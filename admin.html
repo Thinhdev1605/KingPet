@@ -1,0 +1,266 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>King Pet Admin | Hệ Thống Quản Trị Đồ Ăn & Phụ Kiện Thú Cưng</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin.css?v=2.5">
+</head>
+<body>
+<div id="toast"></div>
+
+<!-- MÀN HÌNH ĐĂNG NHẬP ADMIN -->
+<div id="loginScreen" class="login-screen">
+  <div class="login-card">
+    <div class="admin-logo">👑</div>
+    <span class="kicker">KING PET ROYAL ADMIN</span>
+    <h1>Quản trị hệ thống</h1>
+    <p>Đăng nhập bằng tài khoản Quản trị viên để điều hành toàn bộ cửa hàng đồ ăn & phụ kiện thú cưng King Pet.</p>
+    <input id="adminUser" placeholder="Tên đăng nhập" value="admin">
+    <input id="adminPass" type="password" placeholder="Mật khẩu" value="2006">
+    <button class="primary full" onclick="adminLogin()">Đăng nhập Admin</button>
+    <small>Tài khoản Demo: <b>admin / 2006</b></small>
+    <a href="index.html">← Quay lại cửa hàng King Pet</a>
+  </div>
+</div>
+
+<!-- NỀN TẢNG QUẢN TRỊ ADMIN -->
+<div id="adminApp" class="hidden">
+  <aside class="sidebar">
+    <a class="admin-brand" href="#">
+      <span>👑</span>
+      <div>KingPet<small style="display:block;font-size:9px;color:#f97316">ADMIN PORTAL</small></div>
+    </a>
+    <div class="side-label">HỆ THỐNG QUẢN TRỊ</div>
+    <button class="nav-item active" data-tab="dashboard">▦ <span>Tổng quan KPI</span></button>
+    <button class="nav-item" data-tab="products">🍖 <span>Đồ ăn & Phụ kiện</span></button>
+    <button class="nav-item" data-tab="orders">▤ <span>Đơn đặt hàng</span></button>
+    <button class="nav-item" data-tab="users">♙ <span>Tài khoản User</span></button>
+    <button class="nav-item" data-tab="categories">◫ <span>Danh mục sản phẩm</span></button>
+    <button class="nav-item" data-tab="reviews">☆ <span>Đánh giá khách hàng</span></button>
+    <button class="nav-item" data-tab="project">◈ <span>Quản lý dự án SPM</span></button>
+    
+    <div class="side-bottom">
+      <a href="index.html" target="_blank">↗ Xem cửa hàng King Pet</a>
+      <button onclick="adminLogout()">⇥ Đăng xuất</button>
+    </div>
+  </aside>
+
+  <section class="main">
+    <header class="admin-top">
+      <div>
+        <span class="kicker">KING PET E-COMMERCE MANAGEMENT</span>
+        <h2 id="pageTitle">Tổng quan</h2>
+      </div>
+      <div class="admin-user">👑 Administrator <span>•</span> King Pet Admin</div>
+    </header>
+
+    <!-- TAB 1: DASHBOARD -->
+    <div id="dashboard" class="tab active">
+      <div id="stats" class="stats"></div>
+      <div class="two-col">
+        <div class="panel">
+          <div class="panel-head"><h3>🧾 Đơn đặt hàng gần đây</h3></div>
+          <div id="recentOrders"></div>
+        </div>
+        <div class="panel">
+          <div class="panel-head"><h3>⚠️ Cảnh báo tồn kho (≤ 15 món)</h3></div>
+          <div id="lowStock"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TAB 2: QUẢN LÝ SẢN PHẨM -->
+    <div id="products" class="tab">
+      <div class="toolbar">
+        <div>
+          <h3>Quản lý Đồ Ăn & Phụ Kiện Thú Cưng</h3>
+          <p class="muted">Thêm mới, chỉnh sửa thông tin dinh dưỡng, hình ảnh 3D, giá bán và số lượng tồn kho.</p>
+        </div>
+        <button class="primary" onclick="openProduct()">+ Thêm sản phẩm mới</button>
+      </div>
+      <div class="filters">
+        <input id="productSearch" oninput="renderProductsAdmin()" placeholder="Tìm tên hạt, pate, súp thưởng, đồ chơi, bát ăn...">
+        <select id="productCat" onchange="renderProductsAdmin()">
+          <option value="">Tất cả danh mục sản phẩm</option>
+          <option value="Hạt khô">🥩 Hạt khô</option>
+          <option value="Pate & Sốt">🥫 Pate & Sốt</option>
+          <option value="Bánh thưởng">🦴 Bánh thưởng</option>
+          <option value="Dinh dưỡng">🍼 Dinh dưỡng</option>
+          <option value="Đồ chơi">🧸 Đồ chơi & Cào móng</option>
+          <option value="Phụ kiện">🦮 Phụ kiện & Dây dắt</option>
+          <option value="Bát ăn & Khay">🥣 Bát ăn & Khay cát</option>
+          <option value="Vệ sinh">🛁 Vệ sinh & Chăm sóc</option>
+        </select>
+      </div>
+      <div class="panel table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Sản phẩm</th>
+              <th>Danh mục</th>
+              <th>Đối tượng / Quy cách</th>
+              <th>Giá bán</th>
+              <th>Tồn kho</th>
+              <th>Đánh giá</th>
+              <th>Trạng thái</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="productsTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3: QUẢN LÝ ĐƠN HÀNG -->
+    <div id="orders" class="tab">
+      <div class="toolbar">
+        <div>
+          <h3>Quản lý đơn đặt hàng</h3>
+          <p class="muted">Theo dõi, duyệt đơn và cập nhật trạng thái giao đồ ăn & phụ kiện trực tuyến.</p>
+        </div>
+      </div>
+      <div class="panel table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Mã đơn</th>
+              <th>Khách hàng & Địa chỉ</th>
+              <th>Sản phẩm đặt</th>
+              <th>Tổng tiền</th>
+              <th>Trạng thái đơn</th>
+              <th>Ngày đặt</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="ordersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 4: QUẢN LÝ USER -->
+    <div id="users" class="tab">
+      <div class="toolbar">
+        <div>
+          <h3>Tài khoản thành viên King Pet</h3>
+          <p class="muted">Quản lý danh sách khách hàng đã đăng ký tài khoản mua sắm.</p>
+        </div>
+      </div>
+      <div class="panel table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Tên đăng nhập</th>
+              <th>Họ và tên</th>
+              <th>Số điện thoại</th>
+              <th>Vai trò</th>
+              <th>Địa chỉ giao hàng</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="usersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 5: DANH MỤC SẢN PHẨM -->
+    <div id="categories" class="tab">
+      <div class="toolbar">
+        <div>
+          <h3>Danh mục Đồ Ăn & Phụ Kiện</h3>
+          <p class="muted">Quản lý các nhóm thực phẩm và phụ kiện đồ dùng tại cửa hàng King Pet.</p>
+        </div>
+      </div>
+      <div id="categoriesGrid" class="category-admin-grid"></div>
+    </div>
+
+    <!-- TAB 6: ĐÁNH GIÁ KHÁCH HÀNG -->
+    <div id="reviews" class="tab">
+      <div class="toolbar">
+        <div>
+          <h3>Đánh giá từ khách hàng</h3>
+          <p class="muted">Kiểm duyệt nhận xét và chấm điểm sao từ các Sen đã mua sản phẩm.</p>
+        </div>
+      </div>
+      <div id="reviewsList" class="reviews-list"></div>
+    </div>
+
+    <!-- TAB 7: QUẢN LÝ DỰ ÁN SPM -->
+    <div id="project" class="tab">
+      <div class="toolbar">
+        <div>
+          <span class="kicker">SOFTWARE PROJECT MANAGEMENT</span>
+          <h3>Thông tin Quản lý Dự án King Pet</h3>
+        </div>
+      </div>
+      <div class="project-grid">
+        <div class="project-card">
+          <span>PROJECT</span>
+          <h3>King Pet</h3>
+          <p>Website chuyên bán đồ ăn & phụ kiện thú cưng</p>
+        </div>
+        <div class="project-card">
+          <span>SCOPE</span>
+          <h3>6 Features</h3>
+          <p>Product Catalog 3D, Account, Smart Cart, Online Order & VietQR, Admin, Review</p>
+        </div>
+        <div class="project-card">
+          <span>TIME</span>
+          <h3>6 tháng</h3>
+          <p>Planning → UI/UX & DB → Dev → Testing → Deployment</p>
+        </div>
+        <div class="project-card">
+          <span>COST</span>
+          <h3>180.000.000 VNĐ</h3>
+          <p>Ngân sách dự kiến toàn dự án</p>
+        </div>
+      </div>
+
+      <div class="two-col">
+        <div class="panel">
+          <h3>👥 Team & Phân công nhiệm vụ (6 Thành viên)</h3>
+          <div class="team-list">
+            <div>1. MA HỮU NINH <b>Tester / QA</b></div>
+            <div>2. Lường Văn Thiện <b>Database Engineer</b></div>
+            <div>3. Phan Thái Thuần <b>Frontend Developer</b></div>
+            <div>4. Kpa Trần Quang Thịnh <b>Project Manager</b></div>
+            <div>5. Lê Trung Phong <b>UI/UX Designer</b></div>
+            <div>6. Lê Duy Tài <b>Backend Developer</b></div>
+          </div>
+        </div>
+        <div class="panel">
+          <h3>📅 Lộ trình Milestones (6 Tháng)</h3>
+          <div class="timeline">
+            <div><b>Tháng 1</b> Phân tích yêu cầu & xác định Scope King Pet</div>
+            <div><b>Tháng 2</b> Thiết kế UI/UX 2D-3D & Cấu trúc Database</div>
+            <div><b>Tháng 3–4</b> Lập trình Frontend + Backend & 52+ sản phẩm</div>
+            <div><b>Tháng 5</b> Kiểm thử QA theo module & Sửa lỗi (Bug fixing)</div>
+            <div><b>Tháng 6</b> Triển khai thực tế & Báo cáo tổng kết SPM</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="panel risk">
+        <h3>🛡️ Quản lý Rủi ro (Risk Management)</h3>
+        <div class="risk-grid">
+          <span>⚠️ Chậm tiến độ dự án <b>→ Tổ chức Sprint Review hàng tuần</b></span>
+          <span>⚠️ Lỗi hệ thống & tồn kho <b>→ Kiểm thử độc lập theo từng module</b></span>
+          <span>⚠️ Vượt ngân sách dự kiến <b>→ Theo dõi sát Cost Baseline hàng tháng</b></span>
+          <span>⚠️ Thay đổi yêu cầu đột xuất <b>→ Áp dụng quy trình Change Request</b></span>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- UNIVERSAL ADMIN MODAL -->
+<div id="adminModal" class="modal-backdrop" onclick="if(event.target===this)closeModal()">
+  <div id="modalBody" class="modal"></div>
+</div>
+
+<script src="admin.js?v=2.5"></script>
+</body>
+</html>

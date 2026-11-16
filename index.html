@@ -1,0 +1,525 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>King Pet — Cửa Hàng Đồ Ăn, Dinh Dưỡng & Phụ Kiện Thú Cưng Hoàng Gia</title>
+  <meta name="description" content="King Pet - Chuyên 100% thức ăn dinh dưỡng, hạt khô, pate tươi, súp thưởng và phụ kiện đồ chơi cao cấp cho Chó và Mèo. Giao hàng hỏa tốc 2H, đổi trả 7 ngày.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css?v=2.5">
+</head>
+<body>
+
+<!-- TOAST THÔNG BÁO -->
+<div id="toast" class="toast-container"></div>
+
+<!-- TOP ANNOUNCEMENT STRIP -->
+<div class="top-strip">
+  <div class="container top-strip-inner">
+    <div class="strip-item">
+      <span>👑 <b>KING PET</b> — Dinh dưỡng & Phụ kiện Hoàng Gia cho Boss cưng</span>
+    </div>
+    <div class="strip-item hide-mobile">
+      <span class="pulse-dot"></span>
+      <span>🔥 Nhập mã <b class="copy-coupon" onclick="applyVoucherCode('KINGPET20'); toast('Đã sao chép & áp dụng mã KINGPET20!', 'success');" title="Nhấp để áp dụng ngay">KINGPET20</b> giảm ngay 20% cho đơn từ 300K</span>
+    </div>
+    <div class="strip-item">
+      <span>🚚 <b>Freeship</b> từ 200K • ⚡ Giao nhanh 2H • Hotline: <b>1900 6868</b></span>
+    </div>
+  </div>
+</div>
+
+<!-- STICKY HEADER -->
+<header class="header">
+  <div class="container nav-container">
+    <!-- Brand Logo -->
+    <a class="brand" href="#home">
+      <div class="logo-box">
+        <span class="logo-crown">👑</span>
+        <span class="logo-paw">🐾</span>
+      </div>
+      <div class="brand-text">
+        <span class="brand-title">King<span>Pet</span></span>
+        <small class="brand-sub">ROYAL PET FOOD & CARE</small>
+      </div>
+    </a>
+
+    <!-- Interactive Pet Filter Switcher -->
+    <div class="pet-quick-switch hide-mobile">
+      <button class="switch-btn active pet-tab" data-pet="" onclick="setPetFilter('')">🐾 Tất cả</button>
+      <button class="switch-btn pet-tab" data-pet="Chó" onclick="setPetFilter('Chó')">🐕 Đồ Chó</button>
+      <button class="switch-btn pet-tab" data-pet="Mèo" onclick="setPetFilter('Mèo')">🐈 Đồ Mèo</button>
+    </div>
+
+    <!-- Intelligent Search Bar -->
+    <div class="nav-search-wrap">
+      <div class="search-box">
+        <span class="search-icon">🔍</span>
+        <input id="searchInput" type="search" placeholder="Tìm hạt, pate, súp thưởng, đồ chơi, bát ăn..." oninput="renderProducts()">
+        <button class="search-clear-btn" onclick="document.getElementById('searchInput').value=''; renderProducts();" title="Xóa tìm kiếm">✕</button>
+      </div>
+    </div>
+
+    <!-- User Action Icons -->
+    <div class="nav-actions">
+      <!-- Wishlist Action -->
+      <button class="action-btn wishlist-nav-btn" onclick="location.hash='products'; filterCategory(''); toast('Hiển thị danh sách sản phẩm yêu thích', 'info');" title="Danh sách yêu thích">
+        <span class="btn-icon">❤️</span>
+        <span class="btn-text hide-tablet">Yêu thích</span>
+        <b id="wishlistCount" class="badge-bubble">0</b>
+      </button>
+
+      <!-- Cart Drawer Action -->
+      <button id="cartBtn" class="action-btn cart-nav-btn" onclick="openCart()" title="Giỏ đồ ăn & phụ kiện của Boss">
+        <span class="btn-icon">🛒</span>
+        <span class="btn-text hide-tablet">Giỏ Boss</span>
+        <b id="cartCount" class="badge-bubble">0</b>
+      </button>
+
+      <!-- Account / Login Action -->
+      <button class="action-btn account-nav-btn" onclick="location.hash='account'" title="Tài khoản thành viên">
+        <span class="btn-icon">👤</span>
+        <span id="userLabel" class="btn-text">Đăng nhập</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Secondary Category Quick-Bar -->
+  <nav class="sub-nav-bar">
+    <div class="container sub-nav-inner">
+      <a href="#products" class="sub-nav-pill active" onclick="filterCategory(''); return false;">🌟 Tất cả</a>
+      <a href="#products" class="sub-nav-pill" onclick="filterCategory('Hạt khô'); return false;">🥩 Hạt khô</a>
+      <a href="#products" class="sub-nav-pill" onclick="filterCategory('Pate & Sốt'); return false;">🥫 Pate & Sốt</a>
+      <a href="#products" class="sub-nav-pill" onclick="filterCategory('Bánh thưởng'); return false;">🦴 Bánh thưởng</a>
+      <a href="#products" class="sub-nav-pill" onclick="filterCategory('Dinh dưỡng'); return false;">🍼 Sữa & Dinh dưỡng</a>
+      <a href="#products" class="sub-nav-pill" onclick="filterCategory('Đồ chơi'); return false;">🧸 Đồ chơi & Cào móng</a>
+      <a href="#products" class="sub-nav-pill" onclick="filterCategory('Phụ kiện'); return false;">🦮 Vòng cổ & Dây dắt</a>
+      <a href="#products" class="sub-nav-pill" onclick="filterCategory('Bát ăn & Khay'); return false;">🥣 Bát ăn & Khay cát</a>
+      <a href="#products" class="sub-nav-pill" onclick="filterCategory('Vệ sinh'); return false;">🛁 Sữa tắm & Vệ sinh</a>
+      <a href="#flashSale" class="sub-nav-pill hot-deal-pill">🔥 Flash Sale Sốc</a>
+    </div>
+  </nav>
+</header>
+
+<main>
+  <!-- HERO SECTION WITH HIGH-CONVERTING E-COMMERCE DESIGN -->
+  <section id="home" class="hero">
+    <div class="hero-bg-accent"></div>
+    <div class="container hero-layout">
+      <!-- Left Hero Copy -->
+      <div class="hero-copy">
+        <div class="hero-royal-badge">
+          <span class="badge-crown">👑</span>
+          <span>THƯƠNG HIỆU THÚ CƯNG HOÀNG GIA • 100% CHÍNH HÃNG</span>
+        </div>
+
+        <h1 class="hero-heading">
+          Bữa Ăn Hoàng Gia &<br>
+          <span class="gradient-text">Phụ Kiện Xịn Xò</span> Cho Boss
+        </h1>
+
+        <p class="hero-desc">
+          King Pet cung cấp giải pháp chăm sóc toàn diện: <b>Hạt khô & Pate tươi chuẩn Human-Grade</b>, súp thưởng bổ dưỡng, cùng <b>bát ăn chống gù, đồ chơi cào móng & phụ kiện cao cấp</b> giúp Boss khỏe mạnh, lông óng mượt và luôn vui vẻ mỗi ngày.
+        </p>
+
+        <div class="hero-cta-group">
+          <a href="#products" class="btn btn-primary btn-cta">
+            <span>🍖 Mua Thực Đơn Ngay</span>
+            <span class="arrow-ico">→</span>
+          </a>
+          <button class="btn btn-secondary" onclick="filterCategory('Đồ chơi')">
+            <span>🧸 Phụ Kiện & Đồ Chơi</span>
+          </button>
+          <button class="btn btn-outline" onclick="showFeatured()">
+            <span>⭐ Món Bán Chạy</span>
+          </button>
+        </div>
+
+        <!-- Trust Badges & Metrics -->
+        <div class="hero-metrics-grid">
+          <div class="metric-card">
+            <span class="metric-val">52+</span>
+            <span class="metric-lbl">Món ăn & Phụ kiện</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-val">100%</span>
+            <span class="metric-lbl">Chuẩn an toàn thú y</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-val">4.9 ★</span>
+            <span class="metric-lbl">Hơn 10.000 Sen tin chọn</span>
+          </div>
+          <div class="metric-card">
+            <span class="metric-val">2 Giờ</span>
+            <span class="metric-lbl">Giao hỏa tốc nội thành</span>
+          </div>
+        </div>
+
+        <div class="hero-trust-list">
+          <span><i class="check-ico">✓</i> Nguyên liệu tự nhiên không độn phụ gia</span>
+          <span><i class="check-ico">✓</i> Đổi trả miễn phí 7 ngày</span>
+          <span><i class="check-ico">✓</i> Tặng kèm quà cho mọi đơn</span>
+        </div>
+      </div>
+
+      <!-- Right Hero Visual Card -->
+      <div class="hero-visual-area">
+        <div class="hero-card-3d" id="heroTilt">
+          <div class="hero-img-container">
+            <img src="hero-pet.jpg" alt="Thú cưng hoàng gia King Pet" class="hero-pet-image" onerror="this.src='https://cdn-media.sforum.vn/storage/app/media/thanhhuyen/%E1%BA%A3nh%20%C4%91%E1%BB%99ng%20v%E1%BA%ADt/2/anh-dong-vat-17.jpg'">
+            <div class="hero-card-overlay"></div>
+          </div>
+
+          <!-- Floating Badge Top Right -->
+          <div class="float-chip chip-top-right">
+            <span class="chip-icon">🥩</span>
+            <div class="chip-content">
+              <strong>Đạm tươi 38% & Omega-3</strong>
+              <small>Công thức chuyên gia thú y</small>
+            </div>
+          </div>
+
+          <!-- Floating Badge Top Left -->
+          <div class="float-chip chip-top-left">
+            <span class="chip-icon">👑</span>
+            <div class="chip-content">
+              <strong>King Pet Royal</strong>
+              <small>Chó & Mèo mọi lứa tuổi</small>
+            </div>
+          </div>
+
+          <!-- Floating Promo Voucher Card Bottom -->
+          <div class="float-voucher-card">
+            <div class="voucher-tag">ƯU ĐÃI THÀNG NÀY • MÃ: <b>KINGPET20</b></div>
+            <div class="voucher-discount">GIẢM NGAY 20%</div>
+            <div class="voucher-note">Áp dụng cho mọi đơn từ 300.000đ • Nhấp để áp dụng ngay!</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FLASH SALE / GIỜ VÀNG GIÁ SỐC VỚI COUNTDOWN TIMER -->
+  <section id="flashSale" class="flash-sale-section">
+    <div class="container">
+      <div class="flash-sale-banner">
+        <div class="flash-sale-title">
+          <div class="flash-badge">⚡ GIỜ VÀNG GIÁ SỐC</div>
+          <h2>Flash Sale Boss Mê Say</h2>
+          <p>Giảm sốc đến 35% cho các món ăn hạt, pate và đồ chơi hot nhất hôm nay!</p>
+        </div>
+
+        <div class="flash-countdown-box">
+          <span class="cd-label">Kết thúc sau:</span>
+          <div class="cd-timer">
+            <div class="cd-block"><span id="flashHour">02</span><small>Giờ</small></div>
+            <span class="cd-colon">:</span>
+            <div class="cd-block"><span id="flashMinute">45</span><small>Phút</small></div>
+            <span class="cd-colon">:</span>
+            <div class="cd-block"><span id="flashSecond">18</span><small>Giây</small></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Quick Flash Items Highlight -->
+      <div class="flash-items-preview">
+        <div class="flash-mini-card" onclick="openProductQuickView(1)">
+          <div class="flash-badge-mini">-25%</div>
+          <div class="mini-card-thumb">🥩</div>
+          <div class="mini-card-text">
+            <b>Hạt Royal King Adult vị Bò</b>
+            <span class="sale-price">195.000đ <del>245.000đ</del></span>
+            <div class="flash-progress"><div class="fill" style="width: 82%"></div></div>
+            <small>Đã bán 82%</small>
+          </div>
+        </div>
+
+        <div class="flash-mini-card" onclick="openProductQuickView(11)">
+          <div class="flash-badge-mini">-28%</div>
+          <div class="mini-card-thumb">🥫</div>
+          <div class="mini-card-text">
+            <b>Pate Tươi Gà Xé & Bí Đỏ</b>
+            <span class="sale-price">85.000đ <del>118.000đ</del></span>
+            <div class="flash-progress"><div class="fill" style="width: 90%"></div></div>
+            <small>Đã bán 90%</small>
+          </div>
+        </div>
+
+        <div class="flash-mini-card" onclick="openProductQuickView(41)">
+          <div class="flash-badge-mini">-30%</div>
+          <div class="mini-card-thumb">🧸</div>
+          <div class="mini-card-text">
+            <b>Bàn Cào Móng Mèo Sisal</b>
+            <span class="sale-price">125.000đ <del>179.000đ</del></span>
+            <div class="flash-progress"><div class="fill" style="width: 75%"></div></div>
+            <small>Đã bán 75%</small>
+          </div>
+        </div>
+
+        <div class="flash-mini-card" onclick="openProductQuickView(46)">
+          <div class="flash-badge-mini">-20%</div>
+          <div class="mini-card-thumb">🥣</div>
+          <div class="mini-card-text">
+            <b>Bát Ăn Đôi Chống Gù Cổ 15°</b>
+            <span class="sale-price">119.000đ <del>155.000đ</del></span>
+            <div class="flash-progress"><div class="fill" style="width: 88%"></div></div>
+            <small>Đã bán 88%</small>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 CHUYÊN MỤC ĐỒ ĂN & PHỤ KIỆN SHOWCASE -->
+  <section id="categories" class="container category-section">
+    <div class="section-header">
+      <div class="header-left">
+        <span class="sub-kicker">CHUYÊN BIỆT CHO CHÓ & MÈO</span>
+        <h2 class="section-title">Danh Mục Đồ Ăn & Phụ Kiện</h2>
+        <p class="section-desc">Đáp ứng trọn vẹn từ dinh dưỡng bữa ăn hàng ngày đến đồ chơi giải trí, đồ dùng vệ sinh và phụ kiện dạo phố.</p>
+      </div>
+      <button class="btn btn-outline hide-mobile" onclick="location.hash='products'; filterCategory('');">
+        Xem tất cả 52+ sản phẩm →
+      </button>
+    </div>
+    <div id="categoryGridClient" class="category-grid"></div>
+  </section>
+
+  <!-- PRODUCT CATALOG SECTION -->
+  <section id="products" class="container product-section">
+    <div class="catalog-top-panel">
+      <div class="catalog-heading">
+        <span class="sub-kicker">KING PET FULL MENU & ACCESSORIES</span>
+        <h2 class="section-title">Thực Đơn & Phụ Kiện Cho Boss</h2>
+        <p id="productCount" class="product-count-label"></p>
+      </div>
+
+      <!-- Filters & Sorting Control Bar -->
+      <div class="catalog-controls">
+        <div class="pet-tab-group">
+          <button class="pet-tab active" data-pet="" onclick="setPetFilter('')">🐾 Tất cả</button>
+          <button class="pet-tab" data-pet="Chó" onclick="setPetFilter('Chó')">🐕 Đồ Chó</button>
+          <button class="pet-tab" data-pet="Mèo" onclick="setPetFilter('Mèo')">🐈 Đồ Mèo</button>
+        </div>
+
+        <div class="select-filters-group">
+          <select id="categoryFilter" onchange="renderProducts()" class="custom-select">
+            <option value="">Tất cả danh mục</option>
+          </select>
+
+          <select id="priceFilter" onchange="renderProducts()" class="custom-select">
+            <option value="">Tất cả mức giá</option>
+            <option value="under100">Dưới 100.000đ</option>
+            <option value="100to200">100.000đ - 200.000đ</option>
+            <option value="over200">Trên 200.000đ</option>
+          </select>
+
+          <select id="sortFilter" onchange="renderProducts()" class="custom-select">
+            <option value="default">Sắp xếp: Mặc định</option>
+            <option value="low">Giá: Thấp → Cao</option>
+            <option value="high">Giá: Cao → Thấp</option>
+            <option value="rating">Đánh giá: Cao nhất ★</option>
+            <option value="stock">Kho hàng: Nhiều nhất</option>
+          </select>
+
+          <button class="btn btn-reset-filter" onclick="resetFilters()" title="Đặt lại bộ lọc">
+            ↺ Đặt lại
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Product Grid View -->
+    <div id="productGrid" class="product-grid"></div>
+  </section>
+
+  <!-- 4 VALUE PROPOSITIONS (WHY CHOOSE KING PET) -->
+  <section class="trust-pillars-section">
+    <div class="container">
+      <div class="pillars-grid">
+        <div class="pillar-card">
+          <div class="pillar-icon">🥩</div>
+          <h3>100% Nguyên Liệu Tươi Sạch</h3>
+          <p>Thịt bò tươi, ức gà, cá hồi tự nhiên chuẩn Human-Grade. Không chất độn bắp, không hóa chất bảo quản độc hại.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">👨‍⚕️</div>
+          <h3>Công Thức Thú Y Khuyên Dùng</h3>
+          <p>Tỉ lệ đạm - béo - canxi cân đối theo thể trạng chó mèo châu Á, hỗ trợ tiêu hóa, sáng mắt và mượt lông.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">⚡</div>
+          <h3>Giao Hỏa Tốc 2H & Freeship</h3>
+          <p>Miễn phí giao hàng toàn quốc từ 200K. Đóng thùng xốp cách nhiệt kèm đá gel bảo quản pate luôn tươi ngon.</p>
+        </div>
+        <div class="pillar-card">
+          <div class="pillar-icon">🔄</div>
+          <h3>Đổi Trả 7 Ngày Miễn Phí</h3>
+          <p>Nếu Boss cưng không hợp khẩu vị hoặc sản phẩm có lỗi, King Pet sẵn sàng đổi vị mới hoặc hoàn tiền 100%.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CUSTOMER REVIEWS & UGC FEEDBACK -->
+  <section id="reviewsSection" class="container reviews-section">
+    <div class="section-header">
+      <div class="header-left">
+        <span class="sub-kicker">GÓC KHEN CỦA SEN & BOSS</span>
+        <h2 class="section-title">Khách Hàng Nói Gì Về King Pet?</h2>
+        <p class="section-desc">Những cảm nhận thực tế sau khi Sen cho Boss thưởng thức các món ăn dinh dưỡng và dùng phụ kiện tại King Pet.</p>
+      </div>
+      <button class="btn btn-primary" onclick="openReviewModal()">
+        ✍️ Viết Đánh Giá Mới
+      </button>
+    </div>
+    <div id="clientReviewsBox" class="reviews-grid"></div>
+  </section>
+
+  <!-- MY ORDERS TRACKING -->
+  <section id="orders" class="container orders-section">
+    <div class="section-header">
+      <div class="header-left">
+        <span class="sub-kicker">TRA CỨU & QUẢN LÝ ĐƠN HÀNG</span>
+        <h2 class="section-title">Đơn Hàng Của Bạn</h2>
+        <p class="section-desc">Kiểm tra lộ trình giao hàng và lịch sử đặt đồ ăn, phụ kiện cho thú cưng.</p>
+      </div>
+    </div>
+    <div id="ordersBox"></div>
+  </section>
+
+  <!-- ACCOUNT & PROFILE -->
+  <section id="account" class="container account-section">
+    <div class="section-header">
+      <div class="header-left">
+        <span class="sub-kicker">ROYAL MEMBER PRIVILEGE</span>
+        <h2 class="section-title">Tài Khoản Thành Viên</h2>
+        <p class="section-desc">Đăng ký để tích lũy điểm thưởng và nhận thông báo các đợt flash sale đặc biệt.</p>
+      </div>
+    </div>
+    <div id="accountBox"></div>
+  </section>
+</main>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container footer-grid">
+    <!-- Col 1: About -->
+    <div class="footer-col brand-col">
+      <a class="brand footer-brand" href="#home">
+        <div class="logo-box">
+          <span class="logo-crown">👑</span>
+        </div>
+        <div class="brand-text">
+          <span class="brand-title">King<span>Pet</span></span>
+          <small class="brand-sub">ROYAL PET FOOD & CARE</small>
+        </div>
+      </a>
+      <p class="footer-about">
+        King Pet là hệ thống chuyên cung cấp đồ ăn dinh dưỡng, hạt khô, pate tươi, sữa non và phụ kiện đồ chơi cao cấp cho Chó Mèo với tiêu chuẩn Hoàng Gia.
+      </p>
+      <div class="footer-cert-badges">
+        <span>🛡️ Chuẩn Thú Y</span>
+        <span>🌿 100% Organic</span>
+        <span>🚚 Giao 2H</span>
+      </div>
+    </div>
+
+    <!-- Col 2: Categories -->
+    <div class="footer-col">
+      <h4 class="footer-title">Thực Đơn & Phụ Kiện</h4>
+      <ul class="footer-links">
+        <li><a href="#products" onclick="filterCategory('Hạt khô')">🥩 Hạt khô dinh dưỡng</a></li>
+        <li><a href="#products" onclick="filterCategory('Pate & Sốt')">🥫 Pate tươi & sốt thịt</a></li>
+        <li><a href="#products" onclick="filterCategory('Bánh thưởng')">🦴 Bánh thưởng & súp thưởng</a></li>
+        <li><a href="#products" onclick="filterCategory('Dinh dưỡng')">🍼 Sữa non & Vitamin gel</a></li>
+        <li><a href="#products" onclick="filterCategory('Đồ chơi')">🧸 Cào móng & Đồ chơi</a></li>
+        <li><a href="#products" onclick="filterCategory('Bát ăn & Khay')">🥣 Bát ăn & Máy lọc nước</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 3: Customer Service -->
+    <div class="footer-col">
+      <h4 class="footer-title">Hỗ Trợ Khách Hàng</h4>
+      <ul class="footer-links">
+        <li><a href="#orders">Tra cứu tiến trình đơn hàng</a></li>
+        <li><a href="#account">Chính sách thành viên King Pet</a></li>
+        <li><a href="#reviewsSection">Đánh giá & Phản hồi</a></li>
+        <li><a href="admin.html">🔐 Cổng Quản Trị Hệ Thống (Admin)</a></li>
+        <li><a href="#home">Chính sách bảo hành & Đổi trả</a></li>
+      </ul>
+    </div>
+
+    <!-- Col 4: Contact -->
+    <div class="footer-col contact-col">
+      <h4 class="footer-title">Liên Hệ King Pet</h4>
+      <p>📞 Hotline: <b>1900 6868</b> (08:00 – 22:00)</p>
+      <p>✉️ Email: <b>cskh@kingpet.vn</b></p>
+      <p>📍 Trụ sở: <b>Số 123 Đường Hoàng Gia, Quận 1, TP. Hồ Chí Minh</b></p>
+      <p>💳 Thanh toán: <b>COD, VietQR, Chuyển khoản mọi ngân hàng</b></p>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="container footer-bottom-inner">
+      <span>© 2026 King Pet — Hệ thống Website Thương mại điện tử Đồ Ăn & Phụ Kiện Thú Cưng Hoàng Gia</span>
+      <span class="spm-badge">Software Project Management Demo</span>
+    </div>
+  </div>
+</footer>
+
+<!-- SLIDE-OUT CART DRAWER -->
+<div id="cartDrawer" class="cart-drawer">
+  <div class="drawer-header">
+    <div class="drawer-title">
+      <h3>🛒 Giỏ Đồ Của Boss</h3>
+      <span class="drawer-pet-hint">Dinh dưỡng & Phụ kiện hoàng gia</span>
+    </div>
+    <button class="drawer-close-btn" onclick="closeCart()" title="Đóng giỏ">✕</button>
+  </div>
+
+  <!-- Freeship Progress Bar -->
+  <div id="freeshipProgress" class="freeship-progress-box"></div>
+
+  <!-- Items in Cart -->
+  <div id="cartItems" class="cart-items-container"></div>
+
+  <!-- Cart Footer -->
+  <div class="cart-footer">
+    <div id="cartVoucherArea" class="cart-voucher-section"></div>
+
+    <div class="cart-total-summary">
+      <div class="total-row-main">
+        <span>Tạm tính tổng đơn:</span>
+        <strong id="cartTotal" class="total-price-text">0đ</strong>
+      </div>
+      <small class="vat-note">(Đã bao gồm VAT & Miễn phí vận chuyển nếu đủ điều kiện)</small>
+    </div>
+
+    <button class="btn btn-primary btn-large full" onclick="checkout()">
+      Tiến Hành Đặt Hàng Ngay →
+    </button>
+  </div>
+</div>
+<div id="overlay" class="drawer-overlay" onclick="closeCart()"></div>
+
+<!-- UNIVERSAL MODAL -->
+<div id="modal" class="modal-backdrop" onclick="if(event.target===this)closeModal()">
+  <div id="modalContent" class="modal-box"></div>
+</div>
+
+<!-- FLOATING QUICK CONTACT WIDGET -->
+<div class="floating-contact">
+  <a href="tel:19006868" class="float-btn float-call" title="Gọi Hotline: 1900 6868">
+    <span>📞</span>
+  </a>
+  <button class="float-btn float-cart-trigger" onclick="openCart()" title="Mở giỏ hàng">
+    <span>🛒</span>
+  </button>
+</div>
+
+<script src="app.js?v=2.5"></script>
+</body>
+</html>
