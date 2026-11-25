@@ -612,7 +612,7 @@ function openProductQuickView(id) {
   const box = document.getElementById("modalContent");
   if (!modal || !box) return;
 
-  box.className = "modal product-modal-content";
+  box.className = "modal modal-box product-modal-content";
   box.innerHTML = `
     <button class="modal-close-btn" onclick="closeModal()">✕</button>
     <div class="quickview-grid">
@@ -1003,132 +1003,176 @@ function checkout() {
   const defaultAddress = user ? user.address || "" : "";
   const defaultPet = user ? user.petName || "" : "";
 
-  box.className = "modal checkout-modal-content";
+  box.className = "modal modal-box checkout-modal-content";
+  box.style.background = "#ffffff";
+  box.style.backgroundColor = "#ffffff";
+  box.style.border = "1.5px solid #e2e8f0";
+  box.style.borderRadius = "24px";
+  box.style.boxShadow = "0 25px 70px -15px rgba(15, 23, 42, 0.45)";
+  box.style.padding = "32px";
+  box.style.width = "min(980px, 95vw)";
+  box.style.maxHeight = "90vh";
+  box.style.overflowY = "auto";
+  box.style.position = "relative";
+  box.style.color = "#0f172a";
+
   box.innerHTML = `
-    <button class="modal-close-btn" onclick="closeModal()">✕</button>
-    <div class="checkout-grid">
-      <div class="checkout-form-col">
-        <div class="checkout-step-title">
-          <span class="step-num">1</span>
-          <h3>Thông tin giao hàng cho Boss</h3>
-        </div>
-
-        <div class="form-grid">
-          <div class="form-group">
-            <label>Họ tên Sen (Người nhận) *</label>
-            <input id="orderName" value="${esc(defaultName)}" placeholder="Ví dụ: Nguyễn Văn A" required>
-          </div>
-          <div class="form-group">
-            <label>Số điện thoại liên hệ *</label>
-            <input id="orderPhone" value="${esc(defaultPhone)}" placeholder="Ví dụ: 0901234567" required>
-          </div>
-          <div class="form-group full-width">
-            <label>Địa chỉ nhận hàng chi tiết *</label>
-            <input id="orderAddress" value="${esc(defaultAddress)}" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành..." required>
-          </div>
-          <div class="form-group">
-            <label>Tên & Giống Boss cưng</label>
-            <input id="orderPet" value="${esc(defaultPet)}" placeholder="Ví dụ: Bé Miu (Mèo Anh lông ngắn)">
-          </div>
-          <div class="form-group">
-            <label>Ghi chú đơn hàng (nếu có)</label>
-            <input id="orderNote" placeholder="Ví dụ: Giao giờ hành chính, gọi trước...">
-          </div>
-        </div>
-
-        <div class="checkout-step-title" style="margin-top: 24px;">
-          <span class="step-num">2</span>
-          <h3>Phương thức thanh toán</h3>
-        </div>
-
-        <div class="payment-method-selector">
-          <label class="pay-option">
-            <input type="radio" name="payMethod" value="COD" checked onchange="toggleQrDisplay(false)">
-            <div class="pay-option-content">
-              <b>💵 Thanh toán tiền mặt khi nhận hàng (COD)</b>
-              <small>Kiểm tra đồ ăn & phụ kiện đúng mẫu mới thanh toán cho shipper.</small>
-            </div>
-          </label>
-
-          <label class="pay-option">
-            <input type="radio" name="payMethod" value="BANK" onchange="toggleQrDisplay(true)">
-            <div class="pay-option-content">
-              <b>⚡ Chuyển khoản QR Ngân hàng (VietQR 24/7)</b>
-              <small>Quét mã QR tự động điền đúng số tiền và nội dung, duyệt đơn hỏa tốc.</small>
-            </div>
-          </label>
-        </div>
-
-        <div id="qrBankBox" class="qr-bank-box" style="display: none;">
-          <div class="qr-card">
-            <h4>Mã VietQR Thanh Toán King Pet</h4>
-            <div class="qr-img-wrap">
-              <img src="https://api.vietqr.io/image/970422-0900123321-compact2.png?amount=${finalTotal}&addInfo=KINGPET%20ORDER&accountName=KING%20PET%20STORE" alt="VietQR" class="vietqr-img" onerror="this.src='https://placehold.co/220x220?text=VietQR+Thanh+Toan'">
-            </div>
-            <div class="qr-info">
-              <p>Ngân hàng: <b>MB Bank (Quân Đội)</b></p>
-              <p>Số tài khoản: <b>0900 123 321</b></p>
-              <p>Chủ tài khoản: <b>KING PET NUTRITION STORE</b></p>
-              <p>Số tiền: <b class="text-orange">${money(finalTotal)}</b></p>
-              <small>Nội dung: <b>KINGPET [Số điện thoại của bạn]</b></small>
-            </div>
-          </div>
+    <button class="modal-close-btn" onclick="closeModal()" title="Đóng cửa sổ">✕</button>
+    
+    <!-- Modal Title Header -->
+    <div class="checkout-modal-header" style="border-bottom: 1.5px solid #f1f5f9; padding-bottom: 18px; margin-bottom: 24px;">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <span style="font-size: 30px;">🛍️</span>
+        <div>
+          <h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #0f172a;">Xác Nhận & Thanh Toán Đơn Hàng</h2>
+          <p style="margin: 4px 0 0; font-size: 13.5px; color: #64748b;">Vui lòng kiểm tra địa chỉ giao đồ ăn cho Boss và chọn hình thức thanh toán</p>
         </div>
       </div>
+    </div>
 
-      <div class="checkout-summary-col">
-        <h3>Tóm tắt đơn hàng</h3>
-        <div class="checkout-items-list">
-          ${cart
-            .map((item) => {
-              const p = products.find((x) => x.id === item.id);
-              if (!p) return "";
-              return `
-              <div class="checkout-item-mini">
-                <img src="${esc(getProductImage(p))}" alt="${esc(p.name)}">
-                <div class="mini-info">
-                  <div class="mini-title">${esc(p.name)}</div>
-                  <div class="mini-qty">x${item.qty} • ${money(p.price)}</div>
-                </div>
-                <div class="mini-total">${money(p.price * item.qty)}</div>
-              </div>
-            `;
-            })
-            .join("")}
-        </div>
-
-        <div class="checkout-bill-details">
-          <div class="bill-row">
-            <span>Tạm tính đồ ăn & phụ kiện:</span>
-            <b>${money(subtotal)}</b>
+    <div class="checkout-grid" style="display: grid; grid-template-columns: 1.35fr 1fr; gap: 24px;">
+      <!-- LEFT COLUMN: 2 DISTINCT FRAMED CARDS -->
+      <div class="checkout-form-col" style="display: flex; flex-direction: column; gap: 20px;">
+        
+        <!-- KHUNG 1: THÔNG TIN GIAO HÀNG CHO BOSS -->
+        <div class="checkout-frame-card" style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 18px; padding: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+          <div class="checkout-step-title" style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
+            <span class="step-num" style="background: #ea580c; color: #ffffff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0;">1</span>
+            <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #0f172a;">Thông tin giao hàng cho Boss</h3>
           </div>
-          ${
-            discount > 0
-              ? `
-            <div class="bill-row text-green">
-              <span>Voucher giảm giá (${appliedVoucher}):</span>
-              <b>-${money(discount)}</b>
+
+          <div class="form-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px;">
+            <div class="form-group">
+              <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">Họ tên Sen (Người nhận) *</label>
+              <input id="orderName" value="${esc(defaultName)}" placeholder="Ví dụ: Nguyễn Văn A" required style="width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 14px; background: #f8fafc; color: #0f172a;">
             </div>
-          `
-              : ""
-          }
-          <div class="bill-row">
-            <span>Phí vận chuyển:</span>
-            <b>${shippingFee === 0 ? '<span class="text-green">FREESHIP</span>' : money(shippingFee)}</b>
-          </div>
-          <div class="bill-row total-row">
-            <span>TỔNG THANH TOÁN:</span>
-            <span class="total-big">${money(finalTotal)}</span>
+            <div class="form-group">
+              <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">Số điện thoại liên hệ *</label>
+              <input id="orderPhone" value="${esc(defaultPhone)}" placeholder="Ví dụ: 0901234567" required style="width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 14px; background: #f8fafc; color: #0f172a;">
+            </div>
+            <div class="form-group" style="grid-column: 1 / -1;">
+              <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">Địa chỉ nhận hàng chi tiết *</label>
+              <input id="orderAddress" value="${esc(defaultAddress)}" placeholder="Số nhà, đường, phường/xã, quận/huyện, tỉnh/thành..." required style="width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 14px; background: #f8fafc; color: #0f172a;">
+            </div>
+            <div class="form-group">
+              <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">Tên & Giống Boss cưng</label>
+              <input id="orderPet" value="${esc(defaultPet)}" placeholder="Ví dụ: Bé Miu (Mèo Anh)" style="width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 14px; background: #f8fafc; color: #0f172a;">
+            </div>
+            <div class="form-group">
+              <label style="display: block; font-size: 13px; font-weight: 700; color: #334155; margin-bottom: 6px;">Ghi chú đơn hàng (nếu có)</label>
+              <input id="orderNote" placeholder="Ví dụ: Giao giờ hành chính..." style="width: 100%; padding: 12px 14px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 14px; background: #f8fafc; color: #0f172a;">
+            </div>
           </div>
         </div>
 
-        <button class="btn primary btn-large full" onclick="submitOrder()">
-          ✓ Xác nhận Đặt Hàng Ngay (${money(finalTotal)})
-        </button>
-        <p class="checkout-guarantee">🛡️ Cam kết hàng mới 100%, đền 200% nếu phát hiện cận date hoặc hư hỏng.</p>
+        <!-- KHUNG 2: PHƯƠNG THỨC THANH TOÁN -->
+        <div class="checkout-frame-card" style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 18px; padding: 22px; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+          <div class="checkout-step-title" style="display: flex; align-items: center; gap: 10px; margin-bottom: 18px;">
+            <span class="step-num" style="background: #ea580c; color: #ffffff; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 800; flex-shrink: 0;">2</span>
+            <h3 style="margin: 0; font-size: 16px; font-weight: 800; color: #0f172a;">Phương thức thanh toán</h3>
+          </div>
+
+          <div class="payment-method-selector" style="display: flex; flex-direction: column; gap: 12px;">
+            <label class="pay-option" style="display: flex; align-items: flex-start; gap: 14px; padding: 16px; border-radius: 14px; border: 1.5px solid #cbd5e1; background: #f8fafc; cursor: pointer; transition: all 0.2s ease;">
+              <input type="radio" name="payMethod" value="COD" checked onchange="toggleQrDisplay(false)" style="margin-top: 4px; accent-color: #ea580c;">
+              <div class="pay-option-content">
+                <b style="display: block; font-size: 14px; color: #0f172a;">💵 Thanh toán tiền mặt khi nhận hàng (COD)</b>
+                <small style="display: block; font-size: 12px; color: #64748b; margin-top: 3px;">Kiểm tra đồ ăn & phụ kiện đúng mẫu mới thanh toán cho shipper.</small>
+              </div>
+            </label>
+
+            <label class="pay-option" style="display: flex; align-items: flex-start; gap: 14px; padding: 16px; border-radius: 14px; border: 1.5px solid #cbd5e1; background: #f8fafc; cursor: pointer; transition: all 0.2s ease;">
+              <input type="radio" name="payMethod" value="BANK" onchange="toggleQrDisplay(true)" style="margin-top: 4px; accent-color: #ea580c;">
+              <div class="pay-option-content">
+                <b style="display: block; font-size: 14px; color: #0f172a;">⚡ Chuyển khoản QR Ngân hàng (VietQR 24/7)</b>
+                <small style="display: block; font-size: 12px; color: #64748b; margin-top: 3px;">Quét mã QR tự động điền đúng số tiền và nội dung, duyệt đơn hỏa tốc.</small>
+              </div>
+            </label>
+          </div>
+
+          <div id="qrBankBox" class="qr-bank-box" style="display: none; margin-top: 16px; background: #fff7ed; border: 1.5px dashed #ea580c; border-radius: 16px; padding: 18px;">
+            <div class="qr-card" style="display: flex; gap: 16px; align-items: center;">
+              <div class="qr-img-wrap" style="width: 140px; height: 140px; background: #ffffff; padding: 6px; border-radius: 12px; border: 1px solid #fed7aa; flex-shrink: 0;">
+                <img src="https://api.vietqr.io/image/970422-0900123321-compact2.png?amount=${finalTotal}&addInfo=KINGPET%20ORDER&accountName=KING%20PET%20STORE" alt="VietQR" class="vietqr-img" onerror="this.src='https://placehold.co/220x220?text=VietQR+Thanh+Toan'" style="width: 100%; height: 100%; object-fit: contain;">
+              </div>
+              <div class="qr-info" style="font-size: 13px; color: #334155;">
+                <h4 style="margin: 0 0 8px; color: #c2410c; font-size: 15px; font-weight: 800;">Mã VietQR Thanh Toán King Pet</h4>
+                <p style="margin: 0 0 4px;">Ngân hàng: <b>MB Bank (Quân Đội)</b></p>
+                <p style="margin: 0 0 4px;">Số tài khoản: <b>0900 123 321</b></p>
+                <p style="margin: 0 0 4px;">Chủ TK: <b>KING PET NUTRITION STORE</b></p>
+                <p style="margin: 0 0 4px;">Số tiền: <b class="text-orange" style="color: #ea580c; font-size: 15px;">${money(finalTotal)}</b></p>
+                <small style="color: #64748b;">Nội dung: <b>KINGPET [Số điện thoại của bạn]</b></small>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- RIGHT COLUMN: KHUNG TÓM TẮT ĐƠN HÀNG -->
+      <div class="checkout-summary-col" style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 18px; padding: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.04); display: flex; flex-direction: column; justify-content: space-between;">
+        <div>
+          <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 16px; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 12px;">
+            <span style="font-size: 20px;">🧾</span>
+            <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #0f172a;">Tóm tắt đơn hàng</h3>
+          </div>
+
+          <div class="checkout-items-list" style="max-height: 220px; overflow-y: auto; margin-bottom: 18px; display: flex; flex-direction: column; gap: 10px; padding-right: 4px;">
+            ${cart
+              .map((item) => {
+                const p = products.find((x) => x.id === item.id);
+                if (!p) return "";
+                return `
+                <div class="checkout-item-mini" style="display: flex; align-items: center; gap: 10px; background: #ffffff; padding: 8px 12px; border-radius: 12px; border: 1px solid #e2e8f0;">
+                  <img src="${esc(getProductImage(p))}" alt="${esc(p.name)}" style="width: 44px; height: 44px; border-radius: 8px; object-fit: contain; background: #f8fafc; padding: 2px;">
+                  <div class="mini-info" style="flex: 1; min-width: 0;">
+                    <div class="mini-title" style="font-size: 13px; font-weight: 700; color: #0f172a; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">${esc(p.name)}</div>
+                    <div class="mini-price" style="font-size: 12px; color: #64748b;">x${item.qty} • <b style="color: #ea580c;">${money(p.price)}</b></div>
+                  </div>
+                  <div style="font-weight: 800; font-size: 13px; color: #0f172a;">${money(p.price * item.qty)}</div>
+                </div>
+              `;
+              })
+              .join("")}
+          </div>
+
+          <div class="checkout-totals" style="display: flex; flex-direction: column; gap: 8px; font-size: 13.5px; border-top: 1px dashed #cbd5e1; padding-top: 14px;">
+            <div style="display: flex; justify-content: space-between; color: #475569;">
+              <span>Tạm tính đồ ăn & phụ kiện:</span>
+              <b style="color: #0f172a;">${money(subtotal)}</b>
+            </div>
+            ${
+              discount > 0
+                ? `<div style="display: flex; justify-content: space-between; color: #16a34a;">
+                    <span>Giảm giá Voucher:</span>
+                    <b>-${money(discount)}</b>
+                  </div>`
+                : ""
+            }
+            <div style="display: flex; justify-content: space-between; color: #475569;">
+              <span>Phí vận chuyển:</span>
+              <b style="color: ${shippingFee === 0 ? '#16a34a' : '#0f172a'};">${shippingFee === 0 ? 'FREESHIP' : money(shippingFee)}</b>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 17px; font-weight: 800; color: #0f172a; border-top: 1.5px solid #e2e8f0; padding-top: 12px; margin-top: 4px;">
+              <span>TỔNG THANH TOÁN:</span>
+              <span style="color: #ea580c; font-size: 20px;">${money(finalTotal)}</span>
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 24px;">
+          <button class="btn btn-primary btn-large full" onclick="submitOrder()" style="width: 100%; padding: 14px 20px; background: #ea580c; color: #ffffff; border: none; border-radius: 14px; font-size: 15.5px; font-weight: 800; cursor: pointer; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35); transition: all 0.2s ease;">
+            ✓ Xác nhận Đặt Hàng Ngay (${money(finalTotal)})
+          </button>
+          
+          <p class="checkout-guarantee" style="text-align: center; font-size: 11.5px; color: #64748b; margin-top: 12px; line-height: 1.4;">
+            🛡️ Cam kết hàng mới 100%, đền 200% nếu phát hiện cận date hoặc hư hỏng.
+          </p>
+        </div>
       </div>
     </div>
   `;
+
   modal.classList.add("active");
 }
 
@@ -1215,7 +1259,7 @@ function showOrderSuccessModal(order) {
   const box = document.getElementById("modalContent");
   if (!modal || !box) return;
 
-  box.className = "modal success-modal-content";
+  box.className = "modal modal-box success-modal-content";
   box.innerHTML = `
     <div class="success-card">
       <div class="success-ico">🎉</div>
@@ -1352,7 +1396,7 @@ function openReviewModal() {
   const box = document.getElementById("modalContent");
   if (!modal || !box) return;
 
-  box.className = "modal review-modal-content";
+  box.className = "modal modal-box review-modal-content";
   box.innerHTML = `
     <button class="modal-close-btn" onclick="closeModal()">✕</button>
     <h3>✍️ Gửi đánh giá cho King Pet</h3>
@@ -1431,6 +1475,7 @@ function submitReview() {
 function renderAccount() {
   const box = document.getElementById("accountBox");
   const userLabel = document.getElementById("userLabel");
+  updateAccountDropdown();
   if (!box) return;
 
   if (user) {
@@ -1616,47 +1661,98 @@ function logoutUser() {
 }
 
 function openEditProfileModal() {
-  if (!user) return;
   const modal = document.getElementById("modal");
   const box = document.getElementById("modalContent");
   if (!modal || !box) return;
 
-  box.className = "modal edit-profile-modal-content";
+  const curUser = user || {
+    name: "",
+    phone: "",
+    address: "",
+    petName: "",
+    petBreed: "",
+    petNotes: ""
+  };
+
+  box.className = "modal modal-box edit-profile-modal-content";
   box.innerHTML = `
     <button class="modal-close-btn" onclick="closeModal()">✕</button>
-    <h3>✏️ Cập nhật thông tin hồ sơ</h3>
-    <div class="form-group" style="margin-top: 16px;">
-      <label>Họ và tên của bạn</label>
-      <input id="editName" value="${esc(user.name || "")}">
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+      <span style="font-size:26px;">✏️</span>
+      <h3 style="margin:0; font-size:20px; font-weight:800; color:#0f172a;">Thông tin nhận hàng & Boss cưng</h3>
     </div>
-    <div class="form-group">
-      <label>Số điện thoại</label>
-      <input id="editPhone" value="${esc(user.phone || "")}">
+    <p style="font-size:13px; color:#64748b; margin-bottom:18px;">
+      Thông tin này giúp King Pet tự động điền khi mua hàng và chuẩn bị thức ăn phù hợp nhất cho Boss.
+    </p>
+
+    <div class="form-grid">
+      <div class="form-group">
+        <label>Họ và tên Sen (Người nhận hàng) *</label>
+        <input id="editName" value="${esc(curUser.name || "")}" placeholder="Ví dụ: Nguyễn Văn A">
+      </div>
+      <div class="form-group">
+        <label>Số điện thoại liên hệ *</label>
+        <input id="editPhone" value="${esc(curUser.phone || "")}" placeholder="Ví dụ: 0901234567">
+      </div>
+      <div class="form-group full-width">
+        <label>Địa chỉ nhận hàng chi tiết (Giao hỏa tốc 2H) *</label>
+        <input id="editAddress" value="${esc(curUser.address || "")}" placeholder="Số nhà, tên đường, phường/xã, quận/huyện, tỉnh/thành...">
+      </div>
+      <div class="form-group">
+        <label>Tên Boss cưng</label>
+        <input id="editPet" value="${esc(curUser.petName || "")}" placeholder="Ví dụ: Bé Miu, Cún Lu...">
+      </div>
+      <div class="form-group">
+        <label>Loài & Giống thú cưng</label>
+        <input id="editPetBreed" value="${esc(curUser.petBreed || "")}" placeholder="Ví dụ: Mèo Anh lông ngắn, Chó Poodle...">
+      </div>
+      <div class="form-group full-width">
+        <label>Ghi chú khẩu vị & chăm sóc Boss</label>
+        <input id="editPetNotes" value="${esc(curUser.petNotes || "")}" placeholder="Ví dụ: Thích pate cá hồi, dị ứng tôm, thích gặm xương...">
+      </div>
     </div>
-    <div class="form-group">
-      <label>Địa chỉ giao hàng mặc định</label>
-      <input id="editAddress" value="${esc(user.address || "")}">
-    </div>
-    <div class="form-group">
-      <label>Tên & Giống Boss cưng</label>
-      <input id="editPet" value="${esc(user.petName || "")}">
-    </div>
-    <button class="btn primary btn-large full" onclick="saveProfile()">Lưu thay đổi</button>
+    <button class="btn primary btn-large full" style="margin-top:20px;" onclick="saveProfile()">💾 Lưu thông tin hồ sơ</button>
   `;
   modal.classList.add("active");
 }
 
 function saveProfile() {
-  if (!user) return;
-  user.name = (document.getElementById("editName")?.value || "").trim();
-  user.phone = (document.getElementById("editPhone")?.value || "").trim();
-  user.address = (document.getElementById("editAddress")?.value || "").trim();
-  user.petName = (document.getElementById("editPet")?.value || "").trim();
+  const name = (document.getElementById("editName")?.value || "").trim();
+  const phone = (document.getElementById("editPhone")?.value || "").trim();
+  const address = (document.getElementById("editAddress")?.value || "").trim();
+  const petName = (document.getElementById("editPet")?.value || "").trim();
+  const petBreed = (document.getElementById("editPetBreed")?.value || "").trim();
+  const petNotes = (document.getElementById("editPetNotes")?.value || "").trim();
+
+  if (!name && !phone) {
+    toast("Vui lòng nhập ít nhất Họ tên hoặc Số điện thoại!", "warning");
+    return;
+  }
+
+  if (!user) {
+    user = {
+      username: phone || "khach_hang",
+      name: name || "Khách Hàng Thân Thiết",
+      phone: phone,
+      address: address,
+      petName: petName,
+      petBreed: petBreed,
+      petNotes: petNotes
+    };
+  } else {
+    user.name = name;
+    user.phone = phone;
+    user.address = address;
+    user.petName = petName;
+    user.petBreed = petBreed;
+    user.petNotes = petNotes;
+  }
 
   localStorage.setItem("pet_user", JSON.stringify(user));
   closeModal();
   renderAccount();
-  toast("Đã cập nhật thông tin hồ sơ thành công!", "success");
+  updateAccountDropdown();
+  toast("Đã cập nhật thông tin hồ sơ thành công! 🎉", "success");
 }
 
 function closeModal() {
@@ -1718,3 +1814,391 @@ window.addEventListener("DOMContentLoaded", () => {
     });
   }
 });
+
+
+// ============================================================================
+// ACCOUNT DROPDOWN & EXPANDED PROFILE ACTIONS
+// ============================================================================
+function toggleAccountDropdown(e) {
+  if (e) {
+    e.preventDefault();
+    e.stopPropagation();
+  }
+  const wrap = document.getElementById("accountNavWrap");
+  const menu = document.getElementById("accountDropdownMenu");
+  if (!wrap || !menu) return;
+
+  const isActive = menu.classList.contains("active");
+  if (isActive) {
+    closeAccountDropdown();
+  } else {
+    updateAccountDropdown();
+    wrap.classList.add("active");
+    menu.classList.add("active");
+  }
+}
+
+function closeAccountDropdown() {
+  const wrap = document.getElementById("accountNavWrap");
+  const menu = document.getElementById("accountDropdownMenu");
+  if (wrap) wrap.classList.remove("active");
+  if (menu) menu.classList.remove("active");
+}
+
+document.addEventListener("click", (e) => {
+  const wrap = document.getElementById("accountNavWrap");
+  if (wrap && !wrap.contains(e.target)) {
+    closeAccountDropdown();
+  }
+});
+
+function updateAccountDropdown() {
+  const menu = document.getElementById("accountDropdownMenu");
+  const userLabel = document.getElementById("userLabel");
+  const userAvatar = document.getElementById("userNavAvatar");
+  if (!menu) return;
+
+  if (user) {
+    if (userLabel) userLabel.textContent = user.name || user.username;
+    if (userAvatar) userAvatar.textContent = "👑";
+
+    menu.innerHTML = `
+      <div class="dropdown-user-header">
+        <div class="dropdown-avatar">👑</div>
+        <div class="dropdown-user-info">
+          <h4 class="dropdown-user-name">${esc(user.name || user.username)}</h4>
+          <p class="dropdown-user-sub">${user.phone ? '📱 ' + esc(user.phone) : 'Thành viên King Pet'}</p>
+          ${user.petName ? `<span class="dropdown-pet-tag">🐾 Boss: <b>${esc(user.petName)}</b></span>` : `<span class="dropdown-pet-tag">⭐ Khách hàng VIP</span>`}
+        </div>
+      </div>
+      <div class="dropdown-menu-list">
+        <button class="dropdown-item" onclick="openEditProfileModal(); closeAccountDropdown();">
+          <span class="dropdown-item-icon">✏️</span>
+          <div class="dropdown-item-text">
+            <b>Cập nhật hồ sơ & Boss cưng</b>
+            <small>Thêm SĐT, địa chỉ giao hàng, thông tin Boss</small>
+          </div>
+        </button>
+        <button class="dropdown-item" onclick="openOrdersModal(); closeAccountDropdown();">
+          <span class="dropdown-item-icon">📦</span>
+          <div class="dropdown-item-text">
+            <b>Đơn hàng của tôi</b>
+            <small>Xem lịch sử đơn và trạng thái vận chuyển</small>
+          </div>
+        </button>
+        <button class="dropdown-item" onclick="openVoucherModal(); closeAccountDropdown();">
+          <span class="dropdown-item-icon">🎟️</span>
+          <div class="dropdown-item-text">
+            <b>Kho Voucher giảm giá</b>
+            <small>Mã KINGPET20 (-20%), KING10 (-10%)</small>
+          </div>
+        </button>
+        <button class="dropdown-item" onclick="filterFavorites(); closeAccountDropdown();">
+          <span class="dropdown-item-icon">❤️</span>
+          <div class="dropdown-item-text">
+            <b>Món yêu thích của Boss</b>
+            <small>Xem danh sách sản phẩm đã bấm tim</small>
+          </div>
+        </button>
+        <a href="admin.html" class="dropdown-item" target="_blank" onclick="closeAccountDropdown();">
+          <span class="dropdown-item-icon">🛠️</span>
+          <div class="dropdown-item-text">
+            <b>Trang Quản trị Admin</b>
+            <small>Quản trị kho hàng, đơn hàng & SPM</small>
+          </div>
+        </a>
+        <div class="dropdown-divider"></div>
+        <button class="dropdown-item text-danger" onclick="logoutUser(); closeAccountDropdown();">
+          <span class="dropdown-item-icon">🚪</span>
+          <div class="dropdown-item-text">
+            <b>Đăng xuất tài khoản</b>
+            <small>Thoát phiên đăng nhập an toàn</small>
+          </div>
+        </button>
+      </div>
+    `;
+  } else {
+    if (userLabel) userLabel.textContent = "Đăng nhập";
+    if (userAvatar) userAvatar.textContent = "👤";
+
+    menu.innerHTML = `
+      <div class="dropdown-guest-header">
+        <div class="guest-crown">👑</div>
+        <h4>Chào mừng bạn đến với King Pet!</h4>
+        <p>Đăng nhập để nhận ngay ưu đãi <b>Freeship</b> và tích điểm thưởng.</p>
+      </div>
+      <div class="dropdown-menu-list">
+        <button class="dropdown-item dropdown-btn-primary" onclick="openAuthModal('login'); closeAccountDropdown();">
+          <span class="dropdown-item-icon">🔑</span>
+          <div class="dropdown-item-text">
+            <b>Đăng nhập tài khoản</b>
+            <small>Dành cho khách hàng đã có tài khoản</small>
+          </div>
+        </button>
+        <button class="dropdown-item" onclick="openAuthModal('register'); closeAccountDropdown();">
+          <span class="dropdown-item-icon">📝</span>
+          <div class="dropdown-item-text">
+            <b>Đăng ký thành viên mới</b>
+            <small>Nhận ngay voucher giảm 20% đơn đầu</small>
+          </div>
+        </button>
+        <button class="dropdown-item" onclick="openEditProfileModal(); closeAccountDropdown();">
+          <span class="dropdown-item-icon">✏️</span>
+          <div class="dropdown-item-text">
+            <b>Thêm thông tin nhận hàng nhanh</b>
+            <small>Điền sẵn địa chỉ & tên Boss cưng</small>
+          </div>
+        </button>
+        <button class="dropdown-item" onclick="openVoucherModal(); closeAccountDropdown();">
+          <span class="dropdown-item-icon">🎟️</span>
+          <div class="dropdown-item-text">
+            <b>Xem mã giảm giá</b>
+            <small>Voucher giảm 20%, 10% và Freeship</small>
+          </div>
+        </button>
+        <div class="dropdown-divider"></div>
+        <a href="admin.html" class="dropdown-item" target="_blank" onclick="closeAccountDropdown();">
+          <span class="dropdown-item-icon">🛠️</span>
+          <div class="dropdown-item-text">
+            <b>Đăng nhập Quản trị viên (Admin)</b>
+            <small>Truy cập bảng điều khiển Admin</small>
+          </div>
+        </a>
+      </div>
+    `;
+  }
+}
+
+function openOrdersModal() {
+  const modal = document.getElementById("modal");
+  const box = document.getElementById("modalContent");
+  if (!modal || !box) return;
+
+  const ordersList = JSON.parse(localStorage.getItem("pet_orders") || "[]");
+
+  box.className = "modal modal-box orders-modal-content";
+  if (ordersList.length === 0) {
+    box.innerHTML = `
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+      <div style="text-align:center; padding: 20px 0;">
+        <span style="font-size: 52px;">📦</span>
+        <h3 style="margin: 12px 0 6px; font-weight:800; color:#0f172a;">Sen chưa có đơn hàng nào</h3>
+        <p style="color:#64748b; font-size:14px; margin-bottom:20px;">Hãy dạo quanh cửa hàng và chọn các món dinh dưỡng hảo hạng cho Boss nhé!</p>
+        <button class="btn primary" onclick="closeModal(); location.hash='products';">🍖 Khám phá thực đơn ngay</button>
+      </div>
+    `;
+  } else {
+    const listHtml = ordersList.map(o => `
+      <div class="order-history-card">
+        <div class="order-history-head">
+          <span>Mã đơn: <b style="color:#0f172a;">${esc(o.id)}</b></span>
+          <span class="order-badge-status ${o.status === 'Đã tiếp nhận' ? 'pending' : ''}">✓ ${esc(o.status || 'Đã tiếp nhận')}</span>
+        </div>
+        <div style="font-size:12px; color:#64748b; margin-bottom:8px;">
+          📅 Ngày đặt: ${esc(o.date || 'Hôm nay')} • 👤 Người nhận: <b>${esc(o.customer ? o.customer.name : 'Khách hàng')}</b>
+        </div>
+        <div class="order-history-body">
+          <span>Số lượng: <b>${(o.items || []).length} món</b> đồ ăn & phụ kiện</span>
+          <span class="order-history-total">${money(o.total || 0)}</span>
+        </div>
+      </div>
+    `).join("");
+
+    box.innerHTML = `
+      <button class="modal-close-btn" onclick="closeModal()">✕</button>
+      <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+        <span style="font-size:26px;">📦</span>
+        <h3 style="margin:0; font-size:20px; font-weight:800; color:#0f172a;">Lịch sử đơn hàng của Boss (${ordersList.length})</h3>
+      </div>
+      <p style="font-size:13px; color:#64748b; margin-bottom:14px;">Theo dõi tiến độ chuẩn bị thực đơn và phụ kiện hoàng gia.</p>
+      <div class="orders-list-wrap">
+        ${listHtml}
+      </div>
+    `;
+  }
+
+  modal.classList.add("active");
+}
+
+function openVoucherModal() {
+  const modal = document.getElementById("modal");
+  const box = document.getElementById("modalContent");
+  if (!modal || !box) return;
+
+  box.className = "modal modal-box voucher-modal-content";
+  box.innerHTML = `
+    <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    <div style="display:flex; align-items:center; gap:10px; margin-bottom:6px;">
+      <span style="font-size:26px;">🎟️</span>
+      <h3 style="margin:0; font-size:20px; font-weight:800; color:#0f172a;">Kho Voucher & Ưu Đãi Độc Quyền</h3>
+    </div>
+    <p style="font-size:13px; color:#64748b; margin-bottom:16px;">Nhấp vào nút để sao chép mã và tự động áp dụng vào giỏ hàng của bạn!</p>
+    
+    <div class="voucher-list-wrap">
+      <div class="voucher-card-item">
+        <div class="voucher-card-info">
+          <h4>KINGPET20</h4>
+          <p>Giảm <b>20%</b> cho mọi đơn hàng từ <b>300.000đ</b></p>
+        </div>
+        <button class="btn-apply-voucher-mini" onclick="applyVoucherCode('KINGPET20'); closeModal(); openCart();">Áp dụng ngay</button>
+      </div>
+
+      <div class="voucher-card-item">
+        <div class="voucher-card-info">
+          <h4>KING10</h4>
+          <p>Giảm <b>10%</b> toàn sàn không giới hạn giá trị đơn hàng</p>
+        </div>
+        <button class="btn-apply-voucher-mini" onclick="applyVoucherCode('KING10'); closeModal(); openCart();">Áp dụng ngay</button>
+      </div>
+
+      <div class="voucher-card-item">
+        <div class="voucher-card-info">
+          <h4>FREESHIP 200K</h4>
+          <p>Miễn phí vận chuyển hỏa tốc 2H cho đơn từ <b>200.000đ</b></p>
+        </div>
+        <button class="btn-apply-voucher-mini" onclick="closeModal(); openCart();">Xem giỏ hàng</button>
+      </div>
+    </div>
+  `;
+  modal.classList.add("active");
+}
+
+function openAuthModal(defaultTab) {
+  const modal = document.getElementById("modal");
+  const box = document.getElementById("modalContent");
+  if (!modal || !box) return;
+
+  box.className = "modal modal-box auth-modal-content";
+  box.innerHTML = `
+    <button class="modal-close-btn" onclick="closeModal()">✕</button>
+    <div class="auth-tabs" style="margin-bottom:16px;">
+      <button class="auth-tab-btn ${defaultTab === 'login' ? 'active' : ''}" onclick="switchModalAuthTab('login')">Đăng nhập</button>
+      <button class="auth-tab-btn ${defaultTab === 'register' ? 'active' : ''}" onclick="switchModalAuthTab('register')">Đăng ký mới</button>
+    </div>
+
+    <div id="modalLoginFormTab" style="display: ${defaultTab === 'login' ? 'block' : 'none'};">
+      <h3 style="margin:0 0 6px; font-weight:800; color:#0f172a;">Đăng nhập thành viên King Pet</h3>
+      <p style="color:#64748b; font-size:13px; margin-bottom:16px;">Tích điểm đổi quà hoàng gia và lưu địa chỉ giao đồ ăn hỏa tốc.</p>
+      <div class="form-group">
+        <label>Tên đăng nhập hoặc Số điện thoại</label>
+        <input id="modalLogUser" placeholder="admin hoặc số điện thoại...">
+      </div>
+      <div class="form-group">
+        <label>Mật khẩu</label>
+        <input id="modalLogPass" type="password" placeholder="Mật khẩu của bạn...">
+      </div>
+      <button class="btn primary btn-large full" style="margin-top:16px;" onclick="modalLoginUser()">Đăng nhập ngay</button>
+      <p style="text-align:center; font-size:12px; color:#94a3b8; margin-top:10px;">Gợi ý demo: tài khoản admin / 2006 hoặc số điện thoại bất kỳ</p>
+    </div>
+
+    <div id="modalRegisterFormTab" style="display: ${defaultTab === 'register' ? 'block' : 'none'};">
+      <h3 style="margin:0 0 6px; font-weight:800; color:#0f172a;">Đăng ký thành viên mới</h3>
+      <p style="color:#64748b; font-size:13px; margin-bottom:16px;">Nhận ngay voucher <b>KINGPET20</b> giảm 20% cho đơn đầu tiên!</p>
+      <div class="form-group">
+        <label>Tên đăng nhập *</label>
+        <input id="modalRegUser" placeholder="Tên tài khoản...">
+      </div>
+      <div class="form-group">
+        <label>Họ và tên Sen *</label>
+        <input id="modalRegName" placeholder="Ví dụ: Nguyễn Văn A">
+      </div>
+      <div class="form-group">
+        <label>Số điện thoại liên hệ *</label>
+        <input id="modalRegPhone" placeholder="0901234567">
+      </div>
+      <div class="form-group">
+        <label>Tên Boss cưng</label>
+        <input id="modalRegPet" placeholder="Ví dụ: Bé Miu, Cún Lu...">
+      </div>
+      <button class="btn primary btn-large full" style="margin-top:16px;" onclick="modalRegisterUser()">Đăng ký tài khoản</button>
+    </div>
+  `;
+  modal.classList.add("active");
+}
+
+function switchModalAuthTab(tab) {
+  const logTab = document.getElementById("modalLoginFormTab");
+  const regTab = document.getElementById("modalRegisterFormTab");
+  const btns = document.querySelectorAll(".auth-modal-content .auth-tab-btn");
+
+  if (tab === "login") {
+    if (logTab) logTab.style.display = "block";
+    if (regTab) regTab.style.display = "none";
+    btns[0]?.classList.add("active");
+    btns[1]?.classList.remove("active");
+  } else {
+    if (logTab) logTab.style.display = "none";
+    if (regTab) regTab.style.display = "block";
+    btns[0]?.classList.remove("active");
+    btns[1]?.classList.add("active");
+  }
+}
+
+function modalLoginUser() {
+  const u = (document.getElementById("modalLogUser")?.value || "").trim();
+  const p = (document.getElementById("modalLogPass")?.value || "").trim();
+
+  if (!u || !p) {
+    toast("Vui lòng nhập tên đăng nhập và mật khẩu!", "warning");
+    return;
+  }
+
+  if (u === "admin" && p === "2006") {
+    user = { username: "admin", name: "Quản trị viên King Pet", phone: "0900123321", address: "King Pet Store, TP.HCM", petName: "Corgi King" };
+  } else {
+    user = { username: u, name: u, phone: u.match(/^[0-9]+$/) ? u : "0901234567", address: "Giao tại địa chỉ khách hàng", petName: "Boss Cưng" };
+  }
+
+  localStorage.setItem("pet_user", JSON.stringify(user));
+  closeModal();
+  renderAccount();
+  updateAccountDropdown();
+  toast(`Chào mừng ${user.name} đã đăng nhập! 🎉`, "success");
+}
+
+function modalRegisterUser() {
+  const u = (document.getElementById("modalRegUser")?.value || "").trim();
+  const n = (document.getElementById("modalRegName")?.value || "").trim();
+  const ph = (document.getElementById("modalRegPhone")?.value || "").trim();
+  const pet = (document.getElementById("modalRegPet")?.value || "").trim();
+
+  if (!u || !n || !ph) {
+    toast("Vui lòng điền đầy đủ các mục bắt buộc (*)", "warning");
+    return;
+  }
+
+  user = {
+    username: u,
+    name: n,
+    phone: ph,
+    address: "Chưa cập nhật địa chỉ",
+    petName: pet || "Boss Cưng"
+  };
+
+  localStorage.setItem("pet_user", JSON.stringify(user));
+  closeModal();
+  renderAccount();
+  updateAccountDropdown();
+  toast("Chúc mừng bạn đã đăng ký thành công! Nhận ngay voucher KINGPET20 giảm 20%", "success");
+}
+
+function filterFavorites() {
+  const wishlist = JSON.parse(localStorage.getItem("pet_wishlist") || "[]");
+  if (wishlist.length === 0) {
+    toast("Bạn chưa có sản phẩm yêu thích nào. Hãy nhấp icon ❤️ ở sản phẩm nhé!", "info");
+    location.hash = "products";
+    return;
+  }
+  toast(`Đang hiển thị ${wishlist.length} món yêu thích của Boss!`, "success");
+  location.hash = "products";
+  const prods = products.filter(p => wishlist.includes(p.id));
+  renderProducts(prods);
+}
+
+// Khởi chạy đồng bộ dropdown khi trang web load
+document.addEventListener("DOMContentLoaded", () => {
+  updateAccountDropdown();
+});
+if (document.readyState === "complete" || document.readyState === "interactive") {
+  updateAccountDropdown();
+}

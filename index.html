@@ -8,7 +8,61 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css?v=2.5">
+  <link rel="stylesheet" href="styles.css?v=5.0">
+  <style>
+    /* CRITICAL MODAL & DROPDOWN OVERRIDE */
+    .modal-backdrop {
+      position: fixed !important;
+      inset: 0 !important;
+      background: rgba(15, 23, 42, 0.75) !important;
+      backdrop-filter: blur(8px) !important;
+      -webkit-backdrop-filter: blur(8px) !important;
+      z-index: 2500 !important;
+      display: flex !important;
+      align-items: center !important;
+      justify-content: center !important;
+      padding: 20px !important;
+    }
+    .modal-box, .modal {
+      background: #ffffff !important;
+      background-color: #ffffff !important;
+      border: 1.5px solid #e2e8f0 !important;
+      border-radius: 24px !important;
+      box-shadow: 0 25px 70px -15px rgba(15, 23, 42, 0.45) !important;
+      color: #0f172a !important;
+      z-index: 2600 !important;
+    }
+    .checkout-modal-content {
+      background: #ffffff !important;
+      border-radius: 24px !important;
+      padding: 32px !important;
+      width: min(980px, 95vw) !important;
+    }
+    .checkout-frame-card {
+      background: #ffffff !important;
+      border: 1.5px solid #e2e8f0 !important;
+      border-radius: 18px !important;
+      padding: 22px !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04) !important;
+    }
+    .checkout-summary-col {
+      background: #f8fafc !important;
+      border: 1.5px solid #e2e8f0 !important;
+      border-radius: 18px !important;
+      padding: 24px !important;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.04) !important;
+    }
+    .pay-option {
+      background: #f8fafc !important;
+      border: 1.5px solid #cbd5e1 !important;
+      border-radius: 14px !important;
+      padding: 16px !important;
+    }
+    .pay-option:hover {
+      border-color: #ea580c !important;
+      background: #fff7ed !important;
+    }
+  </style>
 </head>
 <body>
 
@@ -49,8 +103,8 @@
     <!-- Interactive Pet Filter Switcher -->
     <div class="pet-quick-switch hide-mobile">
       <button class="switch-btn active pet-tab" data-pet="" onclick="setPetFilter('')">🐾 Tất cả</button>
-      <button class="switch-btn pet-tab" data-pet="Chó" onclick="setPetFilter('Chó')">🐕 Đồ Chó</button>
-      <button class="switch-btn pet-tab" data-pet="Mèo" onclick="setPetFilter('Mèo')">🐈 Đồ Mèo</button>
+      <button class="switch-btn pet-tab" data-pet="Chó" onclick="setPetFilter('Chó')">🐕 Dành cho Chó</button>
+      <button class="switch-btn pet-tab" data-pet="Mèo" onclick="setPetFilter('Mèo')">🐈 Dành cho Mèo</button>
     </div>
 
     <!-- Intelligent Search Bar -->
@@ -78,11 +132,15 @@
         <b id="cartCount" class="badge-bubble">0</b>
       </button>
 
-      <!-- Account / Login Action -->
-      <button class="action-btn account-nav-btn" onclick="location.hash='account'" title="Tài khoản thành viên">
-        <span class="btn-icon">👤</span>
-        <span id="userLabel" class="btn-text">Đăng nhập</span>
-      </button>
+      <!-- Account / Profile Dropdown Action -->
+      <div class="account-nav-wrap" id="accountNavWrap">
+        <button id="accountNavBtn" class="action-btn account-nav-btn" onclick="toggleAccountDropdown(event)" title="Tài khoản thành viên & Hồ sơ Sen Boss" aria-haspopup="true" aria-expanded="false">
+          <span class="btn-icon" id="userNavAvatar">👤</span>
+          <span id="userLabel" class="btn-text">Đăng nhập</span>
+          <span class="dropdown-caret">▾</span>
+        </button>
+        <div id="accountDropdownMenu" class="account-dropdown-menu" onclick="event.stopPropagation()"></div>
+      </div>
     </div>
   </div>
 
@@ -300,8 +358,8 @@
       <div class="catalog-controls">
         <div class="pet-tab-group">
           <button class="pet-tab active" data-pet="" onclick="setPetFilter('')">🐾 Tất cả</button>
-          <button class="pet-tab" data-pet="Chó" onclick="setPetFilter('Chó')">🐕 Đồ Chó</button>
-          <button class="pet-tab" data-pet="Mèo" onclick="setPetFilter('Mèo')">🐈 Đồ Mèo</button>
+          <button class="pet-tab" data-pet="Chó" onclick="setPetFilter('Chó')">🐕 Dành cho Chó</button>
+          <button class="pet-tab" data-pet="Mèo" onclick="setPetFilter('Mèo')">🐈 Dành cho Mèo</button>
         </div>
 
         <div class="select-filters-group">
@@ -520,6 +578,6 @@
   </button>
 </div>
 
-<script src="app.js?v=2.5"></script>
+<script src="app.js?v=5.0"></script>
 </body>
 </html>
