@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="vi">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Báo Cáo Cuối Kỳ SPM — King Pet E-Commerce System (Team 6)</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #f97316;
@@ -278,11 +281,30 @@
             color: #e2e8f0;
         }
 
-        .card-badge.primary { background: rgba(249, 115, 22, 0.2); color: var(--primary); }
-        .card-badge.success { background: rgba(16, 185, 129, 0.2); color: var(--success); }
-        .card-badge.warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
-        .card-badge.danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
-        .card-badge.accent { background: rgba(13, 148, 136, 0.2); color: var(--accent); }
+        .card-badge.primary {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--primary);
+        }
+
+        .card-badge.success {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--success);
+        }
+
+        .card-badge.warning {
+            background: rgba(245, 158, 11, 0.2);
+            color: var(--warning);
+        }
+
+        .card-badge.danger {
+            background: rgba(239, 68, 68, 0.2);
+            color: var(--danger);
+        }
+
+        .card-badge.accent {
+            background: rgba(13, 148, 136, 0.2);
+            color: var(--accent);
+        }
 
         .card-body {
             font-size: 0.9rem;
@@ -628,13 +650,27 @@
 
         /* Responsive helper */
         @media (max-width: 1024px) {
-            .slide-deck { padding: 15px; }
-            .slide { padding: 25px; }
-            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
-            .title-main { font-size: 2.2rem; }
+            .slide-deck {
+                padding: 15px;
+            }
+
+            .slide {
+                padding: 25px;
+            }
+
+            .grid-2,
+            .grid-3,
+            .grid-4 {
+                grid-template-columns: 1fr;
+            }
+
+            .title-main {
+                font-size: 2.2rem;
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- TOP NAVIGATION BAR -->
@@ -646,8 +682,10 @@
         <div class="slide-counter" id="slideIndicator">Slide 1 / 16</div>
         <div class="nav-actions">
             <button class="nav-btn" onclick="toggleFullScreen()">⛶ Toàn màn hình</button>
-            <a href="index.html" target="_blank" class="nav-btn" style="text-decoration:none; color:#fff;">🌐 Mở Web King Pet</a>
-            <a href="admin.html" target="_blank" class="nav-btn" style="text-decoration:none; color:#fff;">⚙️ Mở Admin Portal</a>
+            <a href="index.html" target="_blank" class="nav-btn" style="text-decoration:none; color:#fff;">🌐 Mở Web
+                King Pet</a>
+            <a href="admin.html" target="_blank" class="nav-btn" style="text-decoration:none; color:#fff;">⚙️ Mở Admin
+                Portal</a>
         </div>
     </header>
 
@@ -663,8 +701,9 @@
             <div class="title-slide-content">
                 <div class="title-badge">👑 Môn học: Quản Trị Dự Án Phần Mềm (SPM-KINGPET-2026)</div>
                 <h1 class="title-main">BÁO CÁO NGHIỆM THU CUỐI KỲ<br>HỆ THỐNG WEBSITE THƯƠNG MẠI ĐIỆN TỬ KING PET</h1>
-                <p class="title-sub">Nền tảng thương mại điện tử chuyên biệt Đồ ăn, Dinh dưỡng & Phụ kiện Thú cưng Hoàng Gia tích hợp Thanh toán số VietQR 24/7 và Cổng Quản trị SPM toàn diện.</p>
-                
+                <p class="title-sub">Nền tảng thương mại điện tử chuyên biệt Đồ ăn, Dinh dưỡng & Phụ kiện Thú cưng Hoàng
+                    Gia tích hợp Thanh toán số VietQR 24/7 và Cổng Quản trị SPM toàn diện.</p>
+
                 <div class="team-roster">
                     <div class="roster-card">
                         <div class="roster-avatar">PM</div>
@@ -716,8 +755,9 @@
         <section class="slide" id="slide-2">
             <div class="slide-tag">Nội Dung Báo Cáo</div>
             <h2 class="slide-title">MỤC LỤC TRÌNH BÀY (AGENDA)</h2>
-            <p class="slide-subtitle">Cấu trúc bài báo cáo chuẩn 100 điểm theo đề cương nghiệm thu Quản trị Dự án Phần mềm.</p>
-            
+            <p class="slide-subtitle">Cấu trúc bài báo cáo chuẩn 100 điểm theo đề cương nghiệm thu Quản trị Dự án Phần
+                mềm.</p>
+
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header">
@@ -726,15 +766,21 @@
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>Mục 1:</strong> Giới thiệu dự án, bối cảnh, mục tiêu & phạm vi (In/Out Scope).</li>
-                            <li><strong>Mục 2:</strong> Xác định yêu cầu (Functional & Non-Functional Requirements).</li>
+                            <li><strong>Mục 1:</strong> Giới thiệu dự án, bối cảnh, mục tiêu & phạm vi (In/Out Scope).
+                            </li>
+                            <li><strong>Mục 2:</strong> Xác định yêu cầu (Functional & Non-Functional Requirements).
+                            </li>
                             <li><strong>Mục 3:</strong> Quản lý phạm vi & Cấu trúc phân rã công việc WBS 3 cấp độ.</li>
-                            <li><strong>Mục 4:</strong> Quản lý thời gian, lộ trình 6 tuần (2 Sprints) & Biểu đồ Gantt.</li>
-                            <li><strong>Mục 5:</strong> Quản lý chi phí: Định mức Person-Hours & Ngân sách 10 triệu.</li>
+                            <li><strong>Mục 4:</strong> Quản lý thời gian, lộ trình 6 tuần (2 Sprints) & Biểu đồ Gantt.
+                            </li>
+                            <li><strong>Mục 5:</strong> Quản lý chi phí: Định mức Person-Hours & Ngân sách 10 triệu.
+                            </li>
                             <li><strong>Mục 6:</strong> Quản lý nhân sự: Đội ngũ Team 6 & Ma trận trách nhiệm RACI.</li>
                             <li><strong>Mục 7:</strong> Quản lý rủi ro: Ma trận rủi ro & 5 giải pháp xử lý cụ thể.</li>
-                            <li><strong>Mục 8:</strong> Quản lý chất lượng & Chiến lược kiểm thử (Test Strategy/Items).</li>
-                            <li><strong>Mục 9:</strong> Thiết kế hệ thống: Kiến trúc C&C View, CSDL ERD & Giao diện.</li>
+                            <li><strong>Mục 8:</strong> Quản lý chất lượng & Chiến lược kiểm thử (Test Strategy/Items).
+                            </li>
+                            <li><strong>Mục 9:</strong> Thiết kế hệ thống: Kiến trúc C&C View, CSDL ERD & Giao diện.
+                            </li>
                             <li><strong>Mục 10:</strong> Đánh giá dự án: Kết quả đạt được, hạn chế & Hướng mở rộng.</li>
                         </ul>
                     </div>
@@ -747,16 +793,21 @@
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>1. Giới thiệu sản phẩm:</strong> Tổng quan 52+ sản phẩm, 8 nhóm ngành hàng thú cưng.</li>
-                            <li><strong>2. Đăng nhập & Phân quyền:</strong> Tài khoản Sen mua hàng & Quản trị viên Admin.</li>
+                            <li><strong>1. Giới thiệu sản phẩm:</strong> Tổng quan 52+ sản phẩm, 8 nhóm ngành hàng thú
+                                cưng.</li>
+                            <li><strong>2. Đăng nhập & Phân quyền:</strong> Tài khoản Sen mua hàng & Quản trị viên
+                                Admin.</li>
                             <li><strong>3. Trình diễn chức năng cốt lõi:</strong>
                                 <br>• Bộ chuyển đổi đối tượng 1 chạm (🐕 Đồ Chó / 🐈 Đồ Mèo).
                                 <br>• Xem nhanh thông số dinh dưỡng & chất liệu qua 3D Quick-View.
                                 <br>• Giỏ hàng trượt thông minh đo thanh FREESHIP 200k & áp mã giảm giá.
                             </li>
-                            <li><strong>4. Cơ sở dữ liệu:</strong> Thao tác CRUD 4 bảng dữ liệu LocalStorage thời gian thực.</li>
-                            <li><strong>5. Quy trình nghiệp vụ trọn vẹn:</strong> Tìm kiếm → Chọn hàng → Giỏ hàng → Thanh toán VietQR động MB Bank → Đồng bộ Admin Portal.</li>
-                            <li><strong>6. Kiểm thử lỗi thực tế:</strong> Test form validation & cảnh báo tồn kho tự động.</li>
+                            <li><strong>4. Cơ sở dữ liệu:</strong> Thao tác CRUD 4 bảng dữ liệu LocalStorage thời gian
+                                thực.</li>
+                            <li><strong>5. Quy trình nghiệp vụ trọn vẹn:</strong> Tìm kiếm → Chọn hàng → Giỏ hàng →
+                                Thanh toán VietQR động MB Bank → Đồng bộ Admin Portal.</li>
+                            <li><strong>6. Kiểm thử lỗi thực tế:</strong> Test form validation & cảnh báo tồn kho tự
+                                động.</li>
                         </ul>
                     </div>
                 </div>
@@ -767,8 +818,9 @@
         <section class="slide" id="slide-3">
             <div class="slide-tag">Mục 1 • Giới Thiệu Dự Án (5 Điểm)</div>
             <h2 class="slide-title">BỐI CẢNH, MỤC TIÊU & PHẠM VI DỰ ÁN</h2>
-            <p class="slide-subtitle">Xây dựng nền tảng E-Commerce chuyên biệt Đồ ăn, Dinh dưỡng & Phụ kiện Thú cưng Hoàng Gia.</p>
-            
+            <p class="slide-subtitle">Xây dựng nền tảng E-Commerce chuyên biệt Đồ ăn, Dinh dưỡng & Phụ kiện Thú cưng
+                Hoàng Gia.</p>
+
             <div class="kpi-row">
                 <div class="kpi-box">
                     <div class="kpi-value">52+</div>
@@ -796,9 +848,14 @@
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>Xu hướng Pet Humanization:</strong> Thú cưng được xem như thành viên gia đình, nhu cầu dinh dưỡng cao cấp (Human-grade, Organic) và đồ chơi chăm sóc tăng vọt 35%/năm.</li>
-                            <li><strong>Hạn chế mua sắm truyền thống:</strong> Người nuôi khó so sánh hàm lượng đạm/canxi, thiếu thông tin bao bì, khó phân loại đồ riêng cho Chó hoặc Mèo.</li>
-                            <li><strong>Giải pháp King Pet:</strong> Nền tảng E-Commerce chuẩn phong cách Hoàng Gia với đồ họa 3D vector độc quyền, thanh toán VietQR quét mã tức thì và tích hợp dashboard SPM.</li>
+                            <li><strong>Xu hướng Pet Humanization:</strong> Thú cưng được xem như thành viên gia đình,
+                                nhu cầu dinh dưỡng cao cấp (Human-grade, Organic) và đồ chơi chăm sóc tăng vọt 35%/năm.
+                            </li>
+                            <li><strong>Hạn chế mua sắm truyền thống:</strong> Người nuôi khó so sánh hàm lượng
+                                đạm/canxi, thiếu thông tin bao bì, khó phân loại đồ riêng cho Chó hoặc Mèo.</li>
+                            <li><strong>Giải pháp King Pet:</strong> Nền tảng E-Commerce chuẩn phong cách Hoàng Gia với
+                                đồ họa 3D vector độc quyền, thanh toán VietQR quét mã tức thì và tích hợp dashboard SPM.
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -810,12 +867,16 @@
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>Đối tượng sử dụng:</strong> Khách hàng nuôi thú cưng (Sen & Boss), Nhân viên bán hàng & Quản lý cửa hàng (Admin).</li>
+                            <li><strong>Đối tượng sử dụng:</strong> Khách hàng nuôi thú cưng (Sen & Boss), Nhân viên bán
+                                hàng & Quản lý cửa hàng (Admin).</li>
                             <li><strong>Trong phạm vi (In-Scope):</strong>
-                                <br>• Storefront: 8 danh mục, lọc Chó/Mèo, 3D Quick-View, Flash Sale, Giỏ hàng trượt, VietQR.
+                                <br>• Storefront: 8 danh mục, lọc Chó/Mèo, 3D Quick-View, Flash Sale, Giỏ hàng trượt,
+                                VietQR.
                                 <br>• Admin Portal: Dashboard KPI, CRUD sản phẩm, duyệt đơn hàng, theo dõi tiến độ SPM.
                             </li>
-                            <li><strong>Ngoài phạm vi (Out-of-Scope):</strong> Không xây dựng App Mobile native riêng (dùng Responsive Web App); không xây đội vận chuyển riêng (liên kết đối tác giao hỏa tốc).</li>
+                            <li><strong>Ngoài phạm vi (Out-of-Scope):</strong> Không xây dựng App Mobile native riêng
+                                (dùng Responsive Web App); không xây đội vận chuyển riêng (liên kết đối tác giao hỏa
+                                tốc).</li>
                         </ul>
                     </div>
                 </div>
@@ -826,8 +887,9 @@
         <section class="slide" id="slide-4">
             <div class="slide-tag">Mục 2 • Xác Định Yêu Cầu (5 Điểm)</div>
             <h2 class="slide-title">YÊU CẦU CHỨC NĂNG & PHI CHỨC NĂNG</h2>
-            <p class="slide-subtitle">Đặc tả chi tiết Functional Requirements (FR) và Quality Attributes / Non-Functional Requirements (NFR).</p>
-            
+            <p class="slide-subtitle">Đặc tả chi tiết Functional Requirements (FR) và Quality Attributes /
+                Non-Functional Requirements (NFR).</p>
+
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header">
@@ -836,13 +898,20 @@
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>FR-01 (Storefront & Catalog):</strong> Hiển thị 52+ sản phẩm trong 8 nhóm hàng, bộ lọc Chó/Mèo 1 chạm, tìm kiếm live không giật lag.</li>
-                            <li><strong>FR-02 (Flash Sale & Countdown):</strong> Đồng hồ đếm ngược giờ vàng, thanh tiến độ % đã bán, tự động cập nhật giảm giá sốc.</li>
-                            <li><strong>FR-03 (3D Quick-View):</strong> Modal xem nhanh thông số dinh dưỡng (Đạm, Canxi, Xơ), chất liệu và chọn số lượng.</li>
-                            <li><strong>FR-04 (Drawer Cart & Freeship):</strong> Giỏ hàng trượt thông minh, tính toán khoảng cách nhận Freeship 200k, nhập voucher tự động.</li>
-                            <li><strong>FR-05 (Thanh toán số VietQR):</strong> Tự sinh mã QR chuẩn VietQR MB Bank chứa chính xác số tiền và mã đơn #KP-xxxx.</li>
-                            <li><strong>FR-06 (Theo dõi đơn & Đánh giá):</strong> Timeline 4 trạng thái đơn hàng và gửi đánh giá kèm sao xếp hạng.</li>
-                            <li><strong>FR-07 (Admin Dashboard & CRUD):</strong> Cổng quản trị bảo mật (admin/2006), thống kê KPI, thêm/sửa/xóa sản phẩm và duyệt đơn.</li>
+                            <li><strong>FR-01 (Storefront & Catalog):</strong> Hiển thị 52+ sản phẩm trong 8 nhóm hàng,
+                                bộ lọc Chó/Mèo 1 chạm, tìm kiếm live không giật lag.</li>
+                            <li><strong>FR-02 (Flash Sale & Countdown):</strong> Đồng hồ đếm ngược giờ vàng, thanh tiến
+                                độ % đã bán, tự động cập nhật giảm giá sốc.</li>
+                            <li><strong>FR-03 (3D Quick-View):</strong> Modal xem nhanh thông số dinh dưỡng (Đạm, Canxi,
+                                Xơ), chất liệu và chọn số lượng.</li>
+                            <li><strong>FR-04 (Drawer Cart & Freeship):</strong> Giỏ hàng trượt thông minh, tính toán
+                                khoảng cách nhận Freeship 200k, nhập voucher tự động.</li>
+                            <li><strong>FR-05 (Thanh toán số VietQR):</strong> Tự sinh mã QR chuẩn VietQR MB Bank chứa
+                                chính xác số tiền và mã đơn #KP-xxxx.</li>
+                            <li><strong>FR-06 (Theo dõi đơn & Đánh giá):</strong> Timeline 4 trạng thái đơn hàng và gửi
+                                đánh giá kèm sao xếp hạng.</li>
+                            <li><strong>FR-07 (Admin Dashboard & CRUD):</strong> Cổng quản trị bảo mật (admin/2006),
+                                thống kê KPI, thêm/sửa/xóa sản phẩm và duyệt đơn.</li>
                         </ul>
                     </div>
                 </div>
@@ -854,11 +923,17 @@
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>Hiệu năng (Performance):</strong> Tốc độ tải trang dưới 1.5 giây; 100% hình ảnh bao bì là vector SVG siêu nhẹ, không phụ thuộc máy chủ ảnh ngoài.</li>
-                            <li><strong>Khả năng sử dụng (Usability):</strong> Thiết kế UI/UX hiện đại theo chuẩn Figma, phối màu ấm áp (Cam #f97316 & Xanh thú y #0d9488); Responsive 100% trên PC, Tablet và Smartphone.</li>
-                            <li><strong>Độ tin cậy & Toàn vẹn (Reliability):</strong> Lưu trữ bền vững trên LocalStorage; cơ chế fallback tự khởi tạo dữ liệu mẫu khi người dùng xóa cache.</li>
-                            <li><strong>Bảo mật (Security):</strong> Xác thực tài khoản quản trị qua phiên làm việc, chống XSS form nhập và mã hóa thông tin đơn hàng.</li>
-                            <li><strong>Tương thích (Compatibility):</strong> Hoạt động trơn tru trên mọi trình duyệt hiện đại (Chrome, Edge, Safari, Firefox).</li>
+                            <li><strong>Hiệu năng (Performance):</strong> Tốc độ tải trang dưới 1.5 giây; 100% hình ảnh
+                                bao bì là vector SVG siêu nhẹ, không phụ thuộc máy chủ ảnh ngoài.</li>
+                            <li><strong>Khả năng sử dụng (Usability):</strong> Thiết kế UI/UX hiện đại theo chuẩn Figma,
+                                phối màu ấm áp (Cam #f97316 & Xanh thú y #0d9488); Responsive 100% trên PC, Tablet và
+                                Smartphone.</li>
+                            <li><strong>Độ tin cậy & Toàn vẹn (Reliability):</strong> Lưu trữ bền vững trên
+                                LocalStorage; cơ chế fallback tự khởi tạo dữ liệu mẫu khi người dùng xóa cache.</li>
+                            <li><strong>Bảo mật (Security):</strong> Xác thực tài khoản quản trị qua phiên làm việc,
+                                chống XSS form nhập và mã hóa thông tin đơn hàng.</li>
+                            <li><strong>Tương thích (Compatibility):</strong> Hoạt động trơn tru trên mọi trình duyệt
+                                hiện đại (Chrome, Edge, Safari, Firefox).</li>
                         </ul>
                     </div>
                 </div>
@@ -869,8 +944,9 @@
         <section class="slide" id="slide-5">
             <div class="slide-tag">Mục 3 • Quản Lý Phạm Vi (7 Điểm)</div>
             <h2 class="slide-title">CẤU TRÚC PHÂN RÃ CÔNG VIỆC (WBS)</h2>
-            <p class="slide-subtitle">Work Breakdown Structure 3 cấp độ phân chia toàn diện 6 gói công việc chính của dự án King Pet.</p>
-            
+            <p class="slide-subtitle">Work Breakdown Structure 3 cấp độ phân chia toàn diện 6 gói công việc chính của dự
+                án King Pet.</p>
+
             <div class="flow-container">
                 <div class="flow-node highlight">
                     <div class="icon">🚀</div>
@@ -959,16 +1035,21 @@
         <section class="slide" id="slide-6">
             <div class="slide-tag">Mục 4 • Quản Lý Thời Gian (7 Điểm)</div>
             <h2 class="slide-title">LỘ TRÌNH TIẾN ĐỘ & BIỂU ĐỒ GANTT</h2>
-            <p class="slide-subtitle">Triển khai theo phương pháp Agile/Scrum trong 6 tuần (08/10/2026 – 19/11/2026) chia thành 2 Sprints.</p>
-            
+            <p class="slide-subtitle">Triển khai theo phương pháp Agile/Scrum trong 6 tuần (08/10/2026 – 19/11/2026)
+                chia thành 2 Sprints.</p>
+
             <div class="grid-2" style="margin-bottom: 16px;">
                 <div class="card" style="padding: 14px 20px;">
-                    <div class="card-title" style="color: var(--primary);">🏃 SPRINT 1 (Tuần 1 – Tuần 3: 08/10 – 28/10/2026)</div>
-                    <p style="font-size:0.85rem; color:#cbd5e1; margin-top:4px;">Tập trung Khởi động, Khảo sát, Thiết kế High-Fidelity Figma, Storefront Catalog, Xem nhanh 3D và Bộ lọc Chó/Mèo.</p>
+                    <div class="card-title" style="color: var(--primary);">🏃 SPRINT 1 (Tuần 1 – Tuần 3: 08/10 –
+                        28/10/2026)</div>
+                    <p style="font-size:0.85rem; color:#cbd5e1; margin-top:4px;">Tập trung Khởi động, Khảo sát, Thiết kế
+                        High-Fidelity Figma, Storefront Catalog, Xem nhanh 3D và Bộ lọc Chó/Mèo.</p>
                 </div>
                 <div class="card" style="padding: 14px 20px;">
-                    <div class="card-title" style="color: var(--success);">🏆 SPRINT 2 (Tuần 4 – Tuần 6: 29/10 – 19/11/2026)</div>
-                    <p style="font-size:0.85rem; color:#cbd5e1; margin-top:4px;">Tập trung Giỏ hàng trượt, Freeship, Cổng VietQR MB Bank, Cổng Quản trị Admin, QA kiểm thử toàn diện và Đóng dự án.</p>
+                    <div class="card-title" style="color: var(--success);">🏆 SPRINT 2 (Tuần 4 – Tuần 6: 29/10 –
+                        19/11/2026)</div>
+                    <p style="font-size:0.85rem; color:#cbd5e1; margin-top:4px;">Tập trung Giỏ hàng trượt, Freeship,
+                        Cổng VietQR MB Bank, Cổng Quản trị Admin, QA kiểm thử toàn diện và Đóng dự án.</p>
                 </div>
             </div>
 
@@ -1045,8 +1126,9 @@
         <section class="slide" id="slide-7">
             <div class="slide-tag">Mục 5 • Quản Lý Chi Phí (5 Điểm)</div>
             <h2 class="slide-title">DỰ TOÁN NGÂN SÁCH DỰ ÁN (COST BASELINE)</h2>
-            <p class="slide-subtitle">Định mức chi phí thù lao theo giờ công (Person-Hours) và tổng phân bổ ngân sách 10.000.000 VNĐ.</p>
-            
+            <p class="slide-subtitle">Định mức chi phí thù lao theo giờ công (Person-Hours) và tổng phân bổ ngân sách
+                10.000.000 VNĐ.</p>
+
             <div class="kpi-row">
                 <div class="kpi-box">
                     <div class="kpi-value">10.000.000đ</div>
@@ -1128,7 +1210,8 @@
                             <td>Bổ sung thêm 4 nhóm ngành phụ kiện thú cưng ngoài thức ăn</td>
                         </tr>
                         <tr style="background: rgba(249, 115, 22, 0.15); font-weight: bold;">
-                            <td colspan="3" style="text-align: right; color: var(--primary);">TỔNG CỘNG NGÂN SÁCH DỰ ÁN:</td>
+                            <td colspan="3" style="text-align: right; color: var(--primary);">TỔNG CỘNG NGÂN SÁCH DỰ ÁN:
+                            </td>
                             <td style="color: var(--primary); font-size: 1rem;">10.000.000</td>
                             <td style="color: var(--primary);">100%</td>
                             <td style="color: var(--primary);">Đúng chuẩn hạn mức 10 triệu đồng</td>
@@ -1142,8 +1225,9 @@
         <section class="slide" id="slide-8">
             <div class="slide-tag">Mục 6 • Quản Lý Nhân Sự (5 Điểm)</div>
             <h2 class="slide-title">ĐỘI NGŨ DỰ ÁN & MA TRẬN TRÁCH NHIỆM RACI</h2>
-            <p class="slide-subtitle">Phân công nhiệm vụ cụ thể cho 6 thành viên theo chuẩn ma trận RACI (Responsible, Accountable, Consulted, Informed).</p>
-            
+            <p class="slide-subtitle">Phân công nhiệm vụ cụ thể cho 6 thành viên theo chuẩn ma trận RACI (Responsible,
+                Accountable, Consulted, Informed).</p>
+
             <div class="table-responsive">
                 <table class="spm-table">
                     <thead>
@@ -1228,8 +1312,9 @@
         <section class="slide" id="slide-9">
             <div class="slide-tag">Mục 7 • Quản Lý Rủi Ro (6 Điểm)</div>
             <h2 class="slide-title">MA TRẬN RỦI RO & PHƯƠNG ÁN XỬ LÝ (RISK MATRIX)</h2>
-            <p class="slide-subtitle">Nhận diện, đánh giá xác suất/ảnh hưởng và thiết lập kế hoạch giảm thiểu rủi ro (Mitigation Plan).</p>
-            
+            <p class="slide-subtitle">Nhận diện, đánh giá xác suất/ảnh hưởng và thiết lập kế hoạch giảm thiểu rủi ro
+                (Mitigation Plan).</p>
+
             <div class="table-responsive">
                 <table class="spm-table">
                     <thead>
@@ -1249,7 +1334,8 @@
                             <td><span class="card-badge warning">Cao (70%)</span></td>
                             <td><span class="card-badge danger">Cao</span></td>
                             <td><span class="card-badge danger">Nghiêm trọng</span></td>
-                            <td>Kích hoạt quy trình Change Request, tận dụng quỹ dự phòng 1.500.000đ để dựng mẫu 3D SVG đồng bộ.</td>
+                            <td>Kích hoạt quy trình Change Request, tận dụng quỹ dự phòng 1.500.000đ để dựng mẫu 3D SVG
+                                đồng bộ.</td>
                         </tr>
                         <tr>
                             <td><strong>RSK-02</strong></td>
@@ -1257,7 +1343,8 @@
                             <td><span class="card-badge warning">Cao (80%)</span></td>
                             <td><span class="card-badge warning">Trung bình</span></td>
                             <td><span class="card-badge warning">Trung bình</span></td>
-                            <td>Tích hợp cơ chế Cache-Busting qua query string (styles.css?v=2.5) và ép charset UTF-8 toàn bộ tệp tin.</td>
+                            <td>Tích hợp cơ chế Cache-Busting qua query string (styles.css?v=2.5) và ép charset UTF-8
+                                toàn bộ tệp tin.</td>
                         </tr>
                         <tr>
                             <td><strong>RSK-03</strong></td>
@@ -1265,7 +1352,8 @@
                             <td><span class="card-badge accent">Vừa (50%)</span></td>
                             <td><span class="card-badge danger">Cao</span></td>
                             <td><span class="card-badge warning">Trung bình</span></td>
-                            <td>Xây dựng hàm Data Migration & Fallback tự động trong app.js, tự bù đắp các thuộc tính còn thiếu.</td>
+                            <td>Xây dựng hàm Data Migration & Fallback tự động trong app.js, tự bù đắp các thuộc tính
+                                còn thiếu.</td>
                         </tr>
                         <tr>
                             <td><strong>RSK-04</strong></td>
@@ -1273,7 +1361,8 @@
                             <td><span class="card-badge accent">Vừa (40%)</span></td>
                             <td><span class="card-badge danger">Cao</span></td>
                             <td><span class="card-badge warning">Trung bình</span></td>
-                            <td>Tổ chức họp Daily Standup 15 phút, theo dõi sát đường cơ sở Schedule Baseline và Sprint Review hàng tuần.</td>
+                            <td>Tổ chức họp Daily Standup 15 phút, theo dõi sát đường cơ sở Schedule Baseline và Sprint
+                                Review hàng tuần.</td>
                         </tr>
                         <tr>
                             <td><strong>RSK-05</strong></td>
@@ -1281,7 +1370,8 @@
                             <td><span class="card-badge success">Thấp (20%)</span></td>
                             <td><span class="card-badge danger">Cao</span></td>
                             <td><span class="card-badge success">Thấp</span></td>
-                            <td>Cung cấp phương thức thanh toán kép: VietQR tự động kết hợp Tiền mặt khi nhận hàng (COD).</td>
+                            <td>Cung cấp phương thức thanh toán kép: VietQR tự động kết hợp Tiền mặt khi nhận hàng
+                                (COD).</td>
                         </tr>
                     </tbody>
                 </table>
@@ -1292,8 +1382,9 @@
         <section class="slide" id="slide-10">
             <div class="slide-tag">Mục 8 • Quản Lý Chất Lượng (5 Điểm)</div>
             <h2 class="slide-title">KẾ HOẠCH & CHIẾN LƯỢC KIỂM THỬ (TEST PLAN)</h2>
-            <p class="slide-subtitle">Chiến lược kiểm thử toàn diện bảo đảm 100% tính năng vận hành trơn tru trước khi nghiệm thu.</p>
-            
+            <p class="slide-subtitle">Chiến lược kiểm thử toàn diện bảo đảm 100% tính năng vận hành trơn tru trước khi
+                nghiệm thu.</p>
+
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header">
@@ -1302,10 +1393,15 @@
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>Kiểm thử chức năng (Function Testing):</strong> Kiểm tra luồng thêm giỏ hàng, cập nhật số lượng, bộ lọc Chó/Mèo, sinh mã VietQR và xác nhận đơn hàng.</li>
-                            <li><strong>Kiểm thử giao diện (UI/UX & Responsive Testing):</strong> Sử dụng Chrome DevTools & Responsive Viewer kiểm tra trên độ phân giải Mobile (375px), Tablet (768px) và Desktop (1440px).</li>
-                            <li><strong>Kiểm thử phân quyền (Role Testing):</strong> Khách hàng bình thường chỉ mua sắm; chỉ tài khoản Quản trị mới truy cập được trang admin.html.</li>
-                            <li><strong>Tiêu chí nghiệm thu (Acceptance Criteria):</strong> Tỉ lệ Test Case Pass đạt 100%, 0 lỗi Critical, thời gian phản hồi giao dịch dưới 1 giây.</li>
+                            <li><strong>Kiểm thử chức năng (Function Testing):</strong> Kiểm tra luồng thêm giỏ hàng,
+                                cập nhật số lượng, bộ lọc Chó/Mèo, sinh mã VietQR và xác nhận đơn hàng.</li>
+                            <li><strong>Kiểm thử giao diện (UI/UX & Responsive Testing):</strong> Sử dụng Chrome
+                                DevTools & Responsive Viewer kiểm tra trên độ phân giải Mobile (375px), Tablet (768px)
+                                và Desktop (1440px).</li>
+                            <li><strong>Kiểm thử phân quyền (Role Testing):</strong> Khách hàng bình thường chỉ mua sắm;
+                                chỉ tài khoản Quản trị mới truy cập được trang admin.html.</li>
+                            <li><strong>Tiêu chí nghiệm thu (Acceptance Criteria):</strong> Tỉ lệ Test Case Pass đạt
+                                100%, 0 lỗi Critical, thời gian phản hồi giao dịch dưới 1 giây.</li>
                         </ul>
                     </div>
                 </div>
@@ -1363,8 +1459,9 @@
         <section class="slide" id="slide-11">
             <div class="slide-tag">Mục 9 • Thiết Kế Hệ Thống (5 Điểm)</div>
             <h2 class="slide-title">KIẾN TRÚC TỔNG THỂ & MÔ HÌNH CSDL (ERD)</h2>
-            <p class="slide-subtitle">Thiết kế kiến trúc Client-Server, C&C View và mô hình dữ liệu quan hệ 4 bảng cốt lõi.</p>
-            
+            <p class="slide-subtitle">Thiết kế kiến trúc Client-Server, C&C View và mô hình dữ liệu quan hệ 4 bảng cốt
+                lõi.</p>
+
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header">
@@ -1436,8 +1533,9 @@
         <section class="slide" id="slide-12">
             <div class="slide-tag">Mục 9 • Thiết Kế Hệ Thống (Tiếp)</div>
             <h2 class="slide-title">THIẾT KẾ GIAO DIỆN CHÍNH (UI/UX DESIGN)</h2>
-            <p class="slide-subtitle">Trình diễn 5 màn hình tương tác cốt lõi theo chuẩn thiết kế High-Fidelity Figma.</p>
-            
+            <p class="slide-subtitle">Trình diễn 5 màn hình tương tác cốt lõi theo chuẩn thiết kế High-Fidelity Figma.
+            </p>
+
             <div class="grid-3">
                 <div class="card">
                     <div class="card-header">
@@ -1490,8 +1588,9 @@
         <section class="slide" id="slide-13">
             <div class="slide-tag">Mục 10 • Đánh Giá Dự Án (5 Điểm)</div>
             <h2 class="slide-title">KẾT QUẢ ĐẠT ĐƯỢC, HẠN CHẾ & HƯỚNG MỞ RỘNG</h2>
-            <p class="slide-subtitle">Tổng kết nghiệm thu dự án theo các tiêu chí thành công đã cam kết trong Project Charter.</p>
-            
+            <p class="slide-subtitle">Tổng kết nghiệm thu dự án theo các tiêu chí thành công đã cam kết trong Project
+                Charter.</p>
+
             <div class="grid-3">
                 <div class="card">
                     <div class="card-header">
@@ -1516,9 +1615,12 @@
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>Hạn chế Scope:</strong> Chưa xây dựng App Mobile native riêng biên dịch bằng Swift/Kotlin (bù lại đã tối ưu Web Responsive).</li>
-                            <li><strong>Thanh toán:</strong> Chưa tích hợp cổng thẻ quốc tế Visa/Mastercard (dùng VietQR và COD để tối ưu chi phí phí sàn).</li>
-                            <li><strong>Khó khăn đã xử lý:</strong> Lỗi cache CSS trình duyệt trên client đã được khắc phục triệt để bằng cơ chế Cache-Busting.</li>
+                            <li><strong>Hạn chế Scope:</strong> Chưa xây dựng App Mobile native riêng biên dịch bằng
+                                Swift/Kotlin (bù lại đã tối ưu Web Responsive).</li>
+                            <li><strong>Thanh toán:</strong> Chưa tích hợp cổng thẻ quốc tế Visa/Mastercard (dùng VietQR
+                                và COD để tối ưu chi phí phí sàn).</li>
+                            <li><strong>Khó khăn đã xử lý:</strong> Lỗi cache CSS trình duyệt trên client đã được khắc
+                                phục triệt để bằng cơ chế Cache-Busting.</li>
                         </ul>
                     </div>
                 </div>
@@ -1530,9 +1632,12 @@
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>Progressive Web App (PWA):</strong> Cho phép người dùng cài đặt ứng dụng King Pet trực tiếp lên màn hình điện thoại.</li>
-                            <li><strong>Trợ lý AI Pet Advisor:</strong> Tích hợp Chatbot AI tư vấn khẩu phần dinh dưỡng cá nhân hóa theo cân nặng và giống thú cưng.</li>
-                            <li><strong>Kết nối ERP/WMS:</strong> Mở rộng kết nối kho bãi tự động và đồng bộ với các sàn TMĐT (Shopee, TikTok Shop).</li>
+                            <li><strong>Progressive Web App (PWA):</strong> Cho phép người dùng cài đặt ứng dụng King
+                                Pet trực tiếp lên màn hình điện thoại.</li>
+                            <li><strong>Trợ lý AI Pet Advisor:</strong> Tích hợp Chatbot AI tư vấn khẩu phần dinh dưỡng
+                                cá nhân hóa theo cân nặng và giống thú cưng.</li>
+                            <li><strong>Kết nối ERP/WMS:</strong> Mở rộng kết nối kho bãi tự động và đồng bộ với các sàn
+                                TMĐT (Shopee, TikTok Shop).</li>
                         </ul>
                     </div>
                 </div>
@@ -1708,10 +1813,12 @@
                 </div>
 
                 <div style="display: flex; gap: 16px;">
-                    <a href="index.html" target="_blank" class="nav-btn" style="text-decoration:none; padding: 12px 24px; font-size: 1rem; background: var(--primary);">
+                    <a href="index.html" target="_blank" class="nav-btn"
+                        style="text-decoration:none; padding: 12px 24px; font-size: 1rem; background: var(--primary);">
                         🚀 Mở Demo Storefront (index.html)
                     </a>
-                    <a href="admin.html" target="_blank" class="nav-btn" style="text-decoration:none; padding: 12px 24px; font-size: 1rem;">
+                    <a href="admin.html" target="_blank" class="nav-btn"
+                        style="text-decoration:none; padding: 12px 24px; font-size: 1rem;">
                         ⚙️ Mở Demo Admin Portal (admin.html)
                     </a>
                 </div>
@@ -1790,4 +1897,5 @@
         updateSlide();
     </script>
 </body>
+
 </html>
