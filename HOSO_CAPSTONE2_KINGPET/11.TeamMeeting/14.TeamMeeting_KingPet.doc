@@ -1,0 +1,591 @@
+﻿
+        <html xmlns:o="urn:schemas-microsoft-com:office:office"
+              xmlns:w="urn:schemas-microsoft-com:office:word"
+              xmlns="http://www.w3.org/TR/REC-html40">
+        <head>
+          <meta charset="utf-8">
+          <title>14.TeamMeeting_KingPet</title>
+          <style>
+        @page Section1 {
+          size: 595.3pt 841.9pt;
+          margin: 56.7pt 56.7pt 56.7pt 70.9pt;
+        }
+        div.Section1 { page: Section1; }
+        body { font-family: "Times New Roman", serif; font-size: 12pt; line-height: 1.4; color: #000000; }
+        .page { page-break-after: always; }
+        .page:last-child { page-break-after: auto; }
+        .cover-header { text-align: center; margin-bottom: 16pt; }
+        .cover-sub { font-size: 12pt; font-weight: bold; text-transform: uppercase; margin: 0 0 4pt 0; }
+        .cover-title { font-size: 15pt; font-weight: bold; text-transform: uppercase; margin: 12pt 0 6pt 0; }
+        .cover-meta { font-size: 12pt; font-style: italic; margin: 0; }
+        .divider-line { width: 140pt; border-top: 1pt solid #000000; margin: 10pt auto 14pt auto; }
+        .section-heading { font-size: 12pt; font-weight: bold; text-transform: uppercase; margin: 14pt 0 6pt 0; }
+        .meeting-heading { font-size: 12pt; font-weight: bold; text-transform: uppercase; margin: 14pt 0 6pt 0; border-bottom: 1pt solid #000000; padding-bottom: 2pt; }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 10pt; font-family: "Times New Roman", serif; font-size: 12pt; }
+        th, td { border: 1pt solid #000000; padding: 5pt 6pt; vertical-align: top; text-align: left; }
+        th { background-color: #f2f2f2; font-weight: bold; text-align: center; }
+        .td-label { background-color: #f9f9f9; font-weight: bold; }
+        .text-center { text-align: center; }
+        p { margin: 0 0 4pt 0; }
+        ul, ol { margin: 2pt 0 0 18pt; padding: 0; }
+        li { margin-bottom: 3pt; }
+        table.signature-table td { border: none; text-align: center; width: 50%; }
+        .sign-space { height: 54pt; }
+      </style>
+        </head>
+        <body>
+          <div class="Section1">
+
+    <!-- TRANG 1: THÔNG TIN CHUNG & LỊCH SỬ TÀI LIỆU -->
+    <div class="page">
+      <div class="cover-header">
+        <p class="cover-sub">DỰ ÁN PHẦN MỀM THƯƠNG MẠI ĐIỆN TỬ</p>
+        <p class="cover-sub">HỆ THỐNG WEBSITE THƯƠNG MẠI ĐIỆN TỬ KING PET</p>
+        <hr class="divider-line">
+        <h1 class="cover-title">BIÊN BẢN HỌP NHÓM DỰ ÁN<br>(TEAM MEETING MINUTES)</h1>
+        <p class="cover-meta">Phiên bản: 2.0 (Bản chính thức) &nbsp;|&nbsp; Ngày cập nhật: 19/11/2026</p>
+      </div>
+
+      <p class="section-heading">I. THÔNG TIN CHUNG VỀ DỰ ÁN</p>
+      <table>
+        <colgroup>
+          <col style="width: 26%;">
+          <col style="width: 24%;">
+          <col style="width: 22%;">
+          <col style="width: 28%;">
+        </colgroup>
+        <tbody><tr>
+          <td class="td-label">Mã dự án</td>
+          <td>SPM-KINGPET-2026</td>
+          <td class="td-label">Đơn vị thực hiện</td>
+          <td>Nhóm King Pet (Team 6)</td>
+        </tr>
+        <tr>
+          <td class="td-label">Tên dự án</td>
+          <td colspan="3">Hệ thống Website Thương mại điện tử Đồ ăn, Dinh dưỡng &amp; Phụ kiện Thú cưng King Pet</td>
+        </tr>
+        <tr>
+          <td class="td-label">Ngày bắt đầu</td>
+          <td>08/10/2026</td>
+          <td class="td-label">Ngày kết thúc</td>
+          <td>19/11/2026 (6 tuần / 2 Sprints)</td>
+        </tr>
+        <tr>
+          <td class="td-label">Quản lý dự án (PM)</td>
+          <td colspan="3">Lường Văn Thiện &nbsp;-&nbsp; ĐT: 0901234567 &nbsp;-&nbsp; Email: thien.luong@kingpet.vn</td>
+        </tr>
+        <tr>
+          <td class="td-label">Phạm vi lưu hành</td>
+          <td colspan="3">Lưu hành nội bộ nhóm dự án Thương mại điện tử King Pet</td>
+        </tr>
+      </tbody></table>
+
+      <p class="section-heading">II. DANH SÁCH THÀNH VIÊN NHÓM DỰ ÁN (TEAM 6)</p>
+      <table>
+        <colgroup>
+          <col style="width: 8%;">
+          <col style="width: 30%;">
+          <col style="width: 24%;">
+          <col style="width: 24%;">
+          <col style="width: 14%;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>STT</th>
+            <th>Họ và tên</th>
+            <th>Vai trò</th>
+            <th>Email</th>
+            <th>Số điện thoại</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center">1</td>
+            <td>Lường Văn Thiện</td>
+            <td>Project Manager (PM)</td>
+            <td>thien.luong@kingpet.vn</td>
+            <td class="text-center">0901234567</td>
+          </tr>
+          <tr>
+            <td class="text-center">2</td>
+            <td>Kpa Trần Quang Thịnh</td>
+            <td>UI/UX Designer</td>
+            <td>thinh.kpa@kingpet.vn</td>
+            <td class="text-center">0901234568</td>
+          </tr>
+          <tr>
+            <td class="text-center">3</td>
+            <td>Phan Thái Thuần</td>
+            <td>Frontend Developer</td>
+            <td>thuan.phan@kingpet.vn</td>
+            <td class="text-center">0901234569</td>
+          </tr>
+          <tr>
+            <td class="text-center">4</td>
+            <td>Lê Duy Tài</td>
+            <td>Backend Developer</td>
+            <td>tai.le@kingpet.vn</td>
+            <td class="text-center">0901234570</td>
+          </tr>
+          <tr>
+            <td class="text-center">5</td>
+            <td>Lê Trung Phong</td>
+            <td>Database Engineer</td>
+            <td>phong.le@kingpet.vn</td>
+            <td class="text-center">0901234571</td>
+          </tr>
+          <tr>
+            <td class="text-center">6</td>
+            <td>Ma Hữu Ninh</td>
+            <td>Tester / QA</td>
+            <td>ninh.ma@kingpet.vn</td>
+            <td class="text-center">0901234572</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="section-heading">III. LỊCH SỬ CẬP NHẬT TÀI LIỆU</p>
+      <table>
+        <colgroup>
+          <col style="width: 14%;">
+          <col style="width: 18%;">
+          <col style="width: 26%;">
+          <col style="width: 42%;">
+        </colgroup>
+        <thead>
+          <tr>
+            <th>Phiên bản</th>
+            <th>Ngày cập nhật</th>
+            <th>Người thực hiện</th>
+            <th>Nội dung thay đổi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="text-center">1.0</td>
+            <td class="text-center">08/10/2026</td>
+            <td>Kpa Trần Quang Thịnh</td>
+            <td>Khởi tạo mẫu và ghi nhận biên bản họp tuần đầu tiên của dự án.</td>
+          </tr>
+          <tr>
+            <td class="text-center">2.0</td>
+            <td class="text-center">19/11/2026</td>
+            <td>Lường Văn Thiện</td>
+            <td>Tổng hợp và hoàn thiện trọn bộ 06 biên bản họp nhóm đến thời điểm đóng dự án.</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- TRANG 2: BIÊN BẢN SỐ 01 & 02 -->
+    <div class="page page-break">
+      <p class="meeting-heading">BIÊN BẢN HỌP NHÓM SỐ 01 (NGÀY 08/10/2026)</p>
+      <table>
+        <colgroup>
+          <col style="width: 22%;">
+          <col style="width: 32%;">
+          <col style="width: 18%;">
+          <col style="width: 28%;">
+        </colgroup>
+        <tbody><tr>
+          <td class="td-label">Cuộc họp</td>
+          <td>Họp nhóm lần 01 (Kick-off)</td>
+          <td class="td-label">Dự án</td>
+          <td>King Pet E-Commerce</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thời gian</td>
+          <td>08:30 - 11:30, ngày 08/10/2026</td>
+          <td class="td-label">Địa điểm</td>
+          <td>Phòng họp nhóm / Google Meet</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ trì</td>
+          <td>Lường Văn Thiện (PM)</td>
+          <td class="td-label">Thư ký</td>
+          <td>Kpa Trần Quang Thịnh</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thành phần tham dự</td>
+          <td colspan="3">Có mặt đầy đủ 6/6 thành viên: Lường Văn Thiện, Kpa Trần Quang Thịnh, Phan Thái Thuần, Lê Duy Tài, Lê Trung Phong, Ma Hữu Ninh.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ đề</td>
+          <td colspan="3"><b>Khởi động dự án, thống nhất kế hoạch 2 Sprint và định mức ngân sách 10 triệu đồng.</b></td>
+        </tr>
+        <tr>
+          <td class="td-label">Nội dung thảo luận</td>
+          <td colspan="3">
+            <ol>
+              <li>Thống nhất mục tiêu và phạm vi xây dựng Hệ thống Website Thương mại điện tử King Pet.</li>
+              <li>Phân công nhiệm vụ cụ thể cho từng thành viên: Thiện (PM), Thịnh (UI/UX), Thuần (Frontend), Tài (Backend), Phong (Database), Ninh (QA/Tester).</li>
+              <li>Chốt lộ trình thực hiện trong 6 tuần (08/10/2026 - 19/11/2026), chia thành 2 Sprint (mỗi Sprint kéo dài 3 tuần).</li>
+              <li>Thông qua đơn giá nhân công theo giờ: PM 50.000đ/giờ, Dev và UI/UX 45.000đ/giờ, QA 40.000đ/giờ. Tổng khối lượng dự kiến 156 giờ công (7.050.000 VNĐ) trong tổng ngân sách 10.000.000 VNĐ.</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Tài liệu liên quan</td>
+          <td colspan="3">Project Charter, Proposal v1.0, Cấu trúc phân rã công việc (WBS), Bảng dự toán chi phí.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Kết luận &amp; Giao việc</td>
+          <td colspan="3">
+            <ul>
+              <li>Thông qua Project Charter và Proposal v1.0.</li>
+              <li>Các thành viên cam kết bám sát tiến độ từng tuần, đảm bảo mốc nghiệm thu ngày 19/11/2026.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Xác nhận của PM</td>
+          <td colspan="3">Lường Văn Thiện (Đã duyệt)</td>
+        </tr>
+      </tbody></table>
+
+      <p class="meeting-heading">BIÊN BẢN HỌP NHÓM SỐ 02 (NGÀY 15/10/2026)</p>
+      <table>
+        <colgroup>
+          <col style="width: 22%;">
+          <col style="width: 32%;">
+          <col style="width: 18%;">
+          <col style="width: 28%;">
+        </colgroup>
+        <tbody><tr>
+          <td class="td-label">Cuộc họp</td>
+          <td>Họp nhóm lần 02</td>
+          <td class="td-label">Dự án</td>
+          <td>King Pet E-Commerce</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thời gian</td>
+          <td>09:00 - 11:00, ngày 15/10/2026</td>
+          <td class="td-label">Địa điểm</td>
+          <td>Phòng họp nhóm / Google Meet</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ trì</td>
+          <td>Lường Văn Thiện (PM)</td>
+          <td class="td-label">Thư ký</td>
+          <td>Kpa Trần Quang Thịnh</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thành phần tham dự</td>
+          <td colspan="3">Có mặt đầy đủ 6/6 thành viên: Lường Văn Thiện, Kpa Trần Quang Thịnh, Phan Thái Thuần, Lê Duy Tài, Lê Trung Phong, Ma Hữu Ninh.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ đề</td>
+          <td colspan="3"><b>Rà soát thiết kế giao diện High-Fidelity trên Figma và cấu trúc CSDL LocalStorage.</b></td>
+        </tr>
+        <tr>
+          <td class="td-label">Nội dung thảo luận</td>
+          <td colspan="3">
+            <ol>
+              <li>Kpa Trần Quang Thịnh trình bày 5 màn hình thiết kế Figma với bảng màu chủ đạo: nền sáng 60% (#F8FAFC) và màu nhấn nút kêu gọi hành động 10% cam (#EA580C).</li>
+              <li>Lê Trung Phong trình bày cấu trúc dữ liệu LocalStorage gồm 4 bảng chính: <i>pet_products</i>, <i>pet_orders</i>, <i>pet_cart</i> và <i>pet_users</i>.</li>
+              <li>Phan Thái Thuần và Lê Duy Tài thống nhất định dạng JSON và quy ước tên trường dữ liệu giữa Frontend và lớp dữ liệu.</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Tài liệu liên quan</td>
+          <td colspan="3">Bản thiết kế Figma (5 màn hình), Sơ đồ thực thể CSDL (ERD), Đặc tả cấu trúc JSON.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Kết luận &amp; Giao việc</td>
+          <td colspan="3">
+            <ul>
+              <li>Phê duyệt bản thiết kế High-Fidelity và lược đồ dữ liệu LocalStorage.</li>
+              <li>Chuyển sang giai đoạn lập trình giao diện Storefront và 8 nhóm danh mục sản phẩm.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Xác nhận của PM</td>
+          <td colspan="3">Lường Văn Thiện (Đã duyệt)</td>
+        </tr>
+      </tbody></table>
+    </div>
+
+    <!-- TRANG 3: BIÊN BẢN SỐ 03 & 04 -->
+    <div class="page page-break">
+      <p class="meeting-heading">BIÊN BẢN HỌP NHÓM SỐ 03 (NGÀY 28/10/2026)</p>
+      <table>
+        <colgroup>
+          <col style="width: 22%;">
+          <col style="width: 32%;">
+          <col style="width: 18%;">
+          <col style="width: 28%;">
+        </colgroup>
+        <tbody><tr>
+          <td class="td-label">Cuộc họp</td>
+          <td>Họp nhóm lần 03 (Sprint 1 Review)</td>
+          <td class="td-label">Dự án</td>
+          <td>King Pet E-Commerce</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thời gian</td>
+          <td>14:00 - 17:00, ngày 28/10/2026</td>
+          <td class="td-label">Địa điểm</td>
+          <td>Phòng họp nhóm / Google Meet</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ trì</td>
+          <td>Lường Văn Thiện (PM)</td>
+          <td class="td-label">Thư ký</td>
+          <td>Kpa Trần Quang Thịnh</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thành phần tham dự</td>
+          <td colspan="3">Có mặt đầy đủ 6/6 thành viên: Lường Văn Thiện, Kpa Trần Quang Thịnh, Phan Thái Thuần, Lê Duy Tài, Lê Trung Phong, Ma Hữu Ninh.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ đề</td>
+          <td colspan="3"><b>Nghiệm thu Sprint 1 (Storefront, Danh mục, 3D Quick-View) và lập kế hoạch Sprint 2.</b></td>
+        </tr>
+        <tr>
+          <td class="td-label">Nội dung thảo luận</td>
+          <td colspan="3">
+            <ol>
+              <li>Demo kết quả Sprint 1: Trang chủ Storefront có thời gian tải dưới 1,5 giây, hiển thị đủ 8 danh mục, bộ lọc riêng cho Chó/Mèo và đồng hồ đếm ngược Flash Sale.</li>
+              <li>Kiểm tra tính năng Xem nhanh sản phẩm (3D Quick-View) với đầy đủ thông số dinh dưỡng.</li>
+              <li>Ma Hữu Ninh báo cáo kết quả kiểm thử Sprint 1: vượt qua 100% kịch bản kiểm thử các chức năng Storefront.</li>
+              <li>Phân chia đầu việc chi tiết cho Sprint 2 (29/10 - 19/11/2026): Giỏ hàng, Freeship, thanh toán VietQR và trang quản trị Admin.</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Tài liệu liên quan</td>
+          <td colspan="3">Báo cáo kiểm thử Sprint 1, Danh sách sản phẩm Storefront, Kế hoạch Sprint 2.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Kết luận &amp; Giao việc</td>
+          <td colspan="3">
+            <ul>
+              <li>Nghiệm thu và đóng Sprint 1 đúng tiến độ đề ra.</li>
+              <li>Bắt đầu triển khai các tính năng trọng tâm của Sprint 2 ngay từ ngày 29/10/2026.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Xác nhận của PM</td>
+          <td colspan="3">Lường Văn Thiện (Đã duyệt)</td>
+        </tr>
+      </tbody></table>
+
+      <p class="meeting-heading">BIÊN BẢN HỌP NHÓM SỐ 04 (NGÀY 05/11/2026)</p>
+      <table>
+        <colgroup>
+          <col style="width: 22%;">
+          <col style="width: 32%;">
+          <col style="width: 18%;">
+          <col style="width: 28%;">
+        </colgroup>
+        <tbody><tr>
+          <td class="td-label">Cuộc họp</td>
+          <td>Họp nhóm lần 04</td>
+          <td class="td-label">Dự án</td>
+          <td>King Pet E-Commerce</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thời gian</td>
+          <td>09:00 - 11:30, ngày 05/11/2026</td>
+          <td class="td-label">Địa điểm</td>
+          <td>Phòng họp nhóm / Google Meet</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ trì</td>
+          <td>Lường Văn Thiện (PM)</td>
+          <td class="td-label">Thư ký</td>
+          <td>Kpa Trần Quang Thịnh</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thành phần tham dự</td>
+          <td colspan="3">Có mặt đầy đủ 6/6 thành viên: Lường Văn Thiện, Kpa Trần Quang Thịnh, Phan Thái Thuần, Lê Duy Tài, Lê Trung Phong, Ma Hữu Ninh.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ đề</td>
+          <td colspan="3"><b>Tích hợp Giỏ hàng trượt (Drawer Cart), điều kiện Freeship và cổng thanh toán VietQR MB Bank.</b></td>
+        </tr>
+        <tr>
+          <td class="td-label">Nội dung thảo luận</td>
+          <td colspan="3">
+            <ol>
+              <li>Kiểm tra hoạt động của Giỏ hàng trượt (Drawer Cart): thêm, xóa và cập nhật số lượng sản phẩm trực tiếp.</li>
+              <li>Chạy thử logic kiểm tra ngưỡng Freeship: thanh tiến độ đạt 100% khi giá trị đơn hàng từ 250.000 VNĐ trở lên.</li>
+              <li>Kiểm tra chức năng áp dụng mã giảm giá tự động <i>KINGPET20</i> (-20%).</li>
+              <li>Tích hợp API VietQR MB Bank sinh mã QR động tương ứng đúng số tiền thanh toán và mã đơn hàng (ví dụ: #KP-89241).</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Tài liệu liên quan</td>
+          <td colspan="3">Tài liệu tích hợp API VietQR MB Bank, Đặc tả luồng giỏ hàng và khuyến mãi.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Kết luận &amp; Giao việc</td>
+          <td colspan="3">
+            <ul>
+              <li>Luồng đặt hàng, giỏ hàng và thanh toán VietQR hoạt động ổn định.</li>
+              <li>Tập trung hoàn thiện phân hệ Quản trị Admin và bộ kịch bản kiểm thử toàn hệ thống.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Xác nhận của PM</td>
+          <td colspan="3">Lường Văn Thiện (Đã duyệt)</td>
+        </tr>
+      </tbody></table>
+    </div>
+
+    <!-- TRANG 4: BIÊN BẢN SỐ 05, 06 & CHỮ KÝ -->
+    <div class="page page-break">
+      <p class="meeting-heading">BIÊN BẢN HỌP NHÓM SỐ 05 (NGÀY 12/11/2026)</p>
+      <table>
+        <colgroup>
+          <col style="width: 22%;">
+          <col style="width: 32%;">
+          <col style="width: 18%;">
+          <col style="width: 28%;">
+        </colgroup>
+        <tbody><tr>
+          <td class="td-label">Cuộc họp</td>
+          <td>Họp nhóm lần 05</td>
+          <td class="td-label">Dự án</td>
+          <td>King Pet E-Commerce</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thời gian</td>
+          <td>14:00 - 16:30, ngày 12/11/2026</td>
+          <td class="td-label">Địa điểm</td>
+          <td>Phòng họp nhóm / Google Meet</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ trì</td>
+          <td>Lường Văn Thiện (PM)</td>
+          <td class="td-label">Thư ký</td>
+          <td>Kpa Trần Quang Thịnh</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thành phần tham dự</td>
+          <td colspan="3">Có mặt đầy đủ 6/6 thành viên: Lường Văn Thiện, Kpa Trần Quang Thịnh, Phan Thái Thuần, Lê Duy Tài, Lê Trung Phong, Ma Hữu Ninh.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ đề</td>
+          <td colspan="3"><b>Đánh giá kiểm thử toàn diện (QA), xử lý lỗi Cache CSS và hoàn thiện trang Admin.</b></td>
+        </tr>
+        <tr>
+          <td class="td-label">Nội dung thảo luận</td>
+          <td colspan="3">
+            <ol>
+              <li>Ma Hữu Ninh báo cáo kết quả chạy bộ Testcase Collection: ghi nhận 02 lỗi nhỏ gồm xung đột cache CSS trên trình duyệt Safari và tràn chữ ở màn hình điện thoại.</li>
+              <li>Phan Thái Thuần và Lê Duy Tài đã khắc phục triệt để lỗi cache CSS và cân chỉnh lại bố cục hiển thị trên thiết bị di động.</li>
+              <li>Hoàn thiện trang Quản trị Admin với chức năng theo dõi danh sách đơn hàng theo thời gian thực và cảnh báo tồn kho tự động.</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Tài liệu liên quan</td>
+          <td colspan="3">Bộ Testcase Collection (12 testcase), Báo cáo lỗi (Bug Report), Giao diện Admin Portal.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Kết luận &amp; Giao việc</td>
+          <td colspan="3">
+            <ul>
+              <li>Kiểm thử hồi quy (Regression Test) đạt 12/12 testcase.</li>
+              <li>Các thành viên hoàn thiện và đóng gói bộ tài liệu kỹ thuật để chuẩn bị nghiệm thu cuối kỳ.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Xác nhận của PM</td>
+          <td colspan="3">Lường Văn Thiện (Đã duyệt)</td>
+        </tr>
+      </tbody></table>
+
+      <p class="meeting-heading">BIÊN BẢN HỌP NHÓM SỐ 06 (NGÀY 19/11/2026)</p>
+      <table>
+        <colgroup>
+          <col style="width: 22%;">
+          <col style="width: 32%;">
+          <col style="width: 18%;">
+          <col style="width: 28%;">
+        </colgroup>
+        <tbody><tr>
+          <td class="td-label">Cuộc họp</td>
+          <td>Họp nhóm lần 06 (Tổng kết dự án)</td>
+          <td class="td-label">Dự án</td>
+          <td>King Pet E-Commerce</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thời gian</td>
+          <td>09:00 - 12:00, ngày 19/11/2026</td>
+          <td class="td-label">Địa điểm</td>
+          <td>Phòng họp nhóm / Google Meet</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ trì</td>
+          <td>Lường Văn Thiện (PM)</td>
+          <td class="td-label">Thư ký</td>
+          <td>Kpa Trần Quang Thịnh</td>
+        </tr>
+        <tr>
+          <td class="td-label">Thành phần tham dự</td>
+          <td colspan="3">Có mặt đầy đủ 6/6 thành viên: Lường Văn Thiện, Kpa Trần Quang Thịnh, Phan Thái Thuần, Lê Duy Tài, Lê Trung Phong, Ma Hữu Ninh.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Chủ đề</td>
+          <td colspan="3"><b>Tổng kết Sprint 2, nghiệm thu toàn diện hệ thống King Pet và đóng dự án.</b></td>
+        </tr>
+        <tr>
+          <td class="td-label">Nội dung thảo luận</td>
+          <td colspan="3">
+            <ol>
+              <li>Kiểm tra đối chiếu toàn bộ 5 màn hình theo thiết kế Figma và mã nguồn <i>kingpet-highfi.html</i>.</li>
+              <li>Rà soát đủ 12 tài liệu trong bộ hồ sơ dự án bằng Tiếng Việt; đối chiếu quyết toán giờ công thực hiện (156 giờ = 7.050.000 VNĐ trong tổng ngân sách 10.000.000 VNĐ).</li>
+              <li>Đánh giá mức độ hoàn thành công việc của 6 thành viên trong suốt 6 tuần triển khai.</li>
+              <li>Thống nhất ký biên bản nghiệm thu và bàn giao đóng dự án đúng ngày 19/11/2026.</li>
+            </ol>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Tài liệu liên quan</td>
+          <td colspan="3">Trọn bộ 12 tài liệu hồ sơ dự án, Mã nguồn hệ thống, Biên bản nghiệm thu đóng dự án.</td>
+        </tr>
+        <tr>
+          <td class="td-label">Kết luận &amp; Giao việc</td>
+          <td colspan="3">
+            <ul>
+              <li>Dự án hoàn thành đầy đủ các hạng mục theo đúng tiến độ 19/11/2026 và nằm trong hạn mức ngân sách 10.000.000 VNĐ.</li>
+              <li>Chính thức đóng dự án SPM-KINGPET-2026 và chuyển sang khâu báo cáo nghiệm thu.</li>
+            </ul>
+          </td>
+        </tr>
+        <tr>
+          <td class="td-label">Xác nhận của PM</td>
+          <td colspan="3">Lường Văn Thiện (Đã duyệt)</td>
+        </tr>
+      </tbody></table>
+
+      <table class="signature-table">
+        <tbody><tr>
+          <td>
+            <p><b>THƯ KÝ CUỘC HỌP</b></p>
+            <p><i>(Ký và ghi rõ họ tên)</i></p>
+            <div class="sign-space"></div>
+            <p><b>Kpa Trần Quang Thịnh</b></p>
+          </td>
+          <td>
+            <p><b>QUẢN LÝ DỰ ÁN (PM)</b></p>
+            <p><i>(Ký và ghi rõ họ tên)</i></p>
+            <div class="sign-space"></div>
+            <p><b>Lường Văn Thiện</b></p>
+          </td>
+        </tr>
+      </tbody></table>
+    </div>
+
+  </div>
+        </body>
+        </html>
+      
