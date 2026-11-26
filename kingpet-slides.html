@@ -5,11 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Báo Cáo Cuối Kỳ SPM — King Pet E-Commerce System (Team 6)</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link
-        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap"
-        rel="stylesheet">
     <style>
         :root {
             --primary: #f97316;
@@ -23,12 +18,17 @@
             --card-bg: rgba(30, 41, 59, 0.7);
             --card-border: rgba(255, 255, 255, 0.1);
             --text-main: #f8fafc;
-            --text-muted: #94a3b8;
+            --text-muted: #cbd5e1;
             --success: #10b981;
             --warning: #f59e0b;
             --danger: #ef4444;
-            --font-heading: 'Space Grotesk', sans-serif;
-            --font-body: 'Plus Jakarta Sans', sans-serif;
+            --font-heading: 'Times New Roman', Times, serif;
+            --font-body: 'Times New Roman', Times, serif;
+        }
+
+        /* ===== GLOBAL TIMES NEW ROMAN OVERRIDE ===== */
+        *, body, h1, h2, h3, h4, h5, h6, p, span, td, th, li, a, button {
+            font-family: 'Times New Roman', Times, serif !important;
         }
 
         * {
@@ -308,8 +308,8 @@
 
         .card-body {
             font-size: 0.9rem;
-            color: #cbd5e1;
-            line-height: 1.6;
+            color: #e2e8f0;
+            line-height: 1.65;
             flex: 1;
         }
 
@@ -324,7 +324,7 @@
             position: relative;
             padding-left: 20px;
             font-size: 0.9rem;
-            color: #cbd5e1;
+            color: #e2e8f0;
             line-height: 1.5;
         }
 
@@ -1532,59 +1532,79 @@
         <!-- ==================== SLIDE 12: MỤC 9 - GIAO DIỆN NGƯỜI DÙNG ==================== -->
         <section class="slide" id="slide-12">
             <div class="slide-tag">Mục 9 • Thiết Kế Hệ Thống (Tiếp)</div>
-            <h2 class="slide-title">THIẾT KẾ GIAO DIỆN CHÍNH (UI/UX DESIGN)</h2>
-            <p class="slide-subtitle">Trình diễn 5 màn hình tương tác cốt lõi theo chuẩn thiết kế High-Fidelity Figma.
-            </p>
+            <h2 class="slide-title">THIẺT KẺ GIAO DIỆN CHÍNH (UI/UX DESIGN)</h2>
+            <p class="slide-subtitle">5 Màn hình tương tác người dùng cốt lõi được tối ưu theo phong cách Hoàng Gia.</p>
 
-            <div class="grid-3">
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title" style="font-size:1rem;">1. Storefront & Bộ lọc</div>
-                        <span class="card-badge primary">Màn hình 1</span>
-                    </div>
-                    <div class="card-body">
-                        <ul class="styled-list">
-                            <li>Bộ chuyển đổi 1 chạm (🐕 Đồ Chó / 🐈 Đồ Mèo).</li>
-                            <li>Banner 3D tilt theo chuột.</li>
-                            <li>Flash Sale giờ vàng đếm ngược.</li>
-                            <li>Huy hiệu Bán chạy & Khuyến mãi -20%.</li>
-                        </ul>
+            <!-- Row 1: 2 large screenshots -->
+            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:14px;">
+                <div style="background:rgba(30,41,59,0.6); border:1px solid rgba(249,115,22,0.35); border-radius:12px; overflow:hidden;">
+                    <img src="HOSO_CAPSTONE2_KINGPET/8.Interface Design/screenshots/screen_01_storefront_hero.png"
+                         style="width:100%; height:168px; object-fit:cover; display:block;"
+                         alt="Storefront">
+                    <div style="padding:8px 12px;">
+                        <div style="color:#f97316; font-weight:700; font-size:0.85rem; font-family:'Times New Roman',Times,serif;">
+                            MÀN HÌNH 1: TRANG CHỦ &amp; STOREFRONT</div>
+                        <div style="color:#e2e8f0; font-size:0.78rem; margin-top:3px; font-family:'Times New Roman',Times,serif;">
+                            Banner 3D tilt, bộ chuyển đổi Chó / Mèo 1 chạm, Flash Sale đếm ngược, huy hiệu Bán chạy &amp; Khuyến mãi -20%.
+                        </div>
                     </div>
                 </div>
-
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title" style="font-size:1rem;">2. 3D Quick-View & Cart</div>
-                        <span class="card-badge accent">Màn hình 2 & 3</span>
-                    </div>
-                    <div class="card-body">
-                        <ul class="styled-list">
-                            <li>Modal xem nhanh xoay 3D góc nhìn.</li>
-                            <li>Bảng dinh dưỡng Đạm, Canxi, Xơ.</li>
-                            <li>Giỏ hàng trượt Drawer Cart từ phải qua.</li>
-                            <li>Thanh đo tiến trình Freeship 200k.</li>
-                        </ul>
+                <div style="background:rgba(30,41,59,0.6); border:1px solid rgba(13,148,136,0.35); border-radius:12px; overflow:hidden;">
+                    <img src="HOSO_CAPSTONE2_KINGPET/8.Interface Design/screenshots/screen_04_modal_3d_quickview.png"
+                         style="width:100%; height:168px; object-fit:cover; display:block;"
+                         alt="Modal 3D Quick-View">
+                    <div style="padding:8px 12px;">
+                        <div style="color:#0d9488; font-weight:700; font-size:0.85rem; font-family:'Times New Roman',Times,serif;">
+                            MÀN HÌNH 2: MODAL CHI TIẺT &amp; DINH DƯỠNG</div>
+                        <div style="color:#e2e8f0; font-size:0.78rem; margin-top:3px; font-family:'Times New Roman',Times,serif;">
+                            Xem nhanh xoay 3D, bảng dinh dưỡng Đạm/Canxi/Xơ chuẩn thú y, nút thêm nhanh vào giỏ hàng.
+                        </div>
                     </div>
                 </div>
+            </div>
 
-                <div class="card">
-                    <div class="card-header">
-                        <div class="card-title" style="font-size:1rem;">3. VietQR & Admin Portal</div>
-                        <span class="card-badge success">Màn hình 4 & 5</span>
+            <!-- Row 2: 3 smaller screenshots -->
+            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
+                <div style="background:rgba(30,41,59,0.6); border:1px solid rgba(249,115,22,0.25); border-radius:12px; overflow:hidden;">
+                    <img src="HOSO_CAPSTONE2_KINGPET/8.Interface Design/screenshots/screen_05_cart_drawer.png"
+                         style="width:100%; height:115px; object-fit:cover; display:block;"
+                         alt="Cart Drawer">
+                    <div style="padding:7px 10px;">
+                        <div style="color:#f97316; font-weight:700; font-size:0.78rem; font-family:'Times New Roman',Times,serif;">
+                            MÀN HÌNH 3: GIỏ HÀNG DRAWER</div>
+                        <div style="color:#cbd5e1; font-size:0.73rem; margin-top:2px; font-family:'Times New Roman',Times,serif;">
+                            Drawer Cart trượt, tiến trình Freeship 300K.
+                        </div>
                     </div>
-                    <div class="card-body">
-                        <ul class="styled-list">
-                            <li>Checkout Form nhập địa chỉ giao cho Boss.</li>
-                            <li>Sinh mã VietQR MB Bank tự động đúng số tiền.</li>
-                            <li>Dashboard 4 chỉ số KPI SPM thời gian thực.</li>
-                            <li>Quản trị kho hàng & Cảnh báo tồn kho ≤ 15.</li>
-                        </ul>
+                </div>
+                <div style="background:rgba(30,41,59,0.6); border:1px solid rgba(16,185,129,0.35); border-radius:12px; overflow:hidden;">
+                    <img src="HOSO_CAPSTONE2_KINGPET/8.Interface Design/screenshots/screen_06_checkout_vietqr.png"
+                         style="width:100%; height:115px; object-fit:cover; display:block;"
+                         alt="VietQR Checkout">
+                    <div style="padding:7px 10px;">
+                        <div style="color:#10b981; font-weight:700; font-size:0.78rem; font-family:'Times New Roman',Times,serif;">
+                            MÀN HÌNH 4: CHECKOUT VIETQR MB BANK</div>
+                        <div style="color:#cbd5e1; font-size:0.73rem; margin-top:2px; font-family:'Times New Roman',Times,serif;">
+                            Sinh mã QR MB Bank tự động đúng số tiền, thanh toán 24/7.
+                        </div>
+                    </div>
+                </div>
+                <div style="background:rgba(30,41,59,0.6); border:1px solid rgba(249,115,22,0.25); border-radius:12px; overflow:hidden;">
+                    <img src="HOSO_CAPSTONE2_KINGPET/8.Interface Design/screenshots/screen_09_admin_dashboard.png"
+                         style="width:100%; height:115px; object-fit:cover; display:block;"
+                         alt="Admin Dashboard">
+                    <div style="padding:7px 10px;">
+                        <div style="color:#f59e0b; font-weight:700; font-size:0.78rem; font-family:'Times New Roman',Times,serif;">
+                            MÀN HÌNH 5: CỔNG ADMIN PORTAL</div>
+                        <div style="color:#cbd5e1; font-size:0.73rem; margin-top:2px; font-family:'Times New Roman',Times,serif;">
+                            Dashboard 4 KPI SPM, quản trị kho &amp; đơn hàng.
+                        </div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- ==================== SLIDE 13: MỤC 10 - ĐÁNH GIÁ DỰ ÁN ==================== -->
+                <!-- ==================== SLIDE 13: MỤC 10 - ĐÁNH GIÁ DỰ ÁN ==================== -->
         <section class="slide" id="slide-13">
             <div class="slide-tag">Mục 10 • Đánh Giá Dự Án (5 Điểm)</div>
             <h2 class="slide-title">KẾT QUẢ ĐẠT ĐƯỢC, HẠN CHẾ & HƯỚNG MỞ RỘNG</h2>
