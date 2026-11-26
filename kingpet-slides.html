@@ -1,0 +1,1697 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Báo Cáo Cuối Kỳ SPM — King Pet E-Commerce System (Team 6)</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #f97316;
+            --primary-dark: #ea580c;
+            --primary-light: #ffedd5;
+            --secondary: #0f172a;
+            --secondary-light: #1e293b;
+            --accent: #0d9488;
+            --accent-light: #ccfbf1;
+            --bg-slide: #090d16;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+            --font-heading: 'Space Grotesk', sans-serif;
+            --font-body: 'Plus Jakarta Sans', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background: #020617;
+            color: var(--text-main);
+            overflow: hidden;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        /* Top Progress Bar & Nav */
+        .top-navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 56px;
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            z-index: 100;
+        }
+
+        .brand-badge {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: var(--font-heading);
+            font-size: 1.05rem;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .brand-badge .logo-dot {
+            width: 12px;
+            height: 12px;
+            background: linear-gradient(135deg, var(--primary), #fbbf24);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--primary);
+        }
+
+        .slide-counter {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            background: rgba(255, 255, 255, 0.05);
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 1px solid var(--card-border);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: #fff;
+            padding: 6px 14px;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.4);
+        }
+
+        .progress-bar-container {
+            position: fixed;
+            top: 55px;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: rgba(255, 255, 255, 0.05);
+            z-index: 101;
+        }
+
+        .progress-bar {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), #fbbf24);
+            transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        /* Slide Deck Container */
+        .slide-deck {
+            position: absolute;
+            top: 60px;
+            left: 0;
+            width: 100vw;
+            height: calc(100vh - 60px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 50px;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            max-width: 1400px;
+            height: 100%;
+            max-height: 840px;
+            background: radial-gradient(circle at top right, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.95));
+            border: 1px solid var(--card-border);
+            border-radius: 24px;
+            padding: 40px 50px;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary) transparent;
+            opacity: 0;
+            transform: translateY(20px) scale(0.98);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+
+        .slide.active {
+            display: flex;
+            flex-direction: column;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* Slide Header Typography */
+        .slide-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.8rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--primary);
+            background: rgba(249, 115, 22, 0.1);
+            border: 1px solid rgba(249, 115, 22, 0.3);
+            padding: 4px 12px;
+            border-radius: 20px;
+            margin-bottom: 12px;
+            width: fit-content;
+        }
+
+        .slide-title {
+            font-family: var(--font-heading);
+            font-size: 2.1rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            line-height: 1.25;
+            margin-bottom: 8px;
+            background: linear-gradient(135deg, #ffffff, #cbd5e1);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .slide-subtitle {
+            font-size: 1rem;
+            color: var(--text-muted);
+            margin-bottom: 24px;
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
+            flex: 1;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            flex: 1;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            flex: 1;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 22px;
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(10px);
+            transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(249, 115, 22, 0.4);
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 14px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+        }
+
+        .card-title {
+            font-family: var(--font-heading);
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 3px 8px;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.1);
+            color: #e2e8f0;
+        }
+
+        .card-badge.primary { background: rgba(249, 115, 22, 0.2); color: var(--primary); }
+        .card-badge.success { background: rgba(16, 185, 129, 0.2); color: var(--success); }
+        .card-badge.warning { background: rgba(245, 158, 11, 0.2); color: var(--warning); }
+        .card-badge.danger { background: rgba(239, 68, 68, 0.2); color: var(--danger); }
+        .card-badge.accent { background: rgba(13, 148, 136, 0.2); color: var(--accent); }
+
+        .card-body {
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        ul.styled-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        ul.styled-list li {
+            position: relative;
+            padding-left: 20px;
+            font-size: 0.9rem;
+            color: #cbd5e1;
+            line-height: 1.5;
+        }
+
+        ul.styled-list li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            top: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Tables */
+        .table-responsive {
+            width: 100%;
+            overflow-x: auto;
+            border-radius: 12px;
+            border: 1px solid var(--card-border);
+            margin-top: 10px;
+        }
+
+        table.spm-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.85rem;
+            text-align: left;
+        }
+
+        table.spm-table th {
+            background: rgba(15, 23, 42, 0.95);
+            color: #94a3b8;
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.8px;
+            padding: 12px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        table.spm-table td {
+            padding: 11px 14px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #e2e8f0;
+            vertical-align: middle;
+        }
+
+        table.spm-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        /* Stat KPI Boxes */
+        .kpi-row {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .kpi-box {
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+            border: 1px solid var(--card-border);
+            border-radius: 16px;
+            padding: 16px 20px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .kpi-box::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 60px;
+            height: 60px;
+            background: radial-gradient(circle, rgba(249, 115, 22, 0.15), transparent 70%);
+            border-radius: 50%;
+        }
+
+        .kpi-value {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: #fff;
+            margin-bottom: 4px;
+        }
+
+        .kpi-label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        /* Gantt & Timeline */
+        .timeline-container {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+            margin-top: 10px;
+        }
+
+        .gantt-item {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--card-border);
+            border-radius: 10px;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 16px;
+        }
+
+        .gantt-info {
+            width: 280px;
+            flex-shrink: 0;
+        }
+
+        .gantt-name {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .gantt-time {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        .gantt-bar-wrap {
+            flex: 1;
+            height: 12px;
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 6px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .gantt-bar {
+            height: 100%;
+            border-radius: 6px;
+            background: linear-gradient(90deg, var(--primary), #fbbf24);
+            position: absolute;
+        }
+
+        /* Footer Controls */
+        .bottom-controls {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(15, 23, 42, 0.85);
+            backdrop-filter: blur(14px);
+            border: 1px solid var(--card-border);
+            padding: 8px 18px;
+            border-radius: 30px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            z-index: 100;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .ctrl-btn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .ctrl-btn:hover {
+            background: rgba(249, 115, 22, 0.2);
+            color: var(--primary);
+        }
+
+        /* Title Slide Special Styles */
+        .title-slide-content {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+            padding: 40px;
+        }
+
+        .title-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(249, 115, 22, 0.15);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            padding: 6px 18px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 20px;
+        }
+
+        .title-main {
+            font-family: var(--font-heading);
+            font-size: 3rem;
+            font-weight: 800;
+            line-height: 1.2;
+            margin-bottom: 16px;
+            background: linear-gradient(135deg, #ffffff 0%, #cbd5e1 50%, #f97316 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            max-width: 1050px;
+        }
+
+        .title-sub {
+            font-size: 1.25rem;
+            color: #94a3b8;
+            max-width: 800px;
+            margin-bottom: 35px;
+            line-height: 1.6;
+        }
+
+        .team-roster {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 14px;
+            max-width: 900px;
+            width: 100%;
+        }
+
+        .roster-card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 12px 16px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .roster-avatar {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: linear-gradient(135deg, rgba(249, 115, 22, 0.3), rgba(15, 23, 42, 0.8));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: var(--primary);
+            font-size: 0.9rem;
+            flex-shrink: 0;
+        }
+
+        .roster-info .name {
+            font-weight: 700;
+            font-size: 0.95rem;
+            color: #fff;
+        }
+
+        .roster-info .role {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        /* Flow Diagrams */
+        .flow-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            padding: 20px 0;
+            overflow-x: auto;
+        }
+
+        .flow-node {
+            background: var(--card-bg);
+            border: 1.5px solid var(--card-border);
+            border-radius: 14px;
+            padding: 16px 20px;
+            text-align: center;
+            min-width: 170px;
+            position: relative;
+        }
+
+        .flow-node.highlight {
+            border-color: var(--primary);
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.25);
+        }
+
+        .flow-node .icon {
+            font-size: 1.6rem;
+            margin-bottom: 6px;
+        }
+
+        .flow-node .title {
+            font-weight: 700;
+            font-size: 0.9rem;
+            color: #fff;
+        }
+
+        .flow-node .desc {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: 4px;
+        }
+
+        .flow-arrow {
+            color: var(--primary);
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        /* Responsive helper */
+        @media (max-width: 1024px) {
+            .slide-deck { padding: 15px; }
+            .slide { padding: 25px; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .title-main { font-size: 2.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- TOP NAVIGATION BAR -->
+    <header class="top-navbar">
+        <div class="brand-badge">
+            <div class="logo-dot"></div>
+            <span>KING PET — SPM FINAL DEFENSE (TEAM 6)</span>
+        </div>
+        <div class="slide-counter" id="slideIndicator">Slide 1 / 16</div>
+        <div class="nav-actions">
+            <button class="nav-btn" onclick="toggleFullScreen()">⛶ Toàn màn hình</button>
+            <a href="index.html" target="_blank" class="nav-btn" style="text-decoration:none; color:#fff;">🌐 Mở Web King Pet</a>
+            <a href="admin.html" target="_blank" class="nav-btn" style="text-decoration:none; color:#fff;">⚙️ Mở Admin Portal</a>
+        </div>
+    </header>
+
+    <div class="progress-bar-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <!-- MAIN SLIDE DECK -->
+    <main class="slide-deck">
+
+        <!-- ==================== SLIDE 1: BÌA BÁO CÁO ==================== -->
+        <section class="slide active" id="slide-1">
+            <div class="title-slide-content">
+                <div class="title-badge">👑 Môn học: Quản Trị Dự Án Phần Mềm (SPM-KINGPET-2026)</div>
+                <h1 class="title-main">BÁO CÁO NGHIỆM THU CUỐI KỲ<br>HỆ THỐNG WEBSITE THƯƠNG MẠI ĐIỆN TỬ KING PET</h1>
+                <p class="title-sub">Nền tảng thương mại điện tử chuyên biệt Đồ ăn, Dinh dưỡng & Phụ kiện Thú cưng Hoàng Gia tích hợp Thanh toán số VietQR 24/7 và Cổng Quản trị SPM toàn diện.</p>
+                
+                <div class="team-roster">
+                    <div class="roster-card">
+                        <div class="roster-avatar">PM</div>
+                        <div class="roster-info">
+                            <div class="name">Lường Văn Thiện</div>
+                            <div class="role">Project Manager (PM) & Chốt Scope</div>
+                        </div>
+                    </div>
+                    <div class="roster-card">
+                        <div class="roster-avatar">UI</div>
+                        <div class="roster-info">
+                            <div class="name">Kpa Trần Quang Thịnh</div>
+                            <div class="role">Lead UI/UX Designer & 3D Vector SVG</div>
+                        </div>
+                    </div>
+                    <div class="roster-card">
+                        <div class="roster-avatar">FE</div>
+                        <div class="roster-info">
+                            <div class="name">Phan Thái Thuần</div>
+                            <div class="role">Frontend Developer & Storefront</div>
+                        </div>
+                    </div>
+                    <div class="roster-card">
+                        <div class="roster-avatar">BE</div>
+                        <div class="roster-info">
+                            <div class="name">Lê Duy Tài</div>
+                            <div class="role">Backend Developer & Cổng VietQR</div>
+                        </div>
+                    </div>
+                    <div class="roster-card">
+                        <div class="roster-avatar">DB</div>
+                        <div class="roster-info">
+                            <div class="name">Lê Trung Phong</div>
+                            <div class="role">Database Engineer & LocalStorage</div>
+                        </div>
+                    </div>
+                    <div class="roster-card">
+                        <div class="roster-avatar">QA</div>
+                        <div class="roster-info">
+                            <div class="name">Ma Hữu Ninh</div>
+                            <div class="role">Tester / QA Lead & Kịch bản Test</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 2: MỤC LỤC BÁO CÁO (AGENDA) ==================== -->
+        <section class="slide" id="slide-2">
+            <div class="slide-tag">Nội Dung Báo Cáo</div>
+            <h2 class="slide-title">MỤC LỤC TRÌNH BÀY (AGENDA)</h2>
+            <p class="slide-subtitle">Cấu trúc bài báo cáo chuẩn 100 điểm theo đề cương nghiệm thu Quản trị Dự án Phần mềm.</p>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">PHẦN 1. NỘI DUNG QUẢN TRỊ DỰ ÁN (50 ĐIỂM)</div>
+                        <span class="card-badge primary">10 Tiêu Chí</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li><strong>Mục 1:</strong> Giới thiệu dự án, bối cảnh, mục tiêu & phạm vi (In/Out Scope).</li>
+                            <li><strong>Mục 2:</strong> Xác định yêu cầu (Functional & Non-Functional Requirements).</li>
+                            <li><strong>Mục 3:</strong> Quản lý phạm vi & Cấu trúc phân rã công việc WBS 3 cấp độ.</li>
+                            <li><strong>Mục 4:</strong> Quản lý thời gian, lộ trình 6 tuần (2 Sprints) & Biểu đồ Gantt.</li>
+                            <li><strong>Mục 5:</strong> Quản lý chi phí: Định mức Person-Hours & Ngân sách 10 triệu.</li>
+                            <li><strong>Mục 6:</strong> Quản lý nhân sự: Đội ngũ Team 6 & Ma trận trách nhiệm RACI.</li>
+                            <li><strong>Mục 7:</strong> Quản lý rủi ro: Ma trận rủi ro & 5 giải pháp xử lý cụ thể.</li>
+                            <li><strong>Mục 8:</strong> Quản lý chất lượng & Chiến lược kiểm thử (Test Strategy/Items).</li>
+                            <li><strong>Mục 9:</strong> Thiết kế hệ thống: Kiến trúc C&C View, CSDL ERD & Giao diện.</li>
+                            <li><strong>Mục 10:</strong> Đánh giá dự án: Kết quả đạt được, hạn chế & Hướng mở rộng.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">PHẦN 2. DEMO SẢN PHẨM THỰC TẾ (50 ĐIỂM)</div>
+                        <span class="card-badge success">Live Demo 100%</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li><strong>1. Giới thiệu sản phẩm:</strong> Tổng quan 52+ sản phẩm, 8 nhóm ngành hàng thú cưng.</li>
+                            <li><strong>2. Đăng nhập & Phân quyền:</strong> Tài khoản Sen mua hàng & Quản trị viên Admin.</li>
+                            <li><strong>3. Trình diễn chức năng cốt lõi:</strong>
+                                <br>• Bộ chuyển đổi đối tượng 1 chạm (🐕 Đồ Chó / 🐈 Đồ Mèo).
+                                <br>• Xem nhanh thông số dinh dưỡng & chất liệu qua 3D Quick-View.
+                                <br>• Giỏ hàng trượt thông minh đo thanh FREESHIP 200k & áp mã giảm giá.
+                            </li>
+                            <li><strong>4. Cơ sở dữ liệu:</strong> Thao tác CRUD 4 bảng dữ liệu LocalStorage thời gian thực.</li>
+                            <li><strong>5. Quy trình nghiệp vụ trọn vẹn:</strong> Tìm kiếm → Chọn hàng → Giỏ hàng → Thanh toán VietQR động MB Bank → Đồng bộ Admin Portal.</li>
+                            <li><strong>6. Kiểm thử lỗi thực tế:</strong> Test form validation & cảnh báo tồn kho tự động.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 3: MỤC 1 - GIỚI THIỆU DỰ ÁN ==================== -->
+        <section class="slide" id="slide-3">
+            <div class="slide-tag">Mục 1 • Giới Thiệu Dự Án (5 Điểm)</div>
+            <h2 class="slide-title">BỐI CẢNH, MỤC TIÊU & PHẠM VI DỰ ÁN</h2>
+            <p class="slide-subtitle">Xây dựng nền tảng E-Commerce chuyên biệt Đồ ăn, Dinh dưỡng & Phụ kiện Thú cưng Hoàng Gia.</p>
+            
+            <div class="kpi-row">
+                <div class="kpi-box">
+                    <div class="kpi-value">52+</div>
+                    <div class="kpi-label">Sản phẩm chuẩn 3D SVG</div>
+                </div>
+                <div class="kpi-box">
+                    <div class="kpi-value">8 Nhóm</div>
+                    <div class="kpi-label">Ngành hàng chuyên sâu</div>
+                </div>
+                <div class="kpi-box">
+                    <div class="kpi-value">100%</div>
+                    <div class="kpi-label">Sinh mã VietQR tự động</div>
+                </div>
+                <div class="kpi-box">
+                    <div class="kpi-value">&lt; 1.5s</div>
+                    <div class="kpi-label">Tốc độ tải trang tối ưu</div>
+                </div>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">1. Bối cảnh & Lý do thực hiện</div>
+                        <span class="card-badge primary">Market Insight</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li><strong>Xu hướng Pet Humanization:</strong> Thú cưng được xem như thành viên gia đình, nhu cầu dinh dưỡng cao cấp (Human-grade, Organic) và đồ chơi chăm sóc tăng vọt 35%/năm.</li>
+                            <li><strong>Hạn chế mua sắm truyền thống:</strong> Người nuôi khó so sánh hàm lượng đạm/canxi, thiếu thông tin bao bì, khó phân loại đồ riêng cho Chó hoặc Mèo.</li>
+                            <li><strong>Giải pháp King Pet:</strong> Nền tảng E-Commerce chuẩn phong cách Hoàng Gia với đồ họa 3D vector độc quyền, thanh toán VietQR quét mã tức thì và tích hợp dashboard SPM.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">2. Đối tượng & Phạm vi triển khai</div>
+                        <span class="card-badge accent">Scope Boundary</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li><strong>Đối tượng sử dụng:</strong> Khách hàng nuôi thú cưng (Sen & Boss), Nhân viên bán hàng & Quản lý cửa hàng (Admin).</li>
+                            <li><strong>Trong phạm vi (In-Scope):</strong>
+                                <br>• Storefront: 8 danh mục, lọc Chó/Mèo, 3D Quick-View, Flash Sale, Giỏ hàng trượt, VietQR.
+                                <br>• Admin Portal: Dashboard KPI, CRUD sản phẩm, duyệt đơn hàng, theo dõi tiến độ SPM.
+                            </li>
+                            <li><strong>Ngoài phạm vi (Out-of-Scope):</strong> Không xây dựng App Mobile native riêng (dùng Responsive Web App); không xây đội vận chuyển riêng (liên kết đối tác giao hỏa tốc).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 4: MỤC 2 - XÁC ĐỊNH YÊU CẦU ==================== -->
+        <section class="slide" id="slide-4">
+            <div class="slide-tag">Mục 2 • Xác Định Yêu Cầu (5 Điểm)</div>
+            <h2 class="slide-title">YÊU CẦU CHỨC NĂNG & PHI CHỨC NĂNG</h2>
+            <p class="slide-subtitle">Đặc tả chi tiết Functional Requirements (FR) và Quality Attributes / Non-Functional Requirements (NFR).</p>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">1. Yêu cầu chức năng (Functional Requirements)</div>
+                        <span class="card-badge primary">8 Phân Hệ Cốt Lõi</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li><strong>FR-01 (Storefront & Catalog):</strong> Hiển thị 52+ sản phẩm trong 8 nhóm hàng, bộ lọc Chó/Mèo 1 chạm, tìm kiếm live không giật lag.</li>
+                            <li><strong>FR-02 (Flash Sale & Countdown):</strong> Đồng hồ đếm ngược giờ vàng, thanh tiến độ % đã bán, tự động cập nhật giảm giá sốc.</li>
+                            <li><strong>FR-03 (3D Quick-View):</strong> Modal xem nhanh thông số dinh dưỡng (Đạm, Canxi, Xơ), chất liệu và chọn số lượng.</li>
+                            <li><strong>FR-04 (Drawer Cart & Freeship):</strong> Giỏ hàng trượt thông minh, tính toán khoảng cách nhận Freeship 200k, nhập voucher tự động.</li>
+                            <li><strong>FR-05 (Thanh toán số VietQR):</strong> Tự sinh mã QR chuẩn VietQR MB Bank chứa chính xác số tiền và mã đơn #KP-xxxx.</li>
+                            <li><strong>FR-06 (Theo dõi đơn & Đánh giá):</strong> Timeline 4 trạng thái đơn hàng và gửi đánh giá kèm sao xếp hạng.</li>
+                            <li><strong>FR-07 (Admin Dashboard & CRUD):</strong> Cổng quản trị bảo mật (admin/2006), thống kê KPI, thêm/sửa/xóa sản phẩm và duyệt đơn.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">2. Yêu cầu phi chức năng (Non-Functional Requirements)</div>
+                        <span class="card-badge accent">Quality Attributes</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li><strong>Hiệu năng (Performance):</strong> Tốc độ tải trang dưới 1.5 giây; 100% hình ảnh bao bì là vector SVG siêu nhẹ, không phụ thuộc máy chủ ảnh ngoài.</li>
+                            <li><strong>Khả năng sử dụng (Usability):</strong> Thiết kế UI/UX hiện đại theo chuẩn Figma, phối màu ấm áp (Cam #f97316 & Xanh thú y #0d9488); Responsive 100% trên PC, Tablet và Smartphone.</li>
+                            <li><strong>Độ tin cậy & Toàn vẹn (Reliability):</strong> Lưu trữ bền vững trên LocalStorage; cơ chế fallback tự khởi tạo dữ liệu mẫu khi người dùng xóa cache.</li>
+                            <li><strong>Bảo mật (Security):</strong> Xác thực tài khoản quản trị qua phiên làm việc, chống XSS form nhập và mã hóa thông tin đơn hàng.</li>
+                            <li><strong>Tương thích (Compatibility):</strong> Hoạt động trơn tru trên mọi trình duyệt hiện đại (Chrome, Edge, Safari, Firefox).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 5: MỤC 3 - QUẢN LÝ PHẠM VI & WBS ==================== -->
+        <section class="slide" id="slide-5">
+            <div class="slide-tag">Mục 3 • Quản Lý Phạm Vi (7 Điểm)</div>
+            <h2 class="slide-title">CẤU TRÚC PHÂN RÃ CÔNG VIỆC (WBS)</h2>
+            <p class="slide-subtitle">Work Breakdown Structure 3 cấp độ phân chia toàn diện 6 gói công việc chính của dự án King Pet.</p>
+            
+            <div class="flow-container">
+                <div class="flow-node highlight">
+                    <div class="icon">🚀</div>
+                    <div class="title">1.0 Khởi Động & Đặc Tả</div>
+                    <div class="desc">Project Charter, SRS, Khảo sát nhu cầu</div>
+                </div>
+                <div class="flow-arrow">➔</div>
+                <div class="flow-node highlight">
+                    <div class="icon">🎨</div>
+                    <div class="title">2.0 Thiết Kế Hệ Thống</div>
+                    <div class="desc">UI Figma, 3D SVG, ERD CSDL</div>
+                </div>
+                <div class="flow-arrow">➔</div>
+                <div class="flow-node highlight">
+                    <div class="icon">💻</div>
+                    <div class="title">3.0 Phát Triển Storefront</div>
+                    <div class="desc">Catalog, 3D Quick-View, Cart Drawer</div>
+                </div>
+                <div class="flow-arrow">➔</div>
+                <div class="flow-node highlight">
+                    <div class="icon">💳</div>
+                    <div class="title">4.0 VietQR & Admin</div>
+                    <div class="desc">API VietQR MB Bank, Dashboard KPI</div>
+                </div>
+                <div class="flow-arrow">➔</div>
+                <div class="flow-node highlight">
+                    <div class="icon">🛡️</div>
+                    <div class="title">5.0 QA & Nghiệm Thu</div>
+                    <div class="desc">Kiểm thử 100%, Hồ sơ Capstone, Đóng dự án</div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="spm-table">
+                    <thead>
+                        <tr>
+                            <th>Mã WBS</th>
+                            <th>Tên Gói Công Việc (Work Package)</th>
+                            <th>Mô Tả Sản Phẩm Bàn Giao Cụ Thể</th>
+                            <th>Người Phụ Trách (RACI)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>WBS 1.0</strong></td>
+                            <td>Khởi tạo & Đặc tả yêu cầu (Requirements)</td>
+                            <td>Project Charter, Tài liệu SRS, Xác định Scope Baseline & Ngân sách 10tr</td>
+                            <td><span class="card-badge primary">Lường Văn Thiện (PM)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>WBS 2.0</strong></td>
+                            <td>Thiết kế UI/UX & Kiến trúc CSDL</td>
+                            <td>Bộ thiết kế 5 màn hình Figma, Hệ thống 52+ bao bì 3D SVG, Sơ đồ ERD 4 bảng</td>
+                            <td><span class="card-badge accent">Kpa Trần Quang Thịnh</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>WBS 3.0</strong></td>
+                            <td>Lập trình Storefront Mua sắm</td>
+                            <td>index.html, styles.css, bộ chuyển đổi Chó/Mèo, Flash Sale, Giỏ hàng trượt</td>
+                            <td><span class="card-badge success">Phan Thái Thuần</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>WBS 4.0</strong></td>
+                            <td>Thanh toán số VietQR & Cổng Admin</td>
+                            <td>Tích hợp VietQR MB Bank, thuật toán Freeship, trang admin.html & Dashboard KPI</td>
+                            <td><span class="card-badge primary">Lê Duy Tài & Lê Trung Phong</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>WBS 5.0</strong></td>
+                            <td>Kiểm thử phần mềm & Đảm bảo QA</td>
+                            <td>Test Plan, Kịch bản Test Cases 7 tính năng, sửa lỗi cache CSS & tương thích</td>
+                            <td><span class="card-badge warning">Ma Hữu Ninh (QA)</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>WBS 6.0</strong></td>
+                            <td>Đóng gói, Báo cáo & Bàn giao SPM</td>
+                            <td>Bộ 12 tài liệu hồ sơ Capstone 2, Slide thuyết trình & Mã nguồn GitHub</td>
+                            <td><span class="card-badge danger">Cả nhóm (Team 6)</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 6: MỤC 4 - QUẢN LÝ THỜI GIAN & GANTT ==================== -->
+        <section class="slide" id="slide-6">
+            <div class="slide-tag">Mục 4 • Quản Lý Thời Gian (7 Điểm)</div>
+            <h2 class="slide-title">LỘ TRÌNH TIẾN ĐỘ & BIỂU ĐỒ GANTT</h2>
+            <p class="slide-subtitle">Triển khai theo phương pháp Agile/Scrum trong 6 tuần (08/10/2026 – 19/11/2026) chia thành 2 Sprints.</p>
+            
+            <div class="grid-2" style="margin-bottom: 16px;">
+                <div class="card" style="padding: 14px 20px;">
+                    <div class="card-title" style="color: var(--primary);">🏃 SPRINT 1 (Tuần 1 – Tuần 3: 08/10 – 28/10/2026)</div>
+                    <p style="font-size:0.85rem; color:#cbd5e1; margin-top:4px;">Tập trung Khởi động, Khảo sát, Thiết kế High-Fidelity Figma, Storefront Catalog, Xem nhanh 3D và Bộ lọc Chó/Mèo.</p>
+                </div>
+                <div class="card" style="padding: 14px 20px;">
+                    <div class="card-title" style="color: var(--success);">🏆 SPRINT 2 (Tuần 4 – Tuần 6: 29/10 – 19/11/2026)</div>
+                    <p style="font-size:0.85rem; color:#cbd5e1; margin-top:4px;">Tập trung Giỏ hàng trượt, Freeship, Cổng VietQR MB Bank, Cổng Quản trị Admin, QA kiểm thử toàn diện và Đóng dự án.</p>
+                </div>
+            </div>
+
+            <div class="timeline-container">
+                <div class="gantt-item">
+                    <div class="gantt-info">
+                        <div class="gantt-name">Tuần 1: Khởi động & Kế hoạch (Sprint 1)</div>
+                        <div class="gantt-time">08/10 – 14/10/2026 • 24 giờ</div>
+                    </div>
+                    <div class="gantt-bar-wrap">
+                        <div class="gantt-bar" style="left: 0%; width: 18%;"></div>
+                    </div>
+                    <span class="card-badge success">Hoàn thành</span>
+                </div>
+
+                <div class="gantt-item">
+                    <div class="gantt-info">
+                        <div class="gantt-name">Tuần 2: Thiết kế UI/UX & CSDL (Sprint 1)</div>
+                        <div class="gantt-time">15/10 – 21/10/2026 • 28 giờ</div>
+                    </div>
+                    <div class="gantt-bar-wrap">
+                        <div class="gantt-bar" style="left: 18%; width: 18%;"></div>
+                    </div>
+                    <span class="card-badge success">Hoàn thành</span>
+                </div>
+
+                <div class="gantt-item">
+                    <div class="gantt-info">
+                        <div class="gantt-name">Tuần 3: Lập trình Storefront & Review S1</div>
+                        <div class="gantt-time">22/10 – 28/10/2026 • 30 giờ</div>
+                    </div>
+                    <div class="gantt-bar-wrap">
+                        <div class="gantt-bar" style="left: 36%; width: 18%;"></div>
+                    </div>
+                    <span class="card-badge success">Hoàn thành</span>
+                </div>
+
+                <div class="gantt-item">
+                    <div class="gantt-info">
+                        <div class="gantt-name">Tuần 4: Giỏ hàng Drawer & Cổng VietQR</div>
+                        <div class="gantt-time">29/10 – 04/11/2026 • 28 giờ</div>
+                    </div>
+                    <div class="gantt-bar-wrap">
+                        <div class="gantt-bar" style="left: 54%; width: 18%;"></div>
+                    </div>
+                    <span class="card-badge success">Hoàn thành</span>
+                </div>
+
+                <div class="gantt-item">
+                    <div class="gantt-info">
+                        <div class="gantt-name">Tuần 5: Hoàn thiện Admin & Kiểm thử QA</div>
+                        <div class="gantt-time">05/11 – 11/11/2026 • 26 giờ</div>
+                    </div>
+                    <div class="gantt-bar-wrap">
+                        <div class="gantt-bar" style="left: 72%; width: 16%;"></div>
+                    </div>
+                    <span class="card-badge success">Hoàn thành</span>
+                </div>
+
+                <div class="gantt-item">
+                    <div class="gantt-info">
+                        <div class="gantt-name">Tuần 6: Nghiệm thu SPM & Bàn giao Dự án</div>
+                        <div class="gantt-time">12/11 – 19/11/2026 • 20 giờ</div>
+                    </div>
+                    <div class="gantt-bar-wrap">
+                        <div class="gantt-bar" style="left: 88%; width: 12%;"></div>
+                    </div>
+                    <span class="card-badge primary">Nghiệm thu 100%</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 7: MỤC 5 - QUẢN LÝ CHI PHÍ ==================== -->
+        <section class="slide" id="slide-7">
+            <div class="slide-tag">Mục 5 • Quản Lý Chi Phí (5 Điểm)</div>
+            <h2 class="slide-title">DỰ TOÁN NGÂN SÁCH DỰ ÁN (COST BASELINE)</h2>
+            <p class="slide-subtitle">Định mức chi phí thù lao theo giờ công (Person-Hours) và tổng phân bổ ngân sách 10.000.000 VNĐ.</p>
+            
+            <div class="kpi-row">
+                <div class="kpi-box">
+                    <div class="kpi-value">10.000.000đ</div>
+                    <div class="kpi-label">Tổng ngân sách dự án</div>
+                </div>
+                <div class="kpi-box">
+                    <div class="kpi-value">156 Giờ</div>
+                    <div class="kpi-label">Tổng giờ công thực hiện</div>
+                </div>
+                <div class="kpi-box">
+                    <div class="kpi-value">7.050.000đ</div>
+                    <div class="kpi-label">Chi phí nhân sự (Labor)</div>
+                </div>
+                <div class="kpi-box">
+                    <div class="kpi-value">1.500.000đ</div>
+                    <div class="kpi-label">Dự phòng rủi ro (15%)</div>
+                </div>
+            </div>
+
+            <div class="table-responsive">
+                <table class="spm-table">
+                    <thead>
+                        <tr>
+                            <th>STT</th>
+                            <th>Hạng Mục Chi Phí (Cost Item)</th>
+                            <th>Khối Lượng / Định Mức</th>
+                            <th>Thành Tiền (VNĐ)</th>
+                            <th>Tỉ Lệ (%)</th>
+                            <th>Ghi Chú Nghiệp Vụ</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Phân tích yêu cầu & Lập trình hệ thống</td>
+                            <td>88 giờ (Dev 45.000đ/h, PM 50.000đ/h)</td>
+                            <td><strong>4.000.000</strong></td>
+                            <td>40,0%</td>
+                            <td>Lập trình Storefront, giỏ hàng thông minh, VietQR và Admin</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Thiết kế UI/UX & Đồ họa 3D SVG</td>
+                            <td>34 giờ (UI/UX 45.000đ/h)</td>
+                            <td><strong>1.500.000</strong></td>
+                            <td>15,0%</td>
+                            <td>Figma Design System, 52+ mẫu bao bì vector SVG</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Kiểm thử, Tối ưu hiệu năng & QA</td>
+                            <td>30 giờ (QA 40.000đ/h)</td>
+                            <td><strong>1.200.000</strong></td>
+                            <td>12,0%</td>
+                            <td>Testcase chức năng, kiểm thử Responsive & Cross-Browser</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Hạ tầng, Tên miền & Lưu trữ Web</td>
+                            <td>Tên miền thương hiệu + SSL + Cloud</td>
+                            <td><strong>800.000</strong></td>
+                            <td>8,0%</td>
+                            <td>Hosting server, tên miền kingpet.vn và hạ tầng mạng</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Đào tạo, Hướng dẫn & Tài liệu hóa</td>
+                            <td>Trọn bộ tài liệu SRS, SDD, User Manual</td>
+                            <td><strong>1.000.000</strong></td>
+                            <td>10,0%</td>
+                            <td>Biên soạn bộ hồ sơ 12 tài liệu Capstone 2 & Video demo</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Dự phòng rủi ro & Phát sinh (Contingency)</td>
+                            <td>Quỹ dự phòng mở rộng phạm vi (Scope)</td>
+                            <td><strong>1.500.000</strong></td>
+                            <td>15,0%</td>
+                            <td>Bổ sung thêm 4 nhóm ngành phụ kiện thú cưng ngoài thức ăn</td>
+                        </tr>
+                        <tr style="background: rgba(249, 115, 22, 0.15); font-weight: bold;">
+                            <td colspan="3" style="text-align: right; color: var(--primary);">TỔNG CỘNG NGÂN SÁCH DỰ ÁN:</td>
+                            <td style="color: var(--primary); font-size: 1rem;">10.000.000</td>
+                            <td style="color: var(--primary);">100%</td>
+                            <td style="color: var(--primary);">Đúng chuẩn hạn mức 10 triệu đồng</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 8: MỤC 6 - QUẢN LÝ NHÂN SỰ & RACI ==================== -->
+        <section class="slide" id="slide-8">
+            <div class="slide-tag">Mục 6 • Quản Lý Nhân Sự (5 Điểm)</div>
+            <h2 class="slide-title">ĐỘI NGŨ DỰ ÁN & MA TRẬN TRÁCH NHIỆM RACI</h2>
+            <p class="slide-subtitle">Phân công nhiệm vụ cụ thể cho 6 thành viên theo chuẩn ma trận RACI (Responsible, Accountable, Consulted, Informed).</p>
+            
+            <div class="table-responsive">
+                <table class="spm-table">
+                    <thead>
+                        <tr>
+                            <th>Nhiệm Vụ Trọng Tâm Dự Án</th>
+                            <th>Lường Văn Thiện<br><small>(PM)</small></th>
+                            <th>Kpa Trần Q. Thịnh<br><small>(UI/UX)</small></th>
+                            <th>Phan Thái Thuần<br><small>(Frontend)</small></th>
+                            <th>Lê Duy Tài<br><small>(Backend)</small></th>
+                            <th>Lê Trung Phong<br><small>(Database)</small></th>
+                            <th>Ma Hữu Ninh<br><small>(Tester/QA)</small></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1. Lập Project Charter & Kiểm soát Ngân sách</td>
+                            <td><span class="card-badge primary">A / R</span></td>
+                            <td><span class="card-badge">C</span></td>
+                            <td><span class="card-badge">I</span></td>
+                            <td><span class="card-badge">I</span></td>
+                            <td><span class="card-badge">I</span></td>
+                            <td><span class="card-badge">I</span></td>
+                        </tr>
+                        <tr>
+                            <td>2. Thiết kế Figma UI & Bao bì 3D SVG</td>
+                            <td><span class="card-badge">A</span></td>
+                            <td><span class="card-badge primary">R</span></td>
+                            <td><span class="card-badge">C</span></td>
+                            <td><span class="card-badge">I</span></td>
+                            <td><span class="card-badge">I</span></td>
+                            <td><span class="card-badge">C</span></td>
+                        </tr>
+                        <tr>
+                            <td>3. Lập trình Storefront, Flash Sale & Bộ lọc</td>
+                            <td><span class="card-badge">A</span></td>
+                            <td><span class="card-badge">C</span></td>
+                            <td><span class="card-badge primary">R</span></td>
+                            <td><span class="card-badge">C</span></td>
+                            <td><span class="card-badge">I</span></td>
+                            <td><span class="card-badge">C</span></td>
+                        </tr>
+                        <tr>
+                            <td>4. Logic Giỏ hàng, Freeship & Cổng VietQR</td>
+                            <td><span class="card-badge">A</span></td>
+                            <td><span class="card-badge">I</span></td>
+                            <td><span class="card-badge">C</span></td>
+                            <td><span class="card-badge primary">R</span></td>
+                            <td><span class="card-badge">C</span></td>
+                            <td><span class="card-badge">C</span></td>
+                        </tr>
+                        <tr>
+                            <td>5. Thiết kế CSDL LocalStorage & Dữ liệu 52+ SP</td>
+                            <td><span class="card-badge">A</span></td>
+                            <td><span class="card-badge">C</span></td>
+                            <td><span class="card-badge">I</span></td>
+                            <td><span class="card-badge">C</span></td>
+                            <td><span class="card-badge primary">R</span></td>
+                            <td><span class="card-badge">I</span></td>
+                        </tr>
+                        <tr>
+                            <td>6. Kiểm thử chức năng, Bug Fix & Test Plan</td>
+                            <td><span class="card-badge">A</span></td>
+                            <td><span class="card-badge">I</span></td>
+                            <td><span class="card-badge">C</span></td>
+                            <td><span class="card-badge">C</span></td>
+                            <td><span class="card-badge">I</span></td>
+                            <td><span class="card-badge primary">R</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 14px; font-size: 0.8rem; color: #94a3b8; display: flex; gap: 20px;">
+                <span><strong>R (Responsible):</strong> Người trực tiếp thực hiện</span>
+                <span><strong>A (Accountable):</strong> Người phê duyệt và chịu trách nhiệm cao nhất</span>
+                <span><strong>C (Consulted):</strong> Người được tham vấn chuyên môn</span>
+                <span><strong>I (Informed):</strong> Người được thông báo tiến độ</span>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 9: MỤC 7 - QUẢN LÝ RỦI RO ==================== -->
+        <section class="slide" id="slide-9">
+            <div class="slide-tag">Mục 7 • Quản Lý Rủi Ro (6 Điểm)</div>
+            <h2 class="slide-title">MA TRẬN RỦI RO & PHƯƠNG ÁN XỬ LÝ (RISK MATRIX)</h2>
+            <p class="slide-subtitle">Nhận diện, đánh giá xác suất/ảnh hưởng và thiết lập kế hoạch giảm thiểu rủi ro (Mitigation Plan).</p>
+            
+            <div class="table-responsive">
+                <table class="spm-table">
+                    <thead>
+                        <tr>
+                            <th>Mã Rủi Ro</th>
+                            <th>Mô Tả Rủi Ro Nhận Diện</th>
+                            <th>Xác Suất</th>
+                            <th>Ảnh Hưởng</th>
+                            <th>Mức Độ</th>
+                            <th>Phương Án Giảm Thiểu & Xử Lý (Mitigation Plan)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>RSK-01</strong></td>
+                            <td>Mở rộng Scope đột xuất (Thêm phụ kiện, đồ chơi ngoài đồ ăn)</td>
+                            <td><span class="card-badge warning">Cao (70%)</span></td>
+                            <td><span class="card-badge danger">Cao</span></td>
+                            <td><span class="card-badge danger">Nghiêm trọng</span></td>
+                            <td>Kích hoạt quy trình Change Request, tận dụng quỹ dự phòng 1.500.000đ để dựng mẫu 3D SVG đồng bộ.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RSK-02</strong></td>
+                            <td>Xung đột Cache CSS trình duyệt (Khách hàng không thấy giao diện mới)</td>
+                            <td><span class="card-badge warning">Cao (80%)</span></td>
+                            <td><span class="card-badge warning">Trung bình</span></td>
+                            <td><span class="card-badge warning">Trung bình</span></td>
+                            <td>Tích hợp cơ chế Cache-Busting qua query string (styles.css?v=2.5) và ép charset UTF-8 toàn bộ tệp tin.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RSK-03</strong></td>
+                            <td>Bất đồng bộ cấu trúc LocalStorage khi nâng cấp phiên bản dữ liệu</td>
+                            <td><span class="card-badge accent">Vừa (50%)</span></td>
+                            <td><span class="card-badge danger">Cao</span></td>
+                            <td><span class="card-badge warning">Trung bình</span></td>
+                            <td>Xây dựng hàm Data Migration & Fallback tự động trong app.js, tự bù đắp các thuộc tính còn thiếu.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RSK-04</strong></td>
+                            <td>Chậm tiến độ thời gian (Schedule Slippage do khối lượng việc lớn)</td>
+                            <td><span class="card-badge accent">Vừa (40%)</span></td>
+                            <td><span class="card-badge danger">Cao</span></td>
+                            <td><span class="card-badge warning">Trung bình</span></td>
+                            <td>Tổ chức họp Daily Standup 15 phút, theo dõi sát đường cơ sở Schedule Baseline và Sprint Review hàng tuần.</td>
+                        </tr>
+                        <tr>
+                            <td><strong>RSK-05</strong></td>
+                            <td>Nghẽn mạng / Gián đoạn kết nối ngân hàng khi thanh toán VietQR</td>
+                            <td><span class="card-badge success">Thấp (20%)</span></td>
+                            <td><span class="card-badge danger">Cao</span></td>
+                            <td><span class="card-badge success">Thấp</span></td>
+                            <td>Cung cấp phương thức thanh toán kép: VietQR tự động kết hợp Tiền mặt khi nhận hàng (COD).</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 10: MỤC 8 - QUẢN LÝ CHẤT LƯỢNG & TEST PLAN ==================== -->
+        <section class="slide" id="slide-10">
+            <div class="slide-tag">Mục 8 • Quản Lý Chất Lượng (5 Điểm)</div>
+            <h2 class="slide-title">KẾ HOẠCH & CHIẾN LƯỢC KIỂM THỬ (TEST PLAN)</h2>
+            <p class="slide-subtitle">Chiến lược kiểm thử toàn diện bảo đảm 100% tính năng vận hành trơn tru trước khi nghiệm thu.</p>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">1. Chiến lược kiểm thử (Test Strategy)</div>
+                        <span class="card-badge success">QA Strategy</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li><strong>Kiểm thử chức năng (Function Testing):</strong> Kiểm tra luồng thêm giỏ hàng, cập nhật số lượng, bộ lọc Chó/Mèo, sinh mã VietQR và xác nhận đơn hàng.</li>
+                            <li><strong>Kiểm thử giao diện (UI/UX & Responsive Testing):</strong> Sử dụng Chrome DevTools & Responsive Viewer kiểm tra trên độ phân giải Mobile (375px), Tablet (768px) và Desktop (1440px).</li>
+                            <li><strong>Kiểm thử phân quyền (Role Testing):</strong> Khách hàng bình thường chỉ mua sắm; chỉ tài khoản Quản trị mới truy cập được trang admin.html.</li>
+                            <li><strong>Tiêu chí nghiệm thu (Acceptance Criteria):</strong> Tỉ lệ Test Case Pass đạt 100%, 0 lỗi Critical, thời gian phản hồi giao dịch dưới 1 giây.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">2. Kết quả kiểm thử các hạng mục chính</div>
+                        <span class="card-badge primary">Execution Results</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" style="margin-top:0;">
+                            <table class="spm-table">
+                                <thead>
+                                    <tr>
+                                        <th>Hạng Mục Kiểm Thử</th>
+                                        <th>Loại Test</th>
+                                        <th>Kết Quả</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>Lọc & Tìm kiếm 52+ sản phẩm</td>
+                                        <td>UI & Functional</td>
+                                        <td><span class="card-badge success">PASS (100%)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Xem nhanh 3D Quick-View</td>
+                                        <td>Interactive UI</td>
+                                        <td><span class="card-badge success">PASS (100%)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Giỏ hàng & Tính Freeship 200k</td>
+                                        <td>Business Logic</td>
+                                        <td><span class="card-badge success">PASS (100%)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Sinh mã VietQR MB Bank đúng tiền</td>
+                                        <td>Payment Gateway</td>
+                                        <td><span class="card-badge success">PASS (100%)</span></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Admin KPI & Cảnh báo tồn kho</td>
+                                        <td>Admin CRUD</td>
+                                        <td><span class="card-badge success">PASS (100%)</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 11: MỤC 9 - KIẾN TRÚC & CSDL ==================== -->
+        <section class="slide" id="slide-11">
+            <div class="slide-tag">Mục 9 • Thiết Kế Hệ Thống (5 Điểm)</div>
+            <h2 class="slide-title">KIẾN TRÚC TỔNG THỂ & MÔ HÌNH CSDL (ERD)</h2>
+            <p class="slide-subtitle">Thiết kế kiến trúc Client-Server, C&C View và mô hình dữ liệu quan hệ 4 bảng cốt lõi.</p>
+            
+            <div class="grid-2">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">1. Khung nhìn kiến trúc (C&C View)</div>
+                        <span class="card-badge primary">Architecture Design</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li><strong>Tầng Trình Diễn (Client Presentation):</strong>
+                                <br>• Storefront (index.html): Giao diện người dùng mua sắm.
+                                <br>• Admin Portal (admin.html): Cổng quản trị điều hành SPM.
+                            </li>
+                            <li><strong>Tầng Xử Lý Nghiệp Vụ (Business Logic Layer):</strong>
+                                <br>• app.js: Bộ điều khiển giỏ hàng, bộ lọc Chó/Mèo, tính Freeship, sinh mã VietQR.
+                                <br>• admin.js: Xử lý thống kê KPI, CRUD sản phẩm, duyệt đơn hàng và theo dõi tiến độ.
+                            </li>
+                            <li><strong>Tầng Dữ Liệu (Data Layer):</strong>
+                                <br>• LocalStorage Database & JSON Schema đảm bảo truy xuất dữ liệu tức thì dưới 10ms.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title">2. Sơ đồ thực thể CSDL (ERD 4 Bảng)</div>
+                        <span class="card-badge accent">Database Schema</span>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive" style="margin-top:0;">
+                            <table class="spm-table">
+                                <thead>
+                                    <tr>
+                                        <th>Bảng CSDL</th>
+                                        <th>Khóa Chính (PK)</th>
+                                        <th>Các Trường Chính (Fields)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>pet_products</strong></td>
+                                        <td><code>id</code></td>
+                                        <td>name, category, price, salePrice, stock, petType, nutrition</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>pet_orders</strong></td>
+                                        <td><code>order_id</code></td>
+                                        <td>customer_name, phone, address, total, paymentMethod, status</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>pet_cart</strong></td>
+                                        <td><code>cart_id</code></td>
+                                        <td>product_id (FK), quantity, added_time</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>pet_users</strong></td>
+                                        <td><code>user_id</code></td>
+                                        <td>full_name, email, phone, role (admin/customer)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 12: MỤC 9 - GIAO DIỆN NGƯỜI DÙNG ==================== -->
+        <section class="slide" id="slide-12">
+            <div class="slide-tag">Mục 9 • Thiết Kế Hệ Thống (Tiếp)</div>
+            <h2 class="slide-title">THIẾT KẾ GIAO DIỆN CHÍNH (UI/UX DESIGN)</h2>
+            <p class="slide-subtitle">Trình diễn 5 màn hình tương tác cốt lõi theo chuẩn thiết kế High-Fidelity Figma.</p>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" style="font-size:1rem;">1. Storefront & Bộ lọc</div>
+                        <span class="card-badge primary">Màn hình 1</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li>Bộ chuyển đổi 1 chạm (🐕 Đồ Chó / 🐈 Đồ Mèo).</li>
+                            <li>Banner 3D tilt theo chuột.</li>
+                            <li>Flash Sale giờ vàng đếm ngược.</li>
+                            <li>Huy hiệu Bán chạy & Khuyến mãi -20%.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" style="font-size:1rem;">2. 3D Quick-View & Cart</div>
+                        <span class="card-badge accent">Màn hình 2 & 3</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li>Modal xem nhanh xoay 3D góc nhìn.</li>
+                            <li>Bảng dinh dưỡng Đạm, Canxi, Xơ.</li>
+                            <li>Giỏ hàng trượt Drawer Cart từ phải qua.</li>
+                            <li>Thanh đo tiến trình Freeship 200k.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" style="font-size:1rem;">3. VietQR & Admin Portal</div>
+                        <span class="card-badge success">Màn hình 4 & 5</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li>Checkout Form nhập địa chỉ giao cho Boss.</li>
+                            <li>Sinh mã VietQR MB Bank tự động đúng số tiền.</li>
+                            <li>Dashboard 4 chỉ số KPI SPM thời gian thực.</li>
+                            <li>Quản trị kho hàng & Cảnh báo tồn kho ≤ 15.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 13: MỤC 10 - ĐÁNH GIÁ DỰ ÁN ==================== -->
+        <section class="slide" id="slide-13">
+            <div class="slide-tag">Mục 10 • Đánh Giá Dự Án (5 Điểm)</div>
+            <h2 class="slide-title">KẾT QUẢ ĐẠT ĐƯỢC, HẠN CHẾ & HƯỚNG MỞ RỘNG</h2>
+            <p class="slide-subtitle">Tổng kết nghiệm thu dự án theo các tiêu chí thành công đã cam kết trong Project Charter.</p>
+            
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" style="color: var(--success);">🏆 Kết Quả Đạt Được</div>
+                        <span class="card-badge success">Success 100%</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li>Hoàn thành 100% tính năng trong phạm vi Scope cam kết.</li>
+                            <li>Bàn giao đúng hạn 6 tuần (19/11/2026), không bị chậm trễ tiến độ.</li>
+                            <li>Chi phí thực tế nằm trọn vẹn trong ngân sách 10.000.000 VNĐ.</li>
+                            <li>Đồ họa 52+ sản phẩm chuẩn 3D SVG tải cực nhanh dưới 1.5s.</li>
+                            <li>Tích hợp thanh toán số VietQR MB Bank và Cổng Quản trị SPM tiện lợi.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" style="color: var(--warning);">⚠️ Khó Khăn & Hạn Chế</div>
+                        <span class="card-badge warning">Challenges</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li><strong>Hạn chế Scope:</strong> Chưa xây dựng App Mobile native riêng biên dịch bằng Swift/Kotlin (bù lại đã tối ưu Web Responsive).</li>
+                            <li><strong>Thanh toán:</strong> Chưa tích hợp cổng thẻ quốc tế Visa/Mastercard (dùng VietQR và COD để tối ưu chi phí phí sàn).</li>
+                            <li><strong>Khó khăn đã xử lý:</strong> Lỗi cache CSS trình duyệt trên client đã được khắc phục triệt để bằng cơ chế Cache-Busting.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" style="color: var(--primary);">🚀 Hướng Mở Rộng</div>
+                        <span class="card-badge primary">Future Roadmap</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li><strong>Progressive Web App (PWA):</strong> Cho phép người dùng cài đặt ứng dụng King Pet trực tiếp lên màn hình điện thoại.</li>
+                            <li><strong>Trợ lý AI Pet Advisor:</strong> Tích hợp Chatbot AI tư vấn khẩu phần dinh dưỡng cá nhân hóa theo cân nặng và giống thú cưng.</li>
+                            <li><strong>Kết nối ERP/WMS:</strong> Mở rộng kết nối kho bãi tự động và đồng bộ với các sàn TMĐT (Shopee, TikTok Shop).</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 14: PHẦN 2 - KỊCH BẢN DEMO SẢN PHẨM ==================== -->
+        <section class="slide" id="slide-14">
+            <div class="slide-tag">Phần 2 • Demo Sản Phẩm (50 Điểm)</div>
+            <h2 class="slide-title">KỊCH BẢN DEMO SẢN PHẨM THỰC TẾ (10 – 15 PHÚT)</h2>
+            <p class="slide-subtitle">Trình diễn luồng trải nghiệm khách hàng, thanh toán VietQR động và nghiệp vụ Quản trị Admin.</p>
+            
+            <div class="table-responsive">
+                <table class="spm-table">
+                    <thead>
+                        <tr>
+                            <th>Bước</th>
+                            <th>Nội Dung Trình Diễn Demo</th>
+                            <th>Thao Tác Thực Hiện Trực Tiếp</th>
+                            <th>Kết Quả Cần Chứng Minh</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Bước 1</strong></td>
+                            <td>Giới thiệu Storefront & Bộ lọc Chó/Mèo</td>
+                            <td>Truy cập index.html, click nút "🐕 Dành cho Chó" rồi "🐈 Dành cho Mèo"</td>
+                            <td>Danh mục lọc tức thì không giật lag, sản phẩm đúng phân loại</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bước 2</strong></td>
+                            <td>Xem nhanh thông số dinh dưỡng 3D Quick-View</td>
+                            <td>Rê chuột tạo hiệu ứng 3D perspective, bấm "Xem nhanh" vào sản phẩm Hạt Puppy</td>
+                            <td>Hiển thị modal với thông số Đạm 30%, Canxi, DHA và hướng dẫn dùng</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bước 3</strong></td>
+                            <td>Giỏ hàng Drawer & Nhận FREESHIP</td>
+                            <td>Bấm "Thêm vào giỏ", mở giỏ hàng trượt, tăng số lượng vượt 200.000đ</td>
+                            <td>Thanh tiến trình chạy đạt 100% và chúc mừng nhận FREESHIP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bước 4</strong></td>
+                            <td>Thanh toán số hóa VietQR MB Bank</td>
+                            <td>Bấm "Đặt hàng", điền tên Sen & Boss cưng, chọn "Chuyển khoản VietQR"</td>
+                            <td>Sinh mã QR động chứa chính xác số tiền và mã đơn hàng #KP-xxxx</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bước 5</strong></td>
+                            <td>Cổng Quản trị Admin Portal & KPI</td>
+                            <td>Truy cập admin.html, đăng nhập tài khoản <code>admin / 2006</code></td>
+                            <td>Dashboard KPI cập nhật doanh thu thực, đơn hàng mới và cảnh báo tồn kho</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bước 6</strong></td>
+                            <td>Kiểm thử lỗi & Dữ liệu CSDL</td>
+                            <td>Thử bỏ trống trường điện thoại khi đặt hàng; kiểm tra CSDL LocalStorage</td>
+                            <td>Form chặn lỗi và báo đỏ; LocalStorage lưu đủ 4 bảng thực thể</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- ==================== SLIDE 15: KẾT THÚC & HỎI ĐÁP (Q&A) ==================== -->
+        <section class="slide" id="slide-15">
+            <div class="title-slide-content">
+                <div class="title-badge">🎯 Hoàn Thành Báo Cáo Nghiệm Thu SPM</div>
+                <h1 class="title-main">XIN TRÂN TRỌNG CẢM ƠN<br>QUÝ THẦY CÔ & HỘI ĐỒNG GIẢNG VIÊN!</h1>
+                <p class="title-sub">Dự án: Hệ thống Website Thương Mại Điện Tử Đồ Ăn, Dinh Dưỡng & Phụ Kiện Thú Cưng Hoàng Gia — King Pet (Team 6)</p>
+                
+                <div style="background: rgba(249, 115, 22, 0.1); border: 1.5px solid var(--primary); padding: 20px 30px; border-radius: 20px; max-width: 650px; margin-bottom: 25px;">
+                    <div style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 8px;">
+                        SẴN SÀNG CHUYỂN SANG PHẦN DEMO THỰC TẾ & HỎI ĐÁP (Q&A)
+                    </div>
+                    <p style="font-size: 0.9rem; color: #cbd5e1;">Nhóm 6 đã chuẩn bị sẵn sàng hệ thống chạy trực tiếp trên Localhost & mã nguồn GitHub để trả lời mọi câu hỏi phản biện của Hội đồng.</p>
+                </div>
+
+                <div style="display: flex; gap: 16px;">
+                    <a href="index.html" target="_blank" class="nav-btn" style="text-decoration:none; padding: 12px 24px; font-size: 1rem; background: var(--primary);">
+                        🚀 Bắt Đầu Demo Storefront
+                    </a>
+                    <a href="admin.html" target="_blank" class="nav-btn" style="text-decoration:none; padding: 12px 24px; font-size: 1rem;">
+                        ⚙️ Bắt Đầu Demo Admin Portal
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- BOTTOM CONTROLS -->
+    <div class="bottom-controls">
+        <button class="ctrl-btn" onclick="prevSlide()" title="Slide trước (Phím Mũi tên trái)">◀</button>
+        <span style="font-size: 0.85rem; font-weight: 700; color: #fff;" id="ctrlSlideNum">1 / 15</span>
+        <button class="ctrl-btn" onclick="nextSlide()" title="Slide sau (Phím Mũi tên phải hoặc Phím Space)">▶</button>
+    </div>
+
+    <!-- SCRIPT FOR SLIDE DECK NAVIGATION -->
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 15;
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach((s, idx) => {
+                s.classList.remove('active');
+                if (idx + 1 === currentSlide) {
+                    s.classList.add('active');
+                }
+            });
+
+            // Update Progress Bar
+            const progress = ((currentSlide - 1) / (totalSlides - 1)) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            // Update Slide Indicators
+            document.getElementById('slideIndicator').innerText = `Slide ${currentSlide} / ${totalSlides}`;
+            document.getElementById('ctrlSlideNum').innerText = `${currentSlide} / ${totalSlides}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(err => {
+                    console.log(`Error attempting to enable full-screen: ${err.message}`);
+                });
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                }
+            }
+        }
+
+        // Keyboard Navigation (Arrow Left, Arrow Right, Spacebar)
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') {
+                nextSlide();
+            } else if (e.key === 'ArrowLeft' || e.key === 'PageUp') {
+                prevSlide();
+            } else if (e.key === 'f' || e.key === 'F') {
+                toggleFullScreen();
+            }
+        });
+
+        // Initialize on load
+        updateSlide();
+    </script>
+</body>
+</html>
