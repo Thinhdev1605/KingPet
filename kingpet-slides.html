@@ -7,27 +7,27 @@
     <title>Báo Cáo Cuối Kỳ SPM — King Pet E-Commerce System (Team 6)</title>
     <style>
         :root {
-            --primary: #f97316;
-            --primary-dark: #ea580c;
+            --primary: #ea580c;
+            --primary-dark: #c2410c;
             --primary-light: #ffedd5;
-            --secondary: #0f172a;
-            --secondary-light: #1e293b;
+            --secondary: #f8fafc;
+            --secondary-light: #f1f5f9;
             --accent: #0d9488;
             --accent-light: #ccfbf1;
-            --bg-slide: #090d16;
-            --card-bg: rgba(30, 41, 59, 0.7);
-            --card-border: rgba(255, 255, 255, 0.1);
-            --text-main: #f8fafc;
-            --text-muted: #cbd5e1;
+            --bg-slide: #ffffff;
+            --card-bg: #ffffff;
+            --card-border: #cbd5e1;
+            --text-main: #0f172a;
+            --text-muted: #475569;
             --success: #10b981;
-            --warning: #f59e0b;
+            --warning: #d97706;
             --danger: #ef4444;
             --font-heading: 'Times New Roman', Times, serif;
             --font-body: 'Times New Roman', Times, serif;
         }
 
         /* ===== GLOBAL TIMES NEW ROMAN OVERRIDE ===== */
-        *, body, h1, h2, h3, h4, h5, h6, p, span, td, th, li, a, button {
+        *, body, h1, h2, h3, h4, h5, h6, p, span, div, td, th, li, a, button {
             font-family: 'Times New Roman', Times, serif !important;
         }
 
@@ -40,8 +40,8 @@
 
         body {
             font-family: var(--font-body);
-            background: #020617;
-            color: var(--text-main);
+            background: #f1f5f9;
+            color: #0f172a;
             overflow: hidden;
             width: 100vw;
             height: 100vh;
@@ -54,7 +54,7 @@
             left: 0;
             right: 0;
             height: 56px;
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--card-border);
             display: flex;
@@ -71,7 +71,7 @@
             font-family: var(--font-heading);
             font-size: 1.05rem;
             font-weight: 700;
-            color: #fff;
+            color: #0f172a;
         }
 
         .brand-badge .logo-dot {
@@ -156,12 +156,12 @@
             max-width: 1400px;
             height: 100%;
             max-height: 840px;
-            background: radial-gradient(circle at top right, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.95));
+            background: #ffffff;
             border: 1px solid var(--card-border);
             border-radius: 24px;
             padding: 40px 50px;
             position: relative;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.1);
             overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: var(--primary) transparent;
@@ -196,21 +196,21 @@
         }
 
         .slide-title {
-            font-family: var(--font-heading);
-            font-size: 2.1rem;
+            font-family: 'Times New Roman', Times, serif !important;
+            font-size: 1.9rem;
             font-weight: 800;
-            letter-spacing: -0.5px;
+            letter-spacing: -0.3px;
             line-height: 1.25;
             margin-bottom: 8px;
-            background: linear-gradient(135deg, #ffffff, #cbd5e1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            color: #0f172a;
+            -webkit-text-fill-color: #0f172a;
         }
 
         .slide-subtitle {
-            font-size: 1rem;
-            color: var(--text-muted);
-            margin-bottom: 24px;
+            font-size: 0.95rem;
+            color: #475569;
+            margin-bottom: 20px;
+            font-style: italic;
         }
 
         /* Grid Layouts */
@@ -266,7 +266,7 @@
             font-family: var(--font-heading);
             font-size: 1.15rem;
             font-weight: 700;
-            color: #fff;
+            color: #0f172a;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -278,7 +278,7 @@
             padding: 3px 8px;
             border-radius: 6px;
             background: rgba(255, 255, 255, 0.1);
-            color: #e2e8f0;
+            color: #1e293b;
         }
 
         .card-badge.primary {
@@ -307,8 +307,8 @@
         }
 
         .card-body {
-            font-size: 0.9rem;
-            color: #e2e8f0;
+            font-size: 0.92rem;
+            color: #1e293b;
             line-height: 1.65;
             flex: 1;
         }
@@ -324,7 +324,7 @@
             position: relative;
             padding-left: 20px;
             font-size: 0.9rem;
-            color: #e2e8f0;
+            color: #1e293b;
             line-height: 1.5;
         }
 
@@ -354,8 +354,8 @@
         }
 
         table.spm-table th {
-            background: rgba(15, 23, 42, 0.95);
-            color: #94a3b8;
+            background: #ea580c;
+            color: #ffffff;
             font-weight: 700;
             text-transform: uppercase;
             font-size: 0.75rem;
@@ -367,7 +367,7 @@
         table.spm-table td {
             padding: 11px 14px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: #e2e8f0;
+            color: #1e293b;
             vertical-align: middle;
         }
 
@@ -384,7 +384,7 @@
         }
 
         .kpi-box {
-            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
+            background: #f8fafc;
             border: 1px solid var(--card-border);
             border-radius: 16px;
             padding: 16px 20px;
@@ -407,7 +407,7 @@
             font-family: var(--font-heading);
             font-size: 1.8rem;
             font-weight: 800;
-            color: #fff;
+            color: #ea580c;
             margin-bottom: 4px;
         }
 
@@ -477,7 +477,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(15, 23, 42, 0.85);
+            background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(14px);
             border: 1px solid var(--card-border);
             padding: 8px 18px;
@@ -1532,79 +1532,59 @@
         <!-- ==================== SLIDE 12: MỤC 9 - GIAO DIỆN NGƯỜI DÙNG ==================== -->
         <section class="slide" id="slide-12">
             <div class="slide-tag">Mục 9 • Thiết Kế Hệ Thống (Tiếp)</div>
-            <h2 class="slide-title">THIẺT KẺ GIAO DIỆN CHÍNH (UI/UX DESIGN)</h2>
-            <p class="slide-subtitle">5 Màn hình tương tác người dùng cốt lõi được tối ưu theo phong cách Hoàng Gia.</p>
+            <h2 class="slide-title">THIẾT KẾ GIAO DIỆN CHÍNH (UI/UX DESIGN)</h2>
+            <p class="slide-subtitle">Trình diễn 5 màn hình tương tác cốt lõi theo chuẩn thiết kế High-Fidelity Figma.
+            </p>
 
-            <!-- Row 1: 2 large screenshots -->
-            <div style="display:grid; grid-template-columns:1fr 1fr; gap:16px; margin-bottom:14px;">
-                <div style="background:rgba(30,41,59,0.6); border:1px solid rgba(249,115,22,0.35); border-radius:12px; overflow:hidden;">
-                    <img src="HOSO_CAPSTONE2_KINGPET/8.Interface Design/screenshots/screen_01_storefront_hero.png"
-                         style="width:100%; height:168px; object-fit:cover; display:block;"
-                         alt="Storefront">
-                    <div style="padding:8px 12px;">
-                        <div style="color:#f97316; font-weight:700; font-size:0.85rem; font-family:'Times New Roman',Times,serif;">
-                            MÀN HÌNH 1: TRANG CHỦ &amp; STOREFRONT</div>
-                        <div style="color:#e2e8f0; font-size:0.78rem; margin-top:3px; font-family:'Times New Roman',Times,serif;">
-                            Banner 3D tilt, bộ chuyển đổi Chó / Mèo 1 chạm, Flash Sale đếm ngược, huy hiệu Bán chạy &amp; Khuyến mãi -20%.
-                        </div>
+            <div class="grid-3">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" style="font-size:1rem;">1. Storefront & Bộ lọc</div>
+                        <span class="card-badge primary">Màn hình 1</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li>Bộ chuyển đổi 1 chạm (🐕 Đồ Chó / 🐈 Đồ Mèo).</li>
+                            <li>Banner 3D tilt theo chuột.</li>
+                            <li>Flash Sale giờ vàng đếm ngược.</li>
+                            <li>Huy hiệu Bán chạy & Khuyến mãi -20%.</li>
+                        </ul>
                     </div>
                 </div>
-                <div style="background:rgba(30,41,59,0.6); border:1px solid rgba(13,148,136,0.35); border-radius:12px; overflow:hidden;">
-                    <img src="HOSO_CAPSTONE2_KINGPET/8.Interface Design/screenshots/screen_04_modal_3d_quickview.png"
-                         style="width:100%; height:168px; object-fit:cover; display:block;"
-                         alt="Modal 3D Quick-View">
-                    <div style="padding:8px 12px;">
-                        <div style="color:#0d9488; font-weight:700; font-size:0.85rem; font-family:'Times New Roman',Times,serif;">
-                            MÀN HÌNH 2: MODAL CHI TIẺT &amp; DINH DƯỠNG</div>
-                        <div style="color:#e2e8f0; font-size:0.78rem; margin-top:3px; font-family:'Times New Roman',Times,serif;">
-                            Xem nhanh xoay 3D, bảng dinh dưỡng Đạm/Canxi/Xơ chuẩn thú y, nút thêm nhanh vào giỏ hàng.
-                        </div>
-                    </div>
-                </div>
-            </div>
 
-            <!-- Row 2: 3 smaller screenshots -->
-            <div style="display:grid; grid-template-columns:1fr 1fr 1fr; gap:14px;">
-                <div style="background:rgba(30,41,59,0.6); border:1px solid rgba(249,115,22,0.25); border-radius:12px; overflow:hidden;">
-                    <img src="HOSO_CAPSTONE2_KINGPET/8.Interface Design/screenshots/screen_05_cart_drawer.png"
-                         style="width:100%; height:115px; object-fit:cover; display:block;"
-                         alt="Cart Drawer">
-                    <div style="padding:7px 10px;">
-                        <div style="color:#f97316; font-weight:700; font-size:0.78rem; font-family:'Times New Roman',Times,serif;">
-                            MÀN HÌNH 3: GIỏ HÀNG DRAWER</div>
-                        <div style="color:#cbd5e1; font-size:0.73rem; margin-top:2px; font-family:'Times New Roman',Times,serif;">
-                            Drawer Cart trượt, tiến trình Freeship 300K.
-                        </div>
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" style="font-size:1rem;">2. 3D Quick-View & Cart</div>
+                        <span class="card-badge accent">Màn hình 2 & 3</span>
+                    </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li>Modal xem nhanh xoay 3D góc nhìn.</li>
+                            <li>Bảng dinh dưỡng Đạm, Canxi, Xơ.</li>
+                            <li>Giỏ hàng trượt Drawer Cart từ phải qua.</li>
+                            <li>Thanh đo tiến trình Freeship 200k.</li>
+                        </ul>
                     </div>
                 </div>
-                <div style="background:rgba(30,41,59,0.6); border:1px solid rgba(16,185,129,0.35); border-radius:12px; overflow:hidden;">
-                    <img src="HOSO_CAPSTONE2_KINGPET/8.Interface Design/screenshots/screen_06_checkout_vietqr.png"
-                         style="width:100%; height:115px; object-fit:cover; display:block;"
-                         alt="VietQR Checkout">
-                    <div style="padding:7px 10px;">
-                        <div style="color:#10b981; font-weight:700; font-size:0.78rem; font-family:'Times New Roman',Times,serif;">
-                            MÀN HÌNH 4: CHECKOUT VIETQR MB BANK</div>
-                        <div style="color:#cbd5e1; font-size:0.73rem; margin-top:2px; font-family:'Times New Roman',Times,serif;">
-                            Sinh mã QR MB Bank tự động đúng số tiền, thanh toán 24/7.
-                        </div>
+
+                <div class="card">
+                    <div class="card-header">
+                        <div class="card-title" style="font-size:1rem;">3. VietQR & Admin Portal</div>
+                        <span class="card-badge success">Màn hình 4 & 5</span>
                     </div>
-                </div>
-                <div style="background:rgba(30,41,59,0.6); border:1px solid rgba(249,115,22,0.25); border-radius:12px; overflow:hidden;">
-                    <img src="HOSO_CAPSTONE2_KINGPET/8.Interface Design/screenshots/screen_09_admin_dashboard.png"
-                         style="width:100%; height:115px; object-fit:cover; display:block;"
-                         alt="Admin Dashboard">
-                    <div style="padding:7px 10px;">
-                        <div style="color:#f59e0b; font-weight:700; font-size:0.78rem; font-family:'Times New Roman',Times,serif;">
-                            MÀN HÌNH 5: CỔNG ADMIN PORTAL</div>
-                        <div style="color:#cbd5e1; font-size:0.73rem; margin-top:2px; font-family:'Times New Roman',Times,serif;">
-                            Dashboard 4 KPI SPM, quản trị kho &amp; đơn hàng.
-                        </div>
+                    <div class="card-body">
+                        <ul class="styled-list">
+                            <li>Checkout Form nhập địa chỉ giao cho Boss.</li>
+                            <li>Sinh mã VietQR MB Bank tự động đúng số tiền.</li>
+                            <li>Dashboard 4 chỉ số KPI SPM thời gian thực.</li>
+                            <li>Quản trị kho hàng & Cảnh báo tồn kho ≤ 15.</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-                <!-- ==================== SLIDE 13: MỤC 10 - ĐÁNH GIÁ DỰ ÁN ==================== -->
+        <!-- ==================== SLIDE 13: MỤC 10 - ĐÁNH GIÁ DỰ ÁN ==================== -->
         <section class="slide" id="slide-13">
             <div class="slide-tag">Mục 10 • Đánh Giá Dự Án (5 Điểm)</div>
             <h2 class="slide-title">KẾT QUẢ ĐẠT ĐƯỢC, HẠN CHẾ & HƯỚNG MỞ RỘNG</h2>
@@ -1668,8 +1648,9 @@
         <section class="slide" id="slide-14">
             <div class="slide-tag">Phần 2 • Demo Sản Phẩm (50 Điểm)</div>
             <h2 class="slide-title">TIÊU CHÍ CHẤM ĐIỂM DEMO SẢN PHẨM PHẦN MỀM</h2>
-            <p class="slide-subtitle">Bảng đối chiếu 7 nội dung demo bắt buộc theo đề cương nghiệm thu cuối kỳ môn Quản trị Dự án Phần mềm.</p>
-            
+            <p class="slide-subtitle">Bảng đối chiếu 7 nội dung demo bắt buộc theo đề cương nghiệm thu cuối kỳ môn Quản
+                trị Dự án Phần mềm.</p>
+
             <div class="table-responsive">
                 <table class="spm-table">
                     <thead>
@@ -1685,50 +1666,60 @@
                             <td><strong>1</strong></td>
                             <td><strong>Giới thiệu sản phẩm</strong></td>
                             <td>Trình bày mục đích, đối tượng sử dụng và các chức năng chính</td>
-                            <td>Nền tảng TMĐT Đồ ăn & Phụ kiện thú cưng Hoàng Gia cho Sen & Boss; 52+ sản phẩm chuẩn dinh dưỡng</td>
+                            <td>Nền tảng TMĐT Đồ ăn & Phụ kiện thú cưng Hoàng Gia cho Sen & Boss; 52+ sản phẩm chuẩn
+                                dinh dưỡng</td>
                         </tr>
                         <tr>
                             <td><strong>2</strong></td>
                             <td><strong>Giao diện đăng nhập</strong></td>
                             <td>Demo đăng nhập, đăng xuất và phân quyền nếu có</td>
-                            <td>Phân quyền RBAC rõ rệt: Khách hàng Storefront & Quản trị viên Admin Portal (admin / 2006, Enter/nút bấm)</td>
+                            <td>Phân quyền RBAC rõ rệt: Khách hàng Storefront & Quản trị viên Admin Portal (admin /
+                                2006, Enter/nút bấm)</td>
                         </tr>
                         <tr>
                             <td><strong>3</strong></td>
                             <td><strong>Chức năng chính</strong></td>
                             <td>Trình diễn tối thiểu 3–5 chức năng quan trọng của hệ thống</td>
-                            <td>5 Chức năng: 1) Lọc Đồ Chó/Mèo; 2) Dinh dưỡng 3D; 3) Giỏ hàng freeship; 4) VietQR động; 5) Cảnh báo kho</td>
+                            <td>5 Chức năng: 1) Lọc Đồ Chó/Mèo; 2) Dinh dưỡng 3D; 3) Giỏ hàng freeship; 4) VietQR động;
+                                5) Cảnh báo kho</td>
                         </tr>
                         <tr>
                             <td><strong>4</strong></td>
                             <td><strong>Cơ sở dữ liệu</strong></td>
                             <td>Minh họa cấu trúc dữ liệu, thao tác thêm, sửa, xóa, tìm kiếm</td>
-                            <td>CSDL 5 bảng thực thể; Demo tìm kiếm tức thì, thêm món mới, sửa giá/kho và xóa đơn hàng trực tiếp</td>
+                            <td>CSDL 5 bảng thực thể; Demo tìm kiếm tức thì, thêm món mới, sửa giá/kho và xóa đơn hàng
+                                trực tiếp</td>
                         </tr>
                         <tr>
                             <td><strong>5</strong></td>
                             <td><strong>Quy trình nghiệp vụ</strong></td>
                             <td>Demo một quy trình hoàn chỉnh từ đầu vào đến kết quả</td>
-                            <td>Quy trình End-to-End: Khách chọn món -> Giỏ hàng -> VietQR -> Admin nhận đơn -> Duyệt đơn -> Trừ kho</td>
+                            <td>Quy trình End-to-End: Khách chọn món -> Giỏ hàng -> VietQR -> Admin nhận đơn -> Duyệt
+                                đơn -> Trừ kho</td>
                         </tr>
                         <tr>
                             <td><strong>6</strong></td>
                             <td><strong>Kiểm thử</strong></td>
                             <td>Thực hiện ít nhất 2 tình huống kiểm thử, trong đó có 1 tình huống lỗi</td>
-                            <td>1) TH Hợp lệ: Đặt hàng VietQR thành công; 2) TH Lỗi: Bỏ trống SĐT hoặc gõ sai mật khẩu Admin</td>
+                            <td>1) TH Hợp lệ: Đặt hàng VietQR thành công; 2) TH Lỗi: Bỏ trống SĐT hoặc gõ sai mật khẩu
+                                Admin</td>
                         </tr>
                         <tr>
                             <td><strong>7</strong></td>
                             <td><strong>Tổng kết</strong></td>
                             <td>Đánh giá mức độ hoàn thiện, chức năng chưa làm được & hướng phát triển</td>
-                            <td>Hoàn thiện 100% Scope; Hạn chế: Chưa có App Native & cổng Visa; Hướng phát triển: Mobile Flutter & AI Nutrition</td>
+                            <td>Hoàn thiện 100% Scope; Hạn chế: Chưa có App Native & cổng Visa; Hướng phát triển: Mobile
+                                Flutter & AI Nutrition</td>
                         </tr>
                     </tbody>
                 </table>
             </div>
 
-            <div style="margin-top: 15px; background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.3); border-radius: 12px; padding: 12px 20px; font-size: 0.88rem; color: #cbd5e1; display: flex; gap: 24px; align-items: center;">
-                <span style="font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">⚠️ Lưu ý Hội đồng:</span>
+            <div
+                style="margin-top: 15px; background: rgba(249, 115, 22, 0.08); border: 1px solid rgba(249, 115, 22, 0.3); border-radius: 12px; padding: 12px 20px; font-size: 0.88rem; color: #cbd5e1; display: flex; gap: 24px; align-items: center;">
+                <span
+                    style="font-weight: 800; color: var(--primary); text-transform: uppercase; letter-spacing: 1px;">⚠️
+                    Lưu ý Hội đồng:</span>
                 <span>• Sản phẩm chạy thực tế 100% trên Localhost/Web.</span>
                 <span>• Tuyệt đối không dùng ảnh chụp tĩnh hay video quay sẵn.</span>
                 <span>• 6 Thành viên hiểu và giải trình rõ phần việc phụ trách.</span>
@@ -1739,35 +1730,57 @@
         <section class="slide" id="slide-15">
             <div class="slide-tag">Phần 2 • Kịch Bản Trực Tiếp</div>
             <h2 class="slide-title">KỊCH BẢN THỰC HIỆN DEMO SẢN PHẨM TRỰC TIẾP (10 – 15 PHÚT)</h2>
-            <p class="slide-subtitle">Hướng dẫn từng thao tác click chuột trên màn hình thực tế để ghi trọn vẹn 50/50 điểm Demo.</p>
+            <p class="slide-subtitle">Hướng dẫn từng thao tác click chuột trên màn hình thực tế để ghi trọn vẹn 50/50
+                điểm Demo.</p>
 
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title" style="color: var(--primary);">🌐 CỔNG KHÁCH HÀNG (STOREFRONT - INDEX.HTML)</div>
+                        <div class="card-title" style="color: var(--primary);">🌐 CỔNG KHÁCH HÀNG (STOREFRONT -
+                            INDEX.HTML)</div>
                         <span class="card-badge primary">Khách Mua Hàng</span>
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>Thao tác 1 (Giới thiệu & Bộ lọc):</strong> Mở <code>index.html</code>, bấm tab <i>"🐕 Đồ Chó"</i> -> danh sách chuyển sang hạt, súp cho Chó; bấm tab <i>"🐈 Đồ Mèo"</i> -> chuyển sang pate, sốt cho Mèo.</li>
-                            <li><strong>Thao tác 2 (Xem dinh dưỡng 3D):</strong> Rê chuột vào sản phẩm tạo hiệu ứng 3D perspective; bấm <i>"Xem nhanh"</i> để mở Modal xem tỷ lệ Đạm 32%, Canxi, Omega và hướng dẫn cho ăn.</li>
-                            <li><strong>Thao tác 3 (Giỏ hàng & Freeship):</strong> Chọn mua 2 món, mở giỏ hàng Drawer trượt, quan sát thanh tiến trình đạt mốc 200.000đ nhận thông báo <i>"CHÚC MỪNG BẠN ĐÃ ĐẠT FREESHIP!"</i>.</li>
-                            <li><strong>Thao tác 4 (Thanh toán VietQR):</strong> Bấm "Đặt hàng", điền tên Sen "Trần Quang Thịnh", SĐT, chọn phương thức VietQR -> Hệ thống tự sinh mã QR MB Bank kèm mã đơn hàng.</li>
+                            <li><strong>Thao tác 1 (Giới thiệu & Bộ lọc):</strong> Mở <code>index.html</code>, bấm tab
+                                <i>"🐕 Đồ Chó"</i> -> danh sách chuyển sang hạt, súp cho Chó; bấm tab <i>"🐈 Đồ Mèo"</i>
+                                -> chuyển sang pate, sốt cho Mèo.
+                            </li>
+                            <li><strong>Thao tác 2 (Xem dinh dưỡng 3D):</strong> Rê chuột vào sản phẩm tạo hiệu ứng 3D
+                                perspective; bấm <i>"Xem nhanh"</i> để mở Modal xem tỷ lệ Đạm 32%, Canxi, Omega và hướng
+                                dẫn cho ăn.</li>
+                            <li><strong>Thao tác 3 (Giỏ hàng & Freeship):</strong> Chọn mua 2 món, mở giỏ hàng Drawer
+                                trượt, quan sát thanh tiến trình đạt mốc 200.000đ nhận thông báo <i>"CHÚC MỪNG BẠN ĐÃ
+                                    ĐẠT FREESHIP!"</i>.</li>
+                            <li><strong>Thao tác 4 (Thanh toán VietQR):</strong> Bấm "Đặt hàng", điền tên Sen "Trần
+                                Quang Thịnh", SĐT, chọn phương thức VietQR -> Hệ thống tự sinh mã QR MB Bank kèm mã đơn
+                                hàng.</li>
                         </ul>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title" style="color: var(--success);">⚙️ CỔNG QUẢN TRỊ (ADMIN PORTAL - ADMIN.HTML)</div>
+                        <div class="card-title" style="color: var(--success);">⚙️ CỔNG QUẢN TRỊ (ADMIN PORTAL -
+                            ADMIN.HTML)</div>
                         <span class="card-badge success">Quản Trị Viên</span>
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>Thao tác 5 (Đăng nhập & Phân quyền):</strong> Mở <code>admin.html</code>, nhập <code>admin / 2006</code>, nhấn phím <i>Enter</i> hoặc click nút -> Đăng nhập thành công vào trang quản trị.</li>
-                            <li><strong>Thao tác 6 (Duyệt đơn hàng vừa đặt):</strong> Vào tab <i>"Đơn đặt hàng"</i>, đơn hàng vừa tạo ở Storefront xuất hiện ngay lập tức; Admin bấm chuyển trạng thái sang <i>"Đang giao"</i>.</li>
-                            <li><strong>Thao tác 7 (Quản lý kho & CSDL):</strong> Tab <i>"Đồ ăn & Phụ kiện"</i> tự động trừ số lượng tồn kho tương ứng; kiểm tra cảnh báo tồn kho ≤ 15 món; bấm <i>"+ Thêm sản phẩm"</i> hoặc chỉnh sửa giá.</li>
-                            <li><strong>Thao tác 8 (Quản lý User & Đăng xuất):</strong> Tab <i>"Tài khoản User"</i> hiển thị đầy đủ tài khoản khách hàng và nhân sự nhóm; bấm <i>"Đăng xuất"</i> để khóa phiên an toàn.</li>
+                            <li><strong>Thao tác 5 (Đăng nhập & Phân quyền):</strong> Mở <code>admin.html</code>, nhập
+                                <code>admin / 2006</code>, nhấn phím <i>Enter</i> hoặc click nút -> Đăng nhập thành công
+                                vào trang quản trị.
+                            </li>
+                            <li><strong>Thao tác 6 (Duyệt đơn hàng vừa đặt):</strong> Vào tab <i>"Đơn đặt hàng"</i>, đơn
+                                hàng vừa tạo ở Storefront xuất hiện ngay lập tức; Admin bấm chuyển trạng thái sang
+                                <i>"Đang giao"</i>.
+                            </li>
+                            <li><strong>Thao tác 7 (Quản lý kho & CSDL):</strong> Tab <i>"Đồ ăn & Phụ kiện"</i> tự động
+                                trừ số lượng tồn kho tương ứng; kiểm tra cảnh báo tồn kho ≤ 15 món; bấm <i>"+ Thêm sản
+                                    phẩm"</i> hoặc chỉnh sửa giá.</li>
+                            <li><strong>Thao tác 8 (Quản lý User & Đăng xuất):</strong> Tab <i>"Tài khoản User"</i> hiển
+                                thị đầy đủ tài khoản khách hàng và nhân sự nhóm; bấm <i>"Đăng xuất"</i> để khóa phiên an
+                                toàn.</li>
                         </ul>
                     </div>
                 </div>
@@ -1778,40 +1791,62 @@
         <section class="slide" id="slide-16">
             <div class="slide-tag">Phần 2 • Kiểm Thử & Dữ Liệu</div>
             <h2 class="slide-title">MINH HỌA 2 TÌNH HUỐNG KIỂM THỬ & THAO TÁC CSDL</h2>
-            <p class="slide-subtitle">Thực hiện trực tiếp tình huống hợp lệ, tình huống lỗi ngoại lệ và các thao tác CRUD cơ sở dữ liệu.</p>
+            <p class="slide-subtitle">Thực hiện trực tiếp tình huống hợp lệ, tình huống lỗi ngoại lệ và các thao tác
+                CRUD cơ sở dữ liệu.</p>
 
             <div class="grid-2">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title" style="color: var(--primary);">🧪 2 TÌNH HUỐNG KIỂM THỬ TRỰC TIẾP (TEST SCENARIOS)</div>
+                        <div class="card-title" style="color: var(--primary);">🧪 2 TÌNH HUỐNG KIỂM THỬ TRỰC TIẾP (TEST
+                            SCENARIOS)</div>
                         <span class="card-badge primary">Tiêu Chí 6</span>
                     </div>
                     <div class="card-body">
-                        <div style="margin-bottom: 16px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); padding: 12px; border-radius: 10px;">
-                            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ TÌNH HUỐNG 1: KIỂM THỬ HỢP LỆ (HAPPY PATH)</div>
-                            <div style="font-size: 0.88rem; color: #cbd5e1;">• Thao tác: Khách hàng chọn 2 sản phẩm, điền đầy đủ Tên, SĐT hợp lệ, Địa chỉ, bấm "Xác nhận đặt hàng".</div>
-                            <div style="font-size: 0.88rem; color: #10b981;">• Kết quả: Tạo đơn thành công, modal mã VietQR hiển thị đúng số tiền, đơn hàng lưu vào CSDL và xuất hiện trên Admin.</div>
+                        <div
+                            style="margin-bottom: 16px; background: rgba(16, 185, 129, 0.1); border: 1px solid var(--success); padding: 12px; border-radius: 10px;">
+                            <div style="font-weight: 700; color: var(--success); margin-bottom: 4px;">✅ TÌNH HUỐNG 1:
+                                KIỂM THỬ HỢP LỆ (HAPPY PATH)</div>
+                            <div style="font-size: 0.88rem; color: #cbd5e1;">• Thao tác: Khách hàng chọn 2 sản phẩm,
+                                điền đầy đủ Tên, SĐT hợp lệ, Địa chỉ, bấm "Xác nhận đặt hàng".</div>
+                            <div style="font-size: 0.88rem; color: #10b981;">• Kết quả: Tạo đơn thành công, modal mã
+                                VietQR hiển thị đúng số tiền, đơn hàng lưu vào CSDL và xuất hiện trên Admin.</div>
                         </div>
 
-                        <div style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); padding: 12px; border-radius: 10px;">
-                            <div style="font-weight: 700; color: var(--danger); margin-bottom: 4px;">❌ TÌNH HUỐNG 2: KIỂM THỬ TÌNH HUỐNG LỖI (ERROR PATH)</div>
-                            <div style="font-size: 0.88rem; color: #cbd5e1;">• Thao tác A (Bỏ trống SĐT): Bấm "Đặt hàng" nhưng cố tình để trống trường Số điện thoại -> <b>Kết quả:</b> Form chặn gửi, viền đỏ cảnh báo.</div>
-                            <div style="font-size: 0.88rem; color: #cbd5e1; margin-top: 4px;">• Thao tác B (Sai mật khẩu Admin): Vào <code>admin.html</code>, nhập mật khẩu sai <code>admin / 1234</code> -> <b>Kết quả:</b> Báo Toast đỏ <i>"⚠️ Sai tài khoản hoặc mật khẩu Admin"</i>, chặn truy cập.</div>
+                        <div
+                            style="background: rgba(239, 68, 68, 0.1); border: 1px solid var(--danger); padding: 12px; border-radius: 10px;">
+                            <div style="font-weight: 700; color: var(--danger); margin-bottom: 4px;">❌ TÌNH HUỐNG 2:
+                                KIỂM THỬ TÌNH HUỐNG LỖI (ERROR PATH)</div>
+                            <div style="font-size: 0.88rem; color: #cbd5e1;">• Thao tác A (Bỏ trống SĐT): Bấm "Đặt hàng"
+                                nhưng cố tình để trống trường Số điện thoại -> <b>Kết quả:</b> Form chặn gửi, viền đỏ
+                                cảnh báo.</div>
+                            <div style="font-size: 0.88rem; color: #cbd5e1; margin-top: 4px;">• Thao tác B (Sai mật khẩu
+                                Admin): Vào <code>admin.html</code>, nhập mật khẩu sai <code>admin / 1234</code> ->
+                                <b>Kết quả:</b> Báo Toast đỏ <i>"⚠️ Sai tài khoản hoặc mật khẩu Admin"</i>, chặn truy
+                                cập.
+                            </div>
                         </div>
                     </div>
                 </div>
 
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title" style="color: var(--accent);">💾 THAO TÁC CƠ SỞ DỮ LIỆU CSDL (CRUD OPERATIONS)</div>
+                        <div class="card-title" style="color: var(--accent);">💾 THAO TÁC CƠ SỞ DỮ LIỆU CSDL (CRUD
+                            OPERATIONS)</div>
                         <span class="card-badge info">Tiêu Chí 4</span>
                     </div>
                     <div class="card-body">
                         <ul class="styled-list">
-                            <li><strong>Thao tác Tìm kiếm (Read/Search):</strong> Gõ từ khóa <i>"hạt"</i> hoặc <i>"pate"</i> tại ô tìm kiếm -> Bảng lọc dữ liệu thời gian thực theo tên và dinh dưỡng.</li>
-                            <li><strong>Thao tác Thêm mới (Create):</strong> Bấm <i>"+ Thêm sản phẩm mới"</i> -> Điền thông tin món mới -> Bấm Lưu -> Sản phẩm được thêm vào CSDL và hiển thị ngay trên Storefront.</li>
-                            <li><strong>Thao tác Chỉnh sửa (Update):</strong> Bấm icon cây bút ✏️ tại món hạt khô -> Thay đổi giá bán hoặc tăng số lượng tồn kho -> Dữ liệu cập nhật tức thì.</li>
-                            <li><strong>Thao tác Xóa (Delete):</strong> Bấm icon thùng rác 🗑️ tại đơn hàng thử nghiệm -> Xác nhận hộp thoại Modal -> Đơn hàng bị xóa khỏi CSDL và Dashboard tự tính lại doanh thu.</li>
+                            <li><strong>Thao tác Tìm kiếm (Read/Search):</strong> Gõ từ khóa <i>"hạt"</i> hoặc
+                                <i>"pate"</i> tại ô tìm kiếm -> Bảng lọc dữ liệu thời gian thực theo tên và dinh dưỡng.
+                            </li>
+                            <li><strong>Thao tác Thêm mới (Create):</strong> Bấm <i>"+ Thêm sản phẩm mới"</i> -> Điền
+                                thông tin món mới -> Bấm Lưu -> Sản phẩm được thêm vào CSDL và hiển thị ngay trên
+                                Storefront.</li>
+                            <li><strong>Thao tác Chỉnh sửa (Update):</strong> Bấm icon cây bút ✏️ tại món hạt khô ->
+                                Thay đổi giá bán hoặc tăng số lượng tồn kho -> Dữ liệu cập nhật tức thì.</li>
+                            <li><strong>Thao tác Xóa (Delete):</strong> Bấm icon thùng rác 🗑️ tại đơn hàng thử nghiệm
+                                -> Xác nhận hộp thoại Modal -> Đơn hàng bị xóa khỏi CSDL và Dashboard tự tính lại doanh
+                                thu.</li>
                         </ul>
                     </div>
                 </div>
@@ -1823,13 +1858,18 @@
             <div class="title-slide-content">
                 <div class="title-badge">🎯 Hoàn Thành Báo Cáo Nghiệm Thu SPM</div>
                 <h1 class="title-main">XIN TRÂN TRỌNG CẢM ƠN<br>QUÝ THẦY CÔ & HỘI ĐỒNG GIẢNG VIÊN!</h1>
-                <p class="title-sub">Dự án: Hệ thống Website Thương Mại Điện Tử Đồ Ăn, Dinh Dưỡng & Phụ Kiện Thú Cưng Hoàng Gia — King Pet (Team 6)</p>
-                
-                <div style="background: rgba(249, 115, 22, 0.1); border: 1.5px solid var(--primary); padding: 20px 30px; border-radius: 20px; max-width: 680px; margin-bottom: 25px;">
-                    <div style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 8px;">
+                <p class="title-sub">Dự án: Hệ thống Website Thương Mại Điện Tử Đồ Ăn, Dinh Dưỡng & Phụ Kiện Thú Cưng
+                    Hoàng Gia — King Pet (Team 6)</p>
+
+                <div
+                    style="background: rgba(249, 115, 22, 0.1); border: 1.5px solid var(--primary); padding: 20px 30px; border-radius: 20px; max-width: 680px; margin-bottom: 25px;">
+                    <div
+                        style="font-family: var(--font-heading); font-size: 1.3rem; font-weight: 700; color: #fff; margin-bottom: 8px;">
                         SẴN SÀNG CHUYỂN SANG PHẦN DEMO THỰC TẾ & HỎI ĐÁP (Q&A)
                     </div>
-                    <p style="font-size: 0.9rem; color: #cbd5e1;">Nhóm 6 cam kết hệ thống chạy thực tế 100% trên Localhost & GitHub, đáp ứng trọn vẹn 10 mục Quản trị dự án (50đ) và 7 tiêu chí Demo phần mềm (50đ).</p>
+                    <p style="font-size: 0.9rem; color: #cbd5e1;">Nhóm 6 cam kết hệ thống chạy thực tế 100% trên
+                        Localhost & GitHub, đáp ứng trọn vẹn 10 mục Quản trị dự án (50đ) và 7 tiêu chí Demo phần mềm
+                        (50đ).</p>
                 </div>
 
                 <div style="display: flex; gap: 16px;">
