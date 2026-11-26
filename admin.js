@@ -755,3 +755,106 @@ function openModal(html) {
 function closeModal() {
   document.getElementById("adminModal").classList.remove("open");
 }
+
+function openDemoGuideModal() {
+  openModal(`
+    <div style="font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #1e293b; max-width: 860px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 14px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <span style="font-size: 28px;">🎯</span>
+          <div>
+            <h2 style="margin: 0; font-size: 19px; font-weight: 800; color: #0f172a;">KỊCH BẢN DEMO SẢN PHẨM PHẦN MỀM (50 ĐIỂM)</h2>
+            <p style="margin: 3px 0 0; font-size: 12.5px; color: #64748b;">Khung 7 nội dung bắt buộc theo đề cương nghiệm thu môn Quản trị Dự án Phần mềm</p>
+          </div>
+        </div>
+        <span style="background: #ffedd5; color: #ea580c; font-size: 11.5px; font-weight: 800; padding: 5px 12px; border-radius: 20px;">7 Tiêu Chí SPM</span>
+      </div>
+
+      <div style="max-height: 58vh; overflow-y: auto; padding-right: 4px;">
+        <table style="width: 100%; border-collapse: collapse; font-size: 12px; text-align: left; line-height: 1.5;">
+          <thead>
+            <tr style="background: #0f172a; color: #ffffff;">
+              <th style="padding: 10px 12px; width: 6%; text-align: center; border-radius: 8px 0 0 0;">STT</th>
+              <th style="padding: 10px 12px; width: 22%;">Nội Dung Demo</th>
+              <th style="padding: 10px 12px; width: 44%;">Thao Tác Thực Hiện Trực Tiếp</th>
+              <th style="padding: 10px 12px; width: 28%; border-radius: 0 8px 0 0;">Kết Quả Cần Chỉ Ra</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid #e2e8f0; background: #ffffff;">
+              <td style="padding: 10px 12px; font-weight: 800; text-align: center; color: #ea580c;">1</td>
+              <td style="padding: 10px 12px;"><b>Giới thiệu sản phẩm</b><br><small style="color: #64748b;">Mục đích & đối tượng</small></td>
+              <td style="padding: 10px 12px;">Giới thiệu nền tảng E-Commerce King Pet, bấm chuyển tab <b>🐕 Dành cho Chó</b> và <b>🐈 Dành cho Mèo</b> trên Storefront.</td>
+              <td style="padding: 10px 12px; color: #059669;"><b>✓ 52+ mã hàng</b> phân loại theo loài và nhóm thức ăn, tải < 1.5s.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+              <td style="padding: 10px 12px; font-weight: 800; text-align: center; color: #ea580c;">2</td>
+              <td style="padding: 10px 12px;"><b>Giao diện đăng nhập</b><br><small style="color: #64748b;">Phân quyền & Đăng xuất</small></td>
+              <td style="padding: 10px 12px;">
+                1) Khách hàng: Bấm nút <b>👤 Đăng nhập</b> ở Storefront.<br>
+                2) Quản trị viên: Vào <code>admin.html</code>, đăng nhập <b>admin / 2006</b>, demo phân quyền Admin và nút Đăng xuất sidebar.
+              </td>
+              <td style="padding: 10px 12px; color: #059669;"><b>✓ Phân quyền RBAC</b> tách biệt giữa Khách mua hàng và Quản trị viên.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; background: #ffffff;">
+              <td style="padding: 10px 12px; font-weight: 800; text-align: center; color: #ea580c;">3</td>
+              <td style="padding: 10px 12px;"><b>Chức năng chính</b><br><small style="color: #64748b;">3–5 chức năng cốt lõi</small></td>
+              <td style="padding: 10px 12px;">
+                1) Lọc Chó/Mèo tức thì.<br>
+                2) 3D Quick-View xem chỉ số dinh dưỡng (Đạm, béo, canxi).<br>
+                3) Giỏ hàng Drawer đo mốc FREESHIP 200K & Voucher.<br>
+                4) Cảnh báo tồn kho ≤ 15 món trên Admin Portal.
+              </td>
+              <td style="padding: 10px 12px; color: #059669;"><b>✓ 5 Chức năng lớn</b> chạy mượt mà, phản hồi ngay lập tức < 200ms.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+              <td style="padding: 10px 12px; font-weight: 800; text-align: center; color: #ea580c;">4</td>
+              <td style="padding: 10px 12px;"><b>Cơ sở dữ liệu CSDL</b><br><small style="color: #64748b;">Thao tác CRUD</small></td>
+              <td style="padding: 10px 12px;">
+                • <b>Tìm kiếm:</b> Gõ từ khóa <i>"hạt"</i>, <i>"pate"</i>.<br>
+                • <b>Thêm mới:</b> Bấm <i>+ Thêm sản phẩm</i> hoặc <i>➕ Thêm thành viên</i>.<br>
+                • <b>Chỉnh sửa:</b> Bấm ✏️ sửa giá bán, số lượng tồn kho.<br>
+                • <b>Xóa:</b> Bấm 🗑️ xóa đơn hàng hoặc sản phẩm.
+              </td>
+              <td style="padding: 10px 12px; color: #059669;"><b>✓ Đầy đủ CRUD</b> trên 5 bảng thực thể CSDL (Products, Orders, Users, Categories, Reviews).</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; background: #ffffff;">
+              <td style="padding: 10px 12px; font-weight: 800; text-align: center; color: #ea580c;">5</td>
+              <td style="padding: 10px 12px;"><b>Quy trình nghiệp vụ</b><br><small style="color: #64748b;">Quy trình End-to-End</small></td>
+              <td style="padding: 10px 12px;">
+                Chọn món -> Vào giỏ -> Đặt hàng -> Chọn VietQR -> Sinh mã QR MB Bank -> Mở <code>admin.html</code> thấy đơn mới -> Admin duyệt <i>"Đang giao"</i> -> Kho tự động trừ.
+              </td>
+              <td style="padding: 10px 12px; color: #059669;"><b>✓ Quy trình hoàn chỉnh</b> đồng bộ dữ liệu thời gian thực giữa Khách và Admin.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; background: #f8fafc;">
+              <td style="padding: 10px 12px; font-weight: 800; text-align: center; color: #ea580c;">6</td>
+              <td style="padding: 10px 12px;"><b>Kiểm thử thực tế</b><br><small style="color: #64748b;">1 Hợp lệ + 1 Lỗi</small></td>
+              <td style="padding: 10px 12px;">
+                • <b>TH1 (Hợp lệ):</b> Điền đủ thông tin -> Đặt hàng sinh VietQR thành công.<br>
+                • <b>TH2 (Tình huống lỗi):</b> Bỏ trống Số điện thoại khi đặt hàng -> Form báo lỗi đỏ; hoặc gõ sai pass Admin <code>admin / 1234</code> báo sai mật khẩu.
+              </td>
+              <td style="padding: 10px 12px; color: #059669;"><b>✓ Validate an toàn</b>, bắt lỗi người dùng và thông báo Toast rõ ràng.</td>
+            </tr>
+            <tr style="border-bottom: 1px solid #e2e8f0; background: #ffffff;">
+              <td style="padding: 10px 12px; font-weight: 800; text-align: center; color: #ea580c;">7</td>
+              <td style="padding: 10px 12px;"><b>Tổng kết & Đánh giá</b><br><small style="color: #64748b;">Mức độ hoàn thiện</small></td>
+              <td style="padding: 10px 12px;">
+                Trình bày: Hoàn thiện 100% mục tiêu Charter; Hạn chế: Chưa làm App Native và cổng Visa; Hướng phát triển: Nâng cấp Mobile App Flutter & AI tư vấn dinh dưỡng thú cưng.
+              </td>
+              <td style="padding: 10px 12px; color: #059669;"><b>✓ Hoàn thành trọn vẹn</b> 50 điểm Demo sản phẩm phần mềm.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div style="margin-top: 18px; display: flex; justify-content: space-between; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 14px;">
+        <div style="font-size: 12px; color: #64748b;">
+          💡 <b>Gợi ý trình bày:</b> Mở song song 2 tab: <code>index.html</code> (Khách) và <code>admin.html</code> (Admin) để thao tác liên thông.
+        </div>
+        <button onclick="closeModal()" class="primary" style="padding: 9px 24px; font-size: 13px; font-weight: 700; border-radius: 10px; cursor: pointer;">
+          Đóng Hướng Dẫn
+        </button>
+      </div>
+    </div>
+  `);
+}
