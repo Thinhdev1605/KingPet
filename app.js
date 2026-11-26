@@ -288,6 +288,40 @@ let reviews = JSON.parse(localStorage.getItem("pet_reviews") || "null");
 if (!Array.isArray(reviews)) reviews = DEFAULT_REVIEWS;
 
 let user = JSON.parse(localStorage.getItem("pet_user") || "null");
+
+function syncUserToDatabase(userObj) {
+  if (!userObj || !userObj.username) return;
+  let userList = [];
+  try {
+    userList = JSON.parse(localStorage.getItem("pet_users") || "[]");
+  } catch (e) { userList = []; }
+  if (!Array.isArray(userList)) userList = [];
+
+  const uname = userObj.username.trim();
+  const idx = userList.findIndex(x => (x.username || "").toLowerCase() === uname.toLowerCase());
+  const fullUser = {
+    username: uname,
+    name: userObj.name || uname,
+    phone: userObj.phone || "0901234567",
+    role: uname.toLowerCase() === "admin" ? "admin" : (userObj.role || "user"),
+    address: userObj.address || "TP. Hồ Chí Minh",
+    petName: userObj.petName || "Boss Cưng",
+    createdAt: userObj.createdAt || new Date().toLocaleDateString("vi-VN")
+  };
+
+  if (idx >= 0) {
+    userList[idx] = { ...userList[idx], ...fullUser };
+  } else {
+    userList.push(fullUser);
+  }
+
+  localStorage.setItem("pet_users", JSON.stringify(userList));
+  localStorage.setItem("pet_users_list", JSON.stringify(userList));
+}
+
+if (user && user.username) {
+  syncUserToDatabase(user);
+}
 let cart = JSON.parse(localStorage.getItem("pet_cart") || "[]");
 let orders = JSON.parse(localStorage.getItem("pet_orders") || "[]");
 let wishlist = JSON.parse(localStorage.getItem("pet_wishlist") || "[]");
@@ -1649,6 +1683,7 @@ function registerUser() {
 
   user = newUser;
   localStorage.setItem("pet_user", JSON.stringify(user));
+  syncUserToDatabase(user);
   renderAccount();
   toast("Đăng ký thành công! Bạn đã nhận được mã giảm giá KINGPET20.", "success");
 }
@@ -1749,6 +1784,7 @@ function saveProfile() {
   }
 
   localStorage.setItem("pet_user", JSON.stringify(user));
+  syncUserToDatabase(user);
   closeModal();
   renderAccount();
   updateAccountDropdown();
@@ -2150,6 +2186,7 @@ function modalLoginUser() {
   }
 
   localStorage.setItem("pet_user", JSON.stringify(user));
+  syncUserToDatabase(user);
   closeModal();
   renderAccount();
   updateAccountDropdown();
@@ -2176,6 +2213,7 @@ function modalRegisterUser() {
   };
 
   localStorage.setItem("pet_user", JSON.stringify(user));
+  syncUserToDatabase(user);
   closeModal();
   renderAccount();
   updateAccountDropdown();

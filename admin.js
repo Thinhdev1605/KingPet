@@ -147,7 +147,89 @@ function getProductImage(p) {
 }
 
 let products = JSON.parse(localStorage.getItem("pet_products") || "[]");
-let users = JSON.parse(localStorage.getItem("pet_users") || "[]");
+function getAdminUsers() {
+  let uList = [];
+  try {
+    uList = JSON.parse(localStorage.getItem("pet_users") || "[]");
+  } catch (e) { uList = []; }
+
+  if (!uList || !uList.length) {
+    try {
+      uList = JSON.parse(localStorage.getItem("pet_users_list") || "[]");
+    } catch (e) {}
+  }
+  if (!Array.isArray(uList)) uList = [];
+
+  // Đồng bộ pet_user đang đăng nhập ở Storefront nếu có
+  try {
+    const curU = JSON.parse(localStorage.getItem("pet_user") || "null");
+    if (curU && curU.username) {
+      const idx = uList.findIndex(x => (x.username || "").toLowerCase() === curU.username.toLowerCase());
+      const merged = {
+        username: curU.username,
+        name: curU.name || curU.username,
+        phone: curU.phone || "0901234567",
+        role: curU.username.toLowerCase() === "admin" ? "admin" : (curU.role || "user"),
+        address: curU.address || "TP. Hồ Chí Minh",
+        petName: curU.petName || "Boss Cưng",
+        createdAt: curU.createdAt || new Date().toLocaleDateString("vi-VN")
+      };
+      if (idx >= 0) {
+        uList[idx] = { ...uList[idx], ...merged };
+      } else {
+        uList.push(merged);
+      }
+    }
+  } catch (e) {}
+
+  // Đồng bộ từ đơn đặt hàng pet_orders nếu khách hàng đặt đơn
+  try {
+    const ords = JSON.parse(localStorage.getItem("pet_orders") || "[]");
+    ords.forEach(o => {
+      const uname = o.phone || (o.customer_name ? o.customer_name.toLowerCase().replace(/\s+/g, "_") : "");
+      if (uname && !uList.some(x => x.username === uname || x.phone === o.phone)) {
+        uList.push({
+          username: uname,
+          name: o.customer_name || uname,
+          phone: o.phone || "0901234567",
+          role: "user",
+          address: o.address || "TP. Hồ Chí Minh",
+          petName: o.pet_name || "Boss Cưng",
+          createdAt: o.date ? new Date(o.date).toLocaleDateString("vi-VN") : "08/10/2026"
+        });
+      }
+    });
+  } catch (e) {}
+
+  // Luôn đảm bảo tài khoản Quản trị viên admin tồn tại
+  if (!uList.some(x => (x.username || "").toLowerCase() === "admin")) {
+    uList.unshift({
+      username: "admin",
+      name: "Quản trị viên King Pet",
+      phone: "0900 123 321",
+      role: "admin",
+      address: "160 Nguyễn Tri Phương, Q.5, TP.HCM",
+      petName: "Corgi King",
+      createdAt: "08/10/2026"
+    });
+  }
+
+  // Khởi tạo các tài khoản thành viên mẫu của Nhóm 6 nếu danh sách chưa có nhiều
+  if (uList.length <= 1) {
+    uList.push(
+      { username: "thinh_corgi", name: "Kpa Trần Quang Thịnh", phone: "0782 599 157", role: "user", address: "45 Lê Duẩn, Q.1, TP.HCM", petName: "Corgi Bắp", createdAt: "15/10/2026" },
+      { username: "thien_pm", name: "Lường Văn Thiện", phone: "0901 234 567", role: "user", address: "12 Võ Văn Kiệt, Q.1, TP.HCM", petName: "Mèo Anh Lông Ngắn", createdAt: "20/10/2026" },
+      { username: "thuan_fe", name: "Phan Thái Thuần", phone: "0901 234 569", role: "user", address: "88 Hai Bà Trưng, Q.3, TP.HCM", petName: "Golden Retriever", createdAt: "28/10/2026" }
+    );
+  }
+
+  localStorage.setItem("pet_users", JSON.stringify(uList));
+  localStorage.setItem("pet_users_list", JSON.stringify(uList));
+  users = uList;
+  return uList;
+}
+
+let users = getAdminUsers();
 let orders = JSON.parse(localStorage.getItem("pet_orders") || "[]");
 let reviews = JSON.parse(localStorage.getItem("pet_reviews") || "[]");
 let categories = JSON.parse(localStorage.getItem("pet_categories") || "null") || [
@@ -233,7 +315,7 @@ document.querySelectorAll(".nav-item").forEach((b) => (b.onclick = () => switchT
 
 function renderDashboard() {
   const revenue = orders.filter((o) => o.status !== "Đã hủy").reduce((s, o) => s + (o.total || 0), 0);
-  const customerCount = users.filter((u) => u.role === "user").length || 18;
+  const customerCount = getAdminUsers().filter((u) => u.role !== "admin").length;
   const stock = products.reduce((s, p) => s + (p.stock || 0), 0);
 
   document.getElementById("stats").innerHTML = `
@@ -455,8 +537,7 @@ function deleteOrder(id) {
 }
 
 function renderUsers() {
-  const usersList = JSON.parse(localStorage.getItem("pet_users_list") || "[]");
-  const allUsers = users.length ? users : usersList;
+  const allUsers = getAdminUsers();
   document.getElementById("usersTable").innerHTML =
     allUsers
       .map(
@@ -465,10 +546,10 @@ function renderUsers() {
       <td><b>${esc(u.username)}</b></td>
       <td>${esc(u.name || "Khách hàng")}</td>
       <td>${esc(u.phone || "0900 123 321")}</td>
-      <td><span class="badge ${u.role === "admin" ? "red" : ""}">${esc(u.role || "user")}</span></td>
+      <td><span class="badge ${u.role === "admin" ? "red" : "green"}">${esc(u.role === "admin" ? "Quản trị viên" : "Khách hàng")}</span></td>
       <td>${esc(u.address || "TP. Hồ Chí Minh")}</td>
       <td>
-        <button class="danger" onclick="deleteUser('${u.username}')">🗑️</button>
+        ${u.username === "admin" ? '<span style="color:#94a3b8; font-size:0.8rem; font-weight:600;">Hệ thống</span>' : `<button class="danger" onclick="deleteUser('${esc(u.username)}')">🗑️ Xóa</button>`}
       </td>
     </tr>`
       )
@@ -477,11 +558,93 @@ function renderUsers() {
 
 function deleteUser(username) {
   if (username === "admin") return toast("⚠️ Không thể xóa tài khoản Quản trị viên tối cao!");
-  if (!confirm(`Xóa tài khoản ${username}?`)) return;
-  users = users.filter((x) => x.username !== username);
-  save();
+  if (!confirm(`Bạn có chắc chắn muốn xóa tài khoản ${username}?`)) return;
+  let allUsers = getAdminUsers().filter((x) => x.username !== username);
+  localStorage.setItem("pet_users", JSON.stringify(allUsers));
+  localStorage.setItem("pet_users_list", JSON.stringify(allUsers));
+  users = allUsers;
   renderUsers();
-  toast("✓ Đã xóa người dùng");
+  renderDashboard();
+  toast("✓ Đã xóa người dùng thành công");
+}
+
+function openAddUserModal() {
+  openModal(`
+    <h3>➕ Thêm Tài Khoản Thành Viên Mới</h3>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Tên đăng nhập (*)</label>
+        <input type="text" id="newUname" placeholder="Ví dụ: sen_corgi" required>
+      </div>
+      <div class="form-group">
+        <label>Họ và tên (*)</label>
+        <input type="text" id="newName" placeholder="Ví dụ: Trần Quang Thịnh" required>
+      </div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Số điện thoại (*)</label>
+        <input type="text" id="newPhone" placeholder="Ví dụ: 0782599157" required>
+      </div>
+      <div class="form-group">
+        <label>Vai trò</label>
+        <select id="newRole">
+          <option value="user" selected>Khách hàng (User)</option>
+          <option value="admin">Quản trị viên (Admin)</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Địa chỉ giao hàng</label>
+      <input type="text" id="newAddr" placeholder="Số nhà, đường, quận/huyện...">
+    </div>
+    <div class="form-group">
+      <label>Tên thú cưng (Boss)</label>
+      <input type="text" id="newPet" placeholder="Ví dụ: Corgi Bắp">
+    </div>
+    <div style="display:flex; justify-content:flex-end; gap:10px; margin-top:16px;">
+      <button class="btn" onclick="closeModal()">Hủy</button>
+      <button class="btn btn-primary" onclick="saveNewUser()">Lưu tài khoản</button>
+    </div>
+  `);
+}
+
+function saveNewUser() {
+  const uname = (document.getElementById("newUname")?.value || "").trim();
+  const name = (document.getElementById("newName")?.value || "").trim();
+  const phone = (document.getElementById("newPhone")?.value || "").trim();
+  const role = document.getElementById("newRole")?.value || "user";
+  const address = (document.getElementById("newAddr")?.value || "").trim();
+  const petName = (document.getElementById("newPet")?.value || "").trim();
+
+  if (!uname || !name || !phone) {
+    toast("Vui lòng điền đầy đủ các thông tin bắt buộc (*)");
+    return;
+  }
+
+  let list = getAdminUsers();
+  if (list.some(x => x.username.toLowerCase() === uname.toLowerCase())) {
+    toast("⚠️ Tên đăng nhập này đã tồn tại!");
+    return;
+  }
+
+  list.push({
+    username: uname,
+    name: name,
+    phone: phone,
+    role: role,
+    address: address || "TP. Hồ Chí Minh",
+    petName: petName || "Boss Cưng",
+    createdAt: new Date().toLocaleDateString("vi-VN")
+  });
+
+  localStorage.setItem("pet_users", JSON.stringify(list));
+  localStorage.setItem("pet_users_list", JSON.stringify(list));
+  users = list;
+  closeModal();
+  renderUsers();
+  renderDashboard();
+  toast("✓ Đã thêm tài khoản thành viên thành công!");
 }
 
 function renderCategories() {
