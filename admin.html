@@ -12,21 +12,21 @@
 <body>
 <div id="toast"></div>
 
-<!-- MÀN HÌNH ĐĂNG NHẬP ADMIN -->
+<!-- MÀN HÌNH ĐĂNG NHẬP ADMIN & STAFF -->
 <div id="loginScreen" class="login-screen">
   <div class="login-card">
     <div class="admin-logo">👑</div>
-    <span class="kicker">KING PET ROYAL ADMIN</span>
-    <h1>Quản trị hệ thống</h1>
-    <p>Đăng nhập bằng tài khoản Quản trị viên để điều hành toàn bộ cửa hàng đồ ăn & phụ kiện thú cưng King Pet.</p>
+    <span class="kicker">KING PET PORTAL</span>
+    <h1>Quản trị &amp; Nhân viên</h1>
+    <p>Đăng nhập bằng tài khoản Quản trị viên (Admin) hoặc Nhân viên trực quầy (Staff) để vận hành cửa hàng King Pet.</p>
     <form onsubmit="event.preventDefault(); adminLogin();" style="display:flex; flex-direction:column; gap:12px; width:100%;">
-      <input id="adminUser" placeholder="Tên đăng nhập" value="admin" autocomplete="username">
+      <input id="adminUser" placeholder="Tên đăng nhập (admin hoặc staff)" value="admin" autocomplete="username">
       <input id="adminPass" type="password" placeholder="Mật khẩu" value="2006" autocomplete="current-password">
       <div style="display:flex; justify-content:space-between; align-items:center; width:100%;">
-        <small style="color:#64748b;">Demo: <b>admin / 2006</b></small>
+        <small style="color:#64748b; font-size:12px;">Demo: <b>admin / 2006</b> hoặc <b>staff / 123456</b></small>
         <a href="javascript:void(0)" onclick="openAdminForgotPasswordModal()" style="font-size:12.5px; color:#ea580c; text-decoration:none; font-weight:700;">🔑 Quên mật khẩu?</a>
       </div>
-      <button type="submit" class="primary full" id="btnLoginAdmin">Đăng nhập Admin</button>
+      <button type="submit" class="primary full" id="btnLoginAdmin">Đăng nhập Hệ thống</button>
     </form>
     <div style="margin-top:10px; padding:6px 10px; background:#ecfdf5; border:1px solid #10b981; border-radius:8px; font-size:11.5px; color:#047857; display:flex; align-items:center; gap:6px;">
       <span>🟢</span> <b>Neon Cloud DB:</b> PostgreSQL 18.7 Connected
@@ -35,22 +35,23 @@
   </div>
 </div>
 
-<!-- NỀN TẢNG QUẢN TRỊ ADMIN -->
+<!-- NỀN TẢNG QUẢN TRỊ ADMIN & STAFF -->
 <div id="adminApp" class="hidden">
   <aside class="sidebar">
     <a class="admin-brand" href="#">
       <span>👑</span>
-      <div>KingPet<small style="display:block;font-size:9px;color:#f97316">ADMIN PORTAL</small></div>
+      <div>KingPet<small id="adminBrandSub" style="display:block;font-size:9px;color:#f97316">ADMIN PORTAL</small></div>
     </a>
     <div class="side-label">HỆ THỐNG QUẢN TRỊ</div>
     <button class="nav-item active" data-tab="dashboard">▦ <span>Tổng quan KPI</span></button>
-    <button class="nav-item" data-tab="products">🍖 <span>Đồ ăn & Phụ kiện</span></button>
     <button class="nav-item" data-tab="orders">▤ <span>Đơn đặt hàng</span></button>
-    <button class="nav-item" data-tab="users">♙ <span>Tài khoản User</span></button>
+    <button class="nav-item" data-tab="bookings">📅 <span>Quản lý Đặt lịch</span></button>
+    <button class="nav-item" data-tab="products">🍖 <span>Đồ ăn &amp; Phụ kiện</span></button>
+    <button class="nav-item admin-only-tab" data-tab="users">♙ <span>Tài khoản User</span></button>
     <button class="nav-item" data-tab="categories">◫ <span>Danh mục sản phẩm</span></button>
     <button class="nav-item" data-tab="reviews">☆ <span>Đánh giá khách hàng</span></button>
-    <button class="nav-item" data-tab="project">◈ <span>Quản lý dự án SPM</span></button>
-    <button class="nav-item" data-tab="database">🐘 <span>CSDL Neon Cloud</span></button>
+    <button class="nav-item admin-only-tab" data-tab="project">◈ <span>Quản lý dự án SPM</span></button>
+    <button class="nav-item admin-only-tab" data-tab="database">🐘 <span>CSDL Neon Cloud</span></button>
     
     <div class="side-bottom">
       <a href="index.html" target="_blank">↗ Xem cửa hàng King Pet</a>
@@ -64,7 +65,7 @@
         <span class="kicker">KING PET E-COMMERCE MANAGEMENT</span>
         <h2 id="pageTitle">Tổng quan</h2>
       </div>
-      <div class="admin-user">👑 Administrator <span>•</span> King Pet Admin</div>
+      <div id="adminUserBadge" class="admin-user">👑 Administrator <span>•</span> King Pet Admin</div>
     </header>
 
     <!-- TAB 1: DASHBOARD -->
@@ -146,6 +147,47 @@
             </tr>
           </thead>
           <tbody id="ordersTable"></tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- TAB 3B: QUẢN LÝ ĐẶT LỊCH DỊCH VỤ SPA & KHÁM THÚ Y -->
+    <div id="bookings" class="tab">
+      <div class="toolbar">
+        <div>
+          <h3>Quản lý Lịch hẹn Dịch vụ Thú cưng</h3>
+          <p class="muted">Tiếp nhận và xử lý lịch hẹn Tắm Spa, Cắt tỉa tạo kiểu lông, Khám sức khỏe &amp; Pet Hotel cho Boss.</p>
+        </div>
+        <div style="display:flex; gap:10px;">
+          <button class="btn" onclick="renderBookingsAdmin()">🔄 Làm mới</button>
+          <button class="btn btn-primary" onclick="openAddBookingModalAdmin()">➕ Đặt lịch tại quầy</button>
+        </div>
+      </div>
+
+      <!-- Filter status pills -->
+      <div style="display:flex; gap:8px; margin-bottom:16px; flex-wrap:wrap;">
+        <button class="btn btn-outline" id="btnFilterBkAll" onclick="filterBookingsAdmin('')" style="font-weight:700;">Tất cả lịch hẹn</button>
+        <button class="btn btn-outline" id="btnFilterBkPending" onclick="filterBookingsAdmin('Chờ tiếp nhận')" style="font-weight:700;">⏳ Chờ tiếp nhận</button>
+        <button class="btn btn-outline" id="btnFilterBkConfirmed" onclick="filterBookingsAdmin('Đã xác nhận')" style="font-weight:700;">✓ Đã xác nhận</button>
+        <button class="btn btn-outline" id="btnFilterBkServing" onclick="filterBookingsAdmin('Đang phục vụ')" style="font-weight:700;">✂️ Đang phục vụ</button>
+        <button class="btn btn-outline" id="btnFilterBkDone" onclick="filterBookingsAdmin('Hoàn thành')" style="font-weight:700;">★ Hoàn thành</button>
+      </div>
+
+      <div class="panel table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th>Mã lịch hẹn</th>
+              <th>Thông tin Boss</th>
+              <th>Khách hàng &amp; SĐT</th>
+              <th>Gói Dịch Vụ</th>
+              <th>Ngày &amp; Giờ hẹn</th>
+              <th>Chi phí</th>
+              <th>Trạng thái</th>
+              <th>Thao tác</th>
+            </tr>
+          </thead>
+          <tbody id="bookingsTable"></tbody>
         </table>
       </div>
     </div>

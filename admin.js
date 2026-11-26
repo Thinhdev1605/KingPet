@@ -268,10 +268,10 @@ async function adminLogin() {
   const u = (document.getElementById("adminUser")?.value || "").trim();
   const p = (document.getElementById("adminPass")?.value || "").trim();
   if (!u || !p) {
-    return toast("⚠️ Vui lòng nhập tài khoản và mật khẩu Admin!");
+    return toast("⚠️ Vui lòng nhập tài khoản và mật khẩu!");
   }
 
-  // 1. Kiểm tra xác thực trực tiếp trên Neon Cloud Database
+  // 1. Kiểm tra xác thực trực tiếp trên Neon Cloud Database (Hỗ trợ Admin và Staff)
   try {
     const res = await fetch('/api/auth/login', {
       method: 'POST',
@@ -279,25 +279,41 @@ async function adminLogin() {
       body: JSON.stringify({ username: u, password: p })
     });
     const data = await res.json();
-    if (data.success && (data.user.role === 'admin' || data.user.role === 'pm')) {
+    if (data.success && (data.user.role === 'admin' || data.user.role === 'pm' || data.user.role === 'staff')) {
       localStorage.setItem("pet_admin_session", "true");
-      localStorage.setItem("pet_admin_pass", p);
-      ADMIN_PASS = p;
+      localStorage.setItem("pet_admin_role", data.user.role);
+      localStorage.setItem("pet_admin_user", data.user.username);
+      localStorage.setItem("pet_admin_name", data.user.full_name || data.user.username);
+      if (data.user.role === 'admin') {
+        localStorage.setItem("pet_admin_pass", p);
+        ADMIN_PASS = p;
+      }
       showAdmin();
-      toast(`✅ Đăng nhập Admin thành công (Xác thực Neon Cloud PostgreSQL)!`);
+      const roleLabel = data.user.role === 'staff' ? 'Nhân viên trực quầy (Staff)' : 'Quản trị viên (Admin)';
+      toast(`✅ Đăng nhập thành công với vai trò ${roleLabel} (Neon Cloud)!`);
       return;
     }
   } catch (e) {
     console.warn("Neon API offline or network issue, using local check:", e);
   }
 
-  // 2. Fallback kiểm tra cục bộ
+  // 2. Fallback kiểm tra cục bộ cho cả Admin & Staff
   if (u.toLowerCase() === ADMIN_USER.toLowerCase() && p === ADMIN_PASS) {
     localStorage.setItem("pet_admin_session", "true");
+    localStorage.setItem("pet_admin_role", "admin");
+    localStorage.setItem("pet_admin_user", "admin");
+    localStorage.setItem("pet_admin_name", "Quản trị viên King Pet");
     showAdmin();
     toast("✅ Đăng nhập Admin thành công!");
+  } else if (u.toLowerCase() === "staff" && (p === "123456" || p === "staff")) {
+    localStorage.setItem("pet_admin_session", "true");
+    localStorage.setItem("pet_admin_role", "staff");
+    localStorage.setItem("pet_admin_user", "staff");
+    localStorage.setItem("pet_admin_name", "Nhân viên trực quầy King Pet");
+    showAdmin();
+    toast("✅ Đăng nhập Nhân viên trực quầy (Staff) thành công!");
   } else {
-    toast(`⚠️ Sai tài khoản hoặc mật khẩu Admin (Demo: admin / ${ADMIN_PASS})`);
+    toast(`⚠️ Sai tài khoản hoặc mật khẩu! (Admin: admin / ${ADMIN_PASS} | Staff: staff / 123456)`);
   }
 }
 
@@ -312,12 +328,52 @@ function showAdmin() {
     app.classList.remove("hidden");
     app.style.display = "block";
   }
+
+  // Phân quyền RBAC (Role-Based Access Control) giữa Admin và Staff
+  const role = localStorage.getItem("pet_admin_role") || "admin";
+  const fullName = localStorage.getItem("pet_admin_name") || (role === 'staff' ? "Nhân viên quầy" : "Trần Quang Thịnh");
+  const badgeEl = document.getElementById("adminUserBadge");
+  const brandSubEl = document.getElementById("adminBrandSub");
+  const adminNotice = document.getElementById("adminCredentialsNotice");
+
+  if (role === 'staff') {
+    // Ẩn các tab đặc quyền chỉ dành cho Admin (Users, SPM Project, Neon Database)
+    document.querySelectorAll(".admin-only-tab").forEach(el => {
+      el.style.display = "none";
+    });
+    if (badgeEl) {
+      badgeEl.innerHTML = `👔 Nhân viên trực quầy • <b>${esc(fullName)}</b> <span style="background:#fef3c7; color:#d97706; padding:2px 8px; border-radius:10px; font-size:11px; margin-left:4px;">Staff</span>`;
+    }
+    if (brandSubEl) {
+      brandSubEl.textContent = "Bàn làm việc Nhân viên trực quầy King Pet";
+    }
+    if (adminNotice) adminNotice.style.display = "none";
+
+    // Mặc định chuyển sang tab Đơn hàng hoặc Đặt lịch cho Staff
+    switchTab("orders");
+  } else {
+    // Quyền Admin: Hiện đầy đủ tất cả các tab
+    document.querySelectorAll(".admin-only-tab").forEach(el => {
+      el.style.display = "";
+    });
+    if (badgeEl) {
+      badgeEl.innerHTML = `👑 Quản trị viên Tối cao • <b>${esc(fullName)}</b> <span style="background:#fee2e2; color:#dc2626; padding:2px 8px; border-radius:10px; font-size:11px; margin-left:4px;">Admin</span>`;
+    }
+    if (brandSubEl) {
+      brandSubEl.textContent = "Hệ thống Quản trị & Điều hành King Pet";
+    }
+    if (adminNotice) adminNotice.style.display = "";
+  }
+
   try { renderDashboard(); } catch (e) { console.error("renderDashboard error:", e); }
   try { renderProductsAdmin(); } catch (e) { console.error("renderProductsAdmin error:", e); }
 }
 
 function adminLogout() {
   localStorage.removeItem("pet_admin_session");
+  localStorage.removeItem("pet_admin_role");
+  localStorage.removeItem("pet_admin_user");
+  localStorage.removeItem("pet_admin_name");
   location.reload();
 }
 
@@ -328,6 +384,7 @@ const titles = {
   dashboard: "Tổng quan hệ thống King Pet (Đồ ăn & Phụ kiện)",
   products: "Quản lý thực đơn đồ ăn & phụ kiện thú cưng",
   orders: "Quản lý đơn đặt hàng",
+  bookings: "Quản lý Lịch hẹn Dịch vụ Thú cưng (Spa & Khám)",
   users: "Tài khoản thành viên",
   categories: "Danh mục đồ ăn & phụ kiện",
   reviews: "Đánh giá khách hàng",
@@ -340,11 +397,13 @@ function switchTab(id) {
   const targetTab = document.getElementById(id);
   if (targetTab) targetTab.classList.add("active");
   document.querySelectorAll(".nav-item").forEach((x) => x.classList.toggle("active", x.dataset.tab === id));
-  document.getElementById("pageTitle").textContent = titles[id] || "Quản trị";
+  const pageTitleEl = document.getElementById("pageTitle");
+  if (pageTitleEl) pageTitleEl.textContent = titles[id] || "Quản trị";
   ({
     dashboard: renderDashboard,
     products: renderProductsAdmin,
     orders: renderOrdersAdmin,
+    bookings: renderBookingsAdmin,
     users: renderUsers,
     categories: renderCategories,
     reviews: renderReviews,
@@ -1190,5 +1249,291 @@ async function syncAllToNeon() {
     toast("✅ Toàn bộ cơ sở dữ liệu đã đồng bộ hoàn hảo với Neon Cloud PostgreSQL!");
   } catch (e) {
     toast("⚠️ Lỗi đồng bộ dữ liệu: " + e.message);
+  }
+}
+
+// ============================================================================
+// QUẢN LÝ LỊCH HẸN DỊCH VỤ SPA & THÚ Y (CHO ADMIN & STAFF)
+// ============================================================================
+let currentBookingFilter = "";
+let adminBookings = [];
+
+async function fetchBookingsData() {
+  try {
+    const res = await fetch('/api/bookings');
+    const data = await res.json();
+    if (Array.isArray(data) && data.length > 0) {
+      adminBookings = data;
+      localStorage.setItem("pet_bookings", JSON.stringify(data));
+      return data;
+    }
+  } catch (e) {
+    console.warn("Could not fetch bookings from server, using local storage:", e);
+  }
+  try {
+    adminBookings = JSON.parse(localStorage.getItem("pet_bookings") || "[]");
+  } catch (e) { adminBookings = []; }
+  return adminBookings;
+}
+
+async function renderBookingsAdmin() {
+  await fetchBookingsData();
+  const tbody = document.getElementById("bookingsTable");
+  if (!tbody) return;
+
+  let list = adminBookings;
+  if (currentBookingFilter) {
+    list = list.filter(b => (b.status || "").toLowerCase() === currentBookingFilter.toLowerCase());
+  }
+
+  // Update filter pill styles
+  const filterPills = {
+    "": "btnFilterBkAll",
+    "Chờ tiếp nhận": "btnFilterBkPending",
+    "Đã xác nhận": "btnFilterBkConfirmed",
+    "Đang phục vụ": "btnFilterBkServing",
+    "Hoàn thành": "btnFilterBkDone"
+  };
+  Object.entries(filterPills).forEach(([status, btnId]) => {
+    const btn = document.getElementById(btnId);
+    if (btn) {
+      if (currentBookingFilter === status) {
+        btn.classList.add("btn-primary");
+        btn.classList.remove("btn-outline");
+      } else {
+        btn.classList.remove("btn-primary");
+        btn.classList.add("btn-outline");
+      }
+    }
+  });
+
+  if (!list.length) {
+    tbody.innerHTML = `<tr><td colspan="8" style="text-align:center; padding:30px; color:#64748b;">Không có lịch hẹn nào ${currentBookingFilter ? `ở trạng thái "${currentBookingFilter}"` : ''}.</td></tr>`;
+    return;
+  }
+
+  tbody.innerHTML = list.map(b => {
+    let badgeColor = "#f59e0b";
+    let badgeBg = "#fef3c7";
+    if (b.status === "Đã xác nhận") { badgeColor = "#2563eb"; badgeBg = "#dbeafe"; }
+    else if (b.status === "Đang phục vụ") { badgeColor = "#7c3aed"; badgeBg = "#ede9fe"; }
+    else if (b.status === "Hoàn thành") { badgeColor = "#16a34a"; badgeBg = "#dcfce7"; }
+    else if (b.status === "Đã hủy") { badgeColor = "#dc2626"; badgeBg = "#fee2e2"; }
+
+    const petIcon = (b.pet_type || '').toLowerCase().includes('mèo') ? '🐈' : '🐕';
+
+    return `
+      <tr>
+        <td><b style="color:#ea580c;">#${esc(b.booking_id || b.id)}</b></td>
+        <td>
+          <div style="font-weight:700; color:#0f172a;">${petIcon} ${esc(b.pet_name)}</div>
+          <small style="color:#64748b;">Giống: ${esc(b.pet_type || 'Chó')}</small>
+        </td>
+        <td>
+          <div style="font-weight:700;">${esc(b.customer_name)}</div>
+          <a href="tel:${esc(b.phone)}" style="color:#2563eb; text-decoration:none; font-size:12px;">📞 ${esc(b.phone)}</a>
+        </td>
+        <td>
+          <span style="font-weight:700; color:#0284c7;">✨ ${esc(b.service_name)}</span>
+          ${b.notes ? `<div style="font-size:11px; color:#64748b; font-style:italic;">Ghi chú: ${esc(b.notes)}</div>` : ''}
+        </td>
+        <td>
+          <div style="font-weight:700; color:#0f172a;">📅 ${esc(b.booking_date)}</div>
+          <div style="color:#ea580c; font-weight:700; font-size:12px;">⏰ ${esc(b.booking_time)}</div>
+        </td>
+        <td><b style="color:#ea580c;">${money(b.price || 0)}</b></td>
+        <td>
+          <span style="background:${badgeBg}; color:${badgeColor}; padding:4px 10px; border-radius:12px; font-weight:800; font-size:12px; display:inline-block;">
+            ${esc(b.status || 'Chờ tiếp nhận')}
+          </span>
+        </td>
+        <td>
+          <div style="display:flex; gap:6px; flex-wrap:wrap;">
+            ${b.status !== "Đã xác nhận" && b.status !== "Hoàn thành" ? `
+              <button onclick="changeBookingStatus('${esc(b.booking_id || b.id)}', 'Đã xác nhận')" style="background:#2563eb; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;" title="Xác nhận lịch">✓ Xác nhận</button>
+            ` : ''}
+            ${b.status === "Đã xác nhận" ? `
+              <button onclick="changeBookingStatus('${esc(b.booking_id || b.id)}', 'Đang phục vụ')" style="background:#7c3aed; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;" title="Bắt đầu phục vụ">✂️ Phục vụ</button>
+            ` : ''}
+            ${b.status === "Đang phục vụ" || b.status === "Đã xác nhận" ? `
+              <button onclick="changeBookingStatus('${esc(b.booking_id || b.id)}', 'Hoàn thành')" style="background:#16a34a; color:#fff; border:none; padding:4px 8px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;" title="Khách đã nhận Boss">★ Xong</button>
+            ` : ''}
+            ${b.status !== "Đã hủy" && b.status !== "Hoàn thành" ? `
+              <button onclick="changeBookingStatus('${esc(b.booking_id || b.id)}', 'Đã hủy')" style="background:#f1f5f9; color:#dc2626; border:1px solid #fca5a5; padding:4px 8px; border-radius:6px; font-size:11px; font-weight:700; cursor:pointer;" title="Hủy lịch">✕</button>
+            ` : ''}
+          </div>
+        </td>
+      </tr>
+    `;
+  }).join('');
+}
+
+function filterBookingsAdmin(status) {
+  currentBookingFilter = status;
+  renderBookingsAdmin();
+}
+
+async function changeBookingStatus(bookingId, newStatus) {
+  const b = adminBookings.find(x => (x.booking_id || x.id) === bookingId);
+  if (b) {
+    b.status = newStatus;
+    localStorage.setItem("pet_bookings", JSON.stringify(adminBookings));
+  }
+
+  try {
+    let localB = JSON.parse(localStorage.getItem("pet_bookings") || "[]");
+    const idx = localB.findIndex(x => (x.booking_id || x.id) === bookingId);
+    if (idx >= 0) {
+      localB[idx].status = newStatus;
+      localStorage.setItem("pet_bookings", JSON.stringify(localB));
+    }
+  } catch (e) {}
+
+  renderBookingsAdmin();
+  toast(`✓ Đã cập nhật trạng thái lịch hẹn #${bookingId} thành "${newStatus}"!`);
+
+  try {
+    await fetch('/api/bookings/update-status', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ booking_id: bookingId, status: newStatus })
+    });
+  } catch (e) {
+    console.warn("Could not sync booking status to server:", e);
+  }
+}
+
+function openAddBookingModalAdmin() {
+  openModal(`
+    <div style="font-family: 'Plus Jakarta Sans', system-ui, sans-serif; color: #1e293b; max-width: 520px;">
+      <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1.5px solid #e2e8f0; padding-bottom: 12px; margin-bottom: 16px;">
+        <div style="display: flex; align-items: center; gap: 10px;">
+          <span style="font-size: 26px;">📅</span>
+          <div>
+            <h3 style="margin: 0; font-size: 18px; font-weight: 800; color: #0f172a;">Đặt Lịch Hẹn Tại Quầy (Staff/Admin)</h3>
+            <p style="margin: 2px 0 0; font-size: 12px; color: #64748b;">Tiếp nhận khách hàng trực tiếp hoặc qua điện thoại</p>
+          </div>
+        </div>
+        <button onclick="closeModal()" style="background: none; border: none; font-size: 22px; cursor: pointer; color: #94a3b8;">✕</button>
+      </div>
+
+      <form onsubmit="submitAddBookingAdmin(event)" style="display: flex; flex-direction: column; gap: 12px;">
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div>
+            <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">Họ tên khách hàng *</label>
+            <input id="adBkCust" required placeholder="Nguyễn Văn A" style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13px; box-sizing: border-box;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">Số điện thoại *</label>
+            <input id="adBkPhone" required placeholder="0901 234 567" style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13px; box-sizing: border-box;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div>
+            <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">Tên Boss cưng *</label>
+            <input id="adBkPetName" required placeholder="Corgi Bắp" style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13px; box-sizing: border-box;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">Loài thú cưng</label>
+            <select id="adBkPetType" style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13px; box-sizing: border-box;">
+              <option value="Chó">🐕 Chó cưng</option>
+              <option value="Mèo">🐈 Mèo cưng</option>
+              <option value="Khác">🐾 Thú cưng khác</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">Gói dịch vụ</label>
+          <select id="adBkService" style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13px; box-sizing: border-box;">
+            <option value="Tắm & Spa Hoàng Gia" data-price="150000">🛁 Tắm & Spa Hoàng Gia (150.000đ)</option>
+            <option value="Cắt tỉa lông & Tạo kiểu" data-price="250000">✂️ Cắt tỉa lông & Tạo kiểu (250.000đ)</option>
+            <option value="Khám sức khỏe & Tiêm vaccine" data-price="200000">🩺 Khám sức khỏe & Tiêm vaccine (200.000đ)</option>
+            <option value="Khách sạn Pet Hotel (1 ngày)" data-price="180000">🏨 Khách sạn Pet Hotel (180.000đ/ngày)</option>
+          </select>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px;">
+          <div>
+            <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">Ngày hẹn *</label>
+            <input id="adBkDate" type="date" required style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13px; box-sizing: border-box;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">Giờ hẹn</label>
+            <select id="adBkTime" style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13px; box-sizing: border-box;">
+              <option value="08:30">08:30</option>
+              <option value="09:30" selected>09:30</option>
+              <option value="10:30">10:30</option>
+              <option value="14:00">14:00</option>
+              <option value="15:30">15:30</option>
+              <option value="17:00">17:00</option>
+            </select>
+          </div>
+        </div>
+
+        <div>
+          <label style="display: block; font-size: 12px; font-weight: 700; margin-bottom: 4px;">Ghi chú đặc biệt (cân nặng, tính cách)</label>
+          <input id="adBkNotes" placeholder="VD: Bé hiền, nặng 6kg, dặn sấy kỹ lông..." style="width: 100%; padding: 8px 12px; border: 1.5px solid #cbd5e1; border-radius: 8px; font-size: 13px; box-sizing: border-box;">
+        </div>
+
+        <button type="submit" class="primary full" style="margin-top: 6px; padding: 11px; font-size: 14px; font-weight: 800; border-radius: 10px; cursor: pointer; background: #ea580c; color: #fff; border: none;">
+          ✅ Tạo Lịch Hẹn & Xác Nhận
+        </button>
+      </form>
+    </div>
+  `);
+
+  const dInput = document.getElementById("adBkDate");
+  if (dInput) {
+    const today = new Date().toISOString().split('T')[0];
+    dInput.value = today;
+    dInput.min = today;
+  }
+}
+
+async function submitAddBookingAdmin(e) {
+  e.preventDefault();
+  const customer = (document.getElementById("adBkCust")?.value || "").trim();
+  const phone = (document.getElementById("adBkPhone")?.value || "").trim();
+  const petName = (document.getElementById("adBkPetName")?.value || "").trim();
+  const petType = document.getElementById("adBkPetType")?.value || "Chó";
+  const svcEl = document.getElementById("adBkService");
+  const serviceName = svcEl?.value || "Tắm & Spa Hoàng Gia";
+  const price = parseInt(svcEl?.selectedOptions[0]?.getAttribute("data-price") || "150000", 10);
+  const bookingDate = document.getElementById("adBkDate")?.value;
+  const bookingTime = document.getElementById("adBkTime")?.value || "09:30";
+  const notes = (document.getElementById("adBkNotes")?.value || "").trim();
+
+  const bookingId = "BK" + Math.floor(1000 + Math.random() * 9000);
+  const newBooking = {
+    booking_id: bookingId,
+    customer_name: customer,
+    phone: phone,
+    pet_name: petName,
+    pet_type: petType,
+    service_name: serviceName,
+    booking_date: bookingDate,
+    booking_time: bookingTime,
+    price: price,
+    status: "Đã xác nhận",
+    notes: notes,
+    created_at: new Date().toISOString()
+  };
+
+  adminBookings.unshift(newBooking);
+  localStorage.setItem("pet_bookings", JSON.stringify(adminBookings));
+  closeModal();
+  renderBookingsAdmin();
+  toast(`🎉 Đã thêm thành công lịch hẹn #${bookingId} cho Boss ${petName}!`);
+
+  try {
+    await fetch('/api/bookings', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(newBooking)
+    });
+  } catch (err) {
+    console.warn("Could not sync new booking to server:", err);
   }
 }

@@ -1875,6 +1875,7 @@ window.addEventListener("DOMContentLoaded", () => {
   renderProducts();
   renderReviews();
   renderOrders();
+  renderBookings();
   renderAccount();
   updateCartBadge();
   updateWishlistUI();
@@ -2607,4 +2608,335 @@ function openDemoGuideModal() {
   `;
 
   modal.classList.add("active");
+}
+
+// ============================================================================
+// DỊCH VỤ ĐẶT LỊCH THÚ CƯNG (SPA, CẮT TỈA, KHÁM THÚ Y, PET HOTEL)
+// ============================================================================
+const DEFAULT_BOOKINGS = [
+  {
+    id: "BK8921",
+    customer: "Lường Văn Thiện",
+    phone: "0901234567",
+    petName: "Bé Miu",
+    petType: "Mèo",
+    weight: 4.5,
+    service: "Tắm & Spa Hoàng Gia",
+    date: "27/11/2026",
+    time: "09:30 - 10:30",
+    price: 150000,
+    status: "Đã xác nhận",
+    note: "Bé hơi sợ nước, vui lòng massage nhẹ nhàng"
+  },
+  {
+    id: "BK8922",
+    customer: "Phan Thái Thuần",
+    phone: "0988776655",
+    petName: "Cún Lu",
+    petType: "Chó",
+    weight: 8.0,
+    service: "Cắt Tỉa & Tạo Kiểu",
+    date: "27/11/2026",
+    time: "14:00 - 15:30",
+    price: 250000,
+    status: "Chờ tiếp nhận",
+    note: "Tỉa kiểu gấu Teddy tròn xoe"
+  }
+];
+
+let bookings = JSON.parse(localStorage.getItem("pet_bookings") || "null");
+if (!bookings || bookings.length === 0) {
+  bookings = DEFAULT_BOOKINGS;
+  localStorage.setItem("pet_bookings", JSON.stringify(bookings));
+}
+
+function openBookingModal(preselectedService = "Tắm & Spa Hoàng Gia", preselectedPrice = 150000) {
+  const modal = document.getElementById("modal");
+  const box = document.getElementById("modalContent");
+  if (!modal || !box) return;
+
+  const defaultCustomer = user ? user.name || user.username : "";
+  const defaultPhone = user ? user.phone || "" : "";
+  const defaultPet = user ? user.petName || "" : "";
+
+  // Set minimum date to today
+  const today = new Date().toISOString().split("T")[0];
+
+  box.className = "modal modal-box booking-modal-content";
+  box.style.background = "#ffffff";
+  box.style.border = "1.5px solid #e2e8f0";
+  box.style.borderRadius = "24px";
+  box.style.boxShadow = "0 25px 70px -15px rgba(15, 23, 42, 0.45)";
+  box.style.maxWidth = "560px";
+  box.style.padding = "24px";
+
+  box.innerHTML = `
+    <button class="modal-close-btn" onclick="closeModal()" title="Đóng cửa sổ">✕</button>
+    
+    <div style="text-align: center; margin-bottom: 20px;">
+      <span style="font-size: 34px;">📅</span>
+      <h2 style="margin: 6px 0 4px; font-size: 21px; font-weight: 800; color: #0f172a;">Đặt Lịch Dịch Vụ Cho Boss</h2>
+      <p style="margin: 0; font-size: 13px; color: #64748b;">Hệ thống chăm sóc thú cưng chuẩn Hoàng Gia • Cam kết 100% hài lòng</p>
+    </div>
+
+    <form onsubmit="event.preventDefault(); submitBooking();" style="display: flex; flex-direction: column; gap: 13px;">
+      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #334155;">Họ tên Sen *</label>
+          <input id="bkCustomer" type="text" placeholder="Nguyễn Văn A" value="${esc(defaultCustomer)}" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 13.5px;">
+        </div>
+        <div class="form-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #334155;">Số điện thoại *</label>
+          <input id="bkPhone" type="tel" placeholder="0901234567" value="${esc(defaultPhone)}" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 13.5px;">
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #334155;">Tên Boss cưng *</label>
+          <input id="bkPetName" type="text" placeholder="Ví dụ: Bé Miu" value="${esc(defaultPet)}" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 13.5px;">
+        </div>
+        <div class="form-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #334155;">Loài *</label>
+          <select id="bkPetType" style="width: 100%; padding: 9px 10px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 13.5px; background: #fff;">
+            <option value="Mèo">🐈 Mèo</option>
+            <option value="Chó">🐕 Chó</option>
+            <option value="Khác">🐾 Thú cưng khác</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #334155;">Cân nặng (kg)</label>
+          <input id="bkWeight" type="number" step="0.5" placeholder="4.5" value="4.5" style="width: 100%; padding: 9px 10px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 13.5px;">
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size: 12.5px; font-weight: 700; color: #334155;">Chọn gói Dịch vụ *</label>
+        <select id="bkService" onchange="updateBookingPriceHint()" style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 13.5px; background: #fff; font-weight: 600;">
+          <option value="Tắm & Spa Hoàng Gia" data-price="150000" ${preselectedService === 'Tắm & Spa Hoàng Gia' ? 'selected' : ''}>🛁 Tắm &amp; Spa Hoàng Gia — Từ 150.000đ</option>
+          <option value="Cắt Tỉa & Tạo Kiểu" data-price="250000" ${preselectedService === 'Cắt Tỉa & Tạo Kiểu' ? 'selected' : ''}>✂️ Cắt Tỉa &amp; Tạo Kiểu — Từ 250.000đ</option>
+          <option value="Khám & Tiêm Vaccine" data-price="100000" ${preselectedService === 'Khám & Tiêm Vaccine' ? 'selected' : ''}>🩺 Khám Sức Khỏe &amp; Tiêm Vaccine — Từ 100.000đ</option>
+          <option value="Khách Sạn Pet Hotel" data-price="120000" ${preselectedService === 'Khách Sạn Pet Hotel' ? 'selected' : ''}>🏨 Khách Sạn Pet Hotel — 120.000đ / ngày</option>
+          <option value="Tư Vấn Dinh Dưỡng Thú Y" data-price="0" ${preselectedService === 'Tư Vấn Dinh Dưỡng Thú Y' ? 'selected' : ''}>🥗 Tư Vấn Dinh Dưỡng Thú Y — Miễn phí</option>
+        </select>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 1.2fr 1fr; gap: 12px;">
+        <div class="form-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #334155;">Ngày hẹn *</label>
+          <input id="bkDate" type="date" min="${today}" value="${today}" required style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 13.5px;">
+        </div>
+        <div class="form-group">
+          <label style="font-size: 12.5px; font-weight: 700; color: #334155;">Khung giờ *</label>
+          <select id="bkTime" style="width: 100%; padding: 9px 10px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 13.5px; background: #fff;">
+            <option value="08:30 - 09:30">08:30 - 09:30 (Sáng)</option>
+            <option value="10:00 - 11:00">10:00 - 11:00 (Sáng)</option>
+            <option value="14:00 - 15:00" selected>14:00 - 15:00 (Chiều)</option>
+            <option value="16:00 - 17:00">16:00 - 17:00 (Chiều)</option>
+            <option value="18:00 - 19:00">18:00 - 19:00 (Tối)</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label style="font-size: 12.5px; font-weight: 700; color: #334155;">Ghi chú đặc biệt / Tình trạng Boss</label>
+        <textarea id="bkNotes" rows="2" placeholder="Ví dụ: Bé nhát người lạ, cần cắt lông đuôi tròn..." style="width: 100%; padding: 9px 12px; border: 1.5px solid #cbd5e1; border-radius: 10px; font-size: 13px;"></textarea>
+      </div>
+
+      <div id="bkPriceBanner" style="background: #fff7ed; border: 1px dashed #ea580c; border-radius: 12px; padding: 10px 14px; display: flex; justify-content: space-between; align-items: center; margin-top: 4px;">
+        <span style="font-size: 13px; color: #9a3412;">Giá dịch vụ ước tính:</span>
+        <strong id="bkEstimatedPrice" style="font-size: 16px; color: #ea580c;">${money(preselectedPrice)}</strong>
+      </div>
+
+      <button type="submit" class="btn btn-primary btn-large full" style="margin-top: 8px; padding: 13px; font-size: 15px; font-weight: 800; background: #ea580c; border-radius: 12px; cursor: pointer; border: none; color: #fff; box-shadow: 0 4px 14px rgba(234, 88, 12, 0.35);">
+        ✓ Xác Nhận Đặt Lịch Ngay
+      </button>
+    </form>
+  `;
+
+  modal.classList.add("active");
+}
+
+function updateBookingPriceHint() {
+  const sel = document.getElementById("bkService");
+  const priceHint = document.getElementById("bkEstimatedPrice");
+  if (!sel || !priceHint) return;
+  const opt = sel.options[sel.selectedIndex];
+  const p = parseInt(opt.getAttribute("data-price") || "0", 10);
+  priceHint.innerText = p > 0 ? money(p) : "Miễn phí";
+}
+
+function submitBooking() {
+  const customer = (document.getElementById("bkCustomer")?.value || "").trim();
+  const phone = (document.getElementById("bkPhone")?.value || "").trim();
+  const petName = (document.getElementById("bkPetName")?.value || "").trim();
+  const petType = document.getElementById("bkPetType")?.value || "Mèo";
+  const weight = parseFloat(document.getElementById("bkWeight")?.value || "4.5");
+  const serviceSel = document.getElementById("bkService");
+  const service = serviceSel ? serviceSel.value : "Tắm & Spa Hoàng Gia";
+  const opt = serviceSel ? serviceSel.options[serviceSel.selectedIndex] : null;
+  const price = parseInt(opt?.getAttribute("data-price") || "150000", 10);
+  const rawDate = document.getElementById("bkDate")?.value || "";
+  const time = document.getElementById("bkTime")?.value || "14:00 - 15:00";
+  const notes = (document.getElementById("bkNotes")?.value || "").trim();
+
+  if (!customer || !phone || !petName || !rawDate) {
+    toast("Vui lòng điền đầy đủ các thông tin bắt buộc (*)", "warning");
+    return;
+  }
+
+  // Format date to DD/MM/YYYY
+  const parts = rawDate.split("-");
+  const dateFormatted = parts.length === 3 ? `${parts[2]}/${parts[1]}/${parts[0]}` : rawDate;
+
+  const bookingId = "BK" + Math.floor(1000 + Math.random() * 9000);
+  const newBooking = {
+    id: bookingId,
+    booking_id: bookingId,
+    customer,
+    customer_name: customer,
+    phone,
+    petName,
+    pet_name: petName,
+    petType,
+    pet_type: petType,
+    weight,
+    service,
+    service_name: service,
+    date: dateFormatted,
+    booking_date: dateFormatted,
+    time,
+    booking_time: time,
+    price,
+    notes,
+    status: "Chờ tiếp nhận",
+    createdAt: Date.now()
+  };
+
+  bookings.unshift(newBooking);
+  localStorage.setItem("pet_bookings", JSON.stringify(bookings));
+
+  // Sync to Neon Cloud Database
+  fetch("/api/bookings", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newBooking)
+  }).then(r => r.json()).then(res => {
+    console.log("Synced booking to Neon Cloud:", res);
+  }).catch(e => {
+    console.warn("Neon booking sync offline fallback:", e);
+  });
+
+  closeModal();
+  renderBookings();
+  toast(`Đặt lịch thành công! Mã hẹn của Boss là: ${bookingId}`, "success");
+
+  // Show detailed success card
+  setTimeout(() => {
+    showBookingSuccessModal(newBooking);
+  }, 300);
+}
+
+function showBookingSuccessModal(b) {
+  const modal = document.getElementById("modal");
+  const box = document.getElementById("modalContent");
+  if (!modal || !box) return;
+
+  box.className = "modal modal-box booking-success-content";
+  box.style.background = "#ffffff";
+  box.style.border = "1.5px solid #10b981";
+  box.style.borderRadius = "24px";
+  box.style.boxShadow = "0 25px 70px -15px rgba(16, 185, 129, 0.4)";
+  box.style.maxWidth = "500px";
+  box.style.padding = "28px";
+  box.style.textAlign = "center";
+
+  box.innerHTML = `
+    <div style="font-size: 48px; margin-bottom: 10px;">🎉</div>
+    <h2 style="margin: 0 0 6px; font-size: 22px; font-weight: 800; color: #0f172a;">Đặt Lịch Dịch Vụ Thành Công!</h2>
+    <p style="margin: 0 0 18px; font-size: 13.5px; color: #64748b;">Nhân viên King Pet sẽ gọi điện thoại xác nhận lịch hẹn trong ít phút.</p>
+
+    <div style="background: #f8fafc; border: 1.5px solid #e2e8f0; border-radius: 16px; padding: 18px; text-align: left; margin-bottom: 20px; font-size: 13.5px; line-height: 1.6;">
+      <div style="display: flex; justify-content: space-between; border-bottom: 1px dashed #cbd5e1; padding-bottom: 8px; margin-bottom: 8px;">
+        <span style="color: #64748b;">Mã lịch hẹn:</span>
+        <strong style="color: #ea580c; font-size: 16px;">${b.id}</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+        <span style="color: #64748b;">Dịch vụ chăm sóc:</span>
+        <strong style="color: #0f172a;">${esc(b.service)}</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+        <span style="color: #64748b;">Boss cưng:</span>
+        <span style="font-weight: 700; color: #0f172a;">${esc(b.petName)} (${esc(b.petType)})</span>
+      </div>
+      <div style="display: flex; justify-content: space-between; margin-bottom: 6px;">
+        <span style="color: #64748b;">Thời gian hẹn:</span>
+        <strong style="color: #0d9488;">${b.time} — ${b.date}</strong>
+      </div>
+      <div style="display: flex; justify-content: space-between; border-top: 1px dashed #cbd5e1; padding-top: 8px; margin-top: 8px;">
+        <span style="color: #64748b;">Chi phí dự kiến:</span>
+        <strong style="color: #ea580c; font-size: 16px;">${b.price > 0 ? money(b.price) : 'Miễn phí'}</strong>
+      </div>
+    </div>
+
+    <button class="btn btn-primary full" onclick="closeModal(); location.hash='booking';" style="width: 100%; padding: 12px; font-weight: 800; border-radius: 12px;">
+      Xem Lịch Hẹn Đã Đặt
+    </button>
+  `;
+  modal.classList.add("active");
+}
+
+function renderBookings() {
+  const container = document.getElementById("myBookingsBox");
+  if (!container) return;
+
+  if (!bookings || bookings.length === 0) {
+    container.innerHTML = `
+      <div style="text-align: center; padding: 24px; background: #fff; border: 1.5px dashed #cbd5e1; border-radius: 16px; color: #64748b;">
+        <span style="font-size: 32px; display: block; margin-bottom: 6px;">🐾</span>
+        <p style="margin: 0; font-size: 14px;">Bạn chưa có lịch hẹn nào. Hãy đặt lịch chăm sóc Boss ngay hôm nay!</p>
+      </div>
+    `;
+    return;
+  }
+
+  container.innerHTML = `
+    <div style="background: #ffffff; border: 1.5px solid #e2e8f0; border-radius: 20px; padding: 24px; box-shadow: 0 4px 16px rgba(0,0,0,0.04);">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1.5px solid #f1f5f9; padding-bottom: 12px;">
+        <div style="display: flex; align-items: center; gap: 8px;">
+          <span style="font-size: 22px;">📋</span>
+          <h3 style="margin: 0; font-size: 17px; font-weight: 800; color: #0f172a;">Lịch Hẹn Của Boss Gần Đây</h3>
+        </div>
+        <span style="background: #fff7ed; color: #ea580c; font-size: 12px; font-weight: 700; padding: 4px 10px; border-radius: 20px; border: 1px solid #fdba74;">
+          ${bookings.length} Lịch hẹn
+        </span>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px;">
+        ${bookings.map(b => {
+          let statusBadge = `<span style="background:#fef3c7; color:#b45309; padding:4px 10px; border-radius:20px; font-size:11.5px; font-weight:700;">⏳ Chờ tiếp nhận</span>`;
+          if (b.status === "Đã xác nhận") {
+            statusBadge = `<span style="background:#ecfdf5; color:#047857; padding:4px 10px; border-radius:20px; font-size:11.5px; font-weight:700;">✓ Đã xác nhận</span>`;
+          } else if (b.status === "Đang phục vụ") {
+            statusBadge = `<span style="background:#eff6ff; color:#1d4ed8; padding:4px 10px; border-radius:20px; font-size:11.5px; font-weight:700;">✂️ Đang phục vụ</span>`;
+          } else if (b.status === "Hoàn thành") {
+            statusBadge = `<span style="background:#f0fdf4; color:#15803d; padding:4px 10px; border-radius:20px; font-size:11.5px; font-weight:700;">★ Hoàn thành</span>`;
+          }
+
+          return `
+            <div style="background: #f8fafc; border: 1px solid #e2e8f0; border-radius: 14px; padding: 16px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px;">
+                <span style="font-size: 12px; color: #64748b; font-weight: 700;">MÃ HẸN: <b style="color: #ea580c;">${b.id}</b></span>
+                ${statusBadge}
+              </div>
+              <div style="font-size: 15px; font-weight: 800; color: #0f172a; margin-bottom: 4px;">${esc(b.service)}</div>
+              <div style="font-size: 13px; color: #475569; margin-bottom: 6px;">Boss: <b>${esc(b.petName)}</b> (${esc(b.petType || 'Thú cưng')}) • Sen: ${esc(b.customer)}</div>
+              <div style="font-size: 12.5px; color: #0d9488; font-weight: 700;">⏰ ${b.time} — Ngày ${b.date}</div>
+              ${b.note ? `<div style="font-size: 12px; color: #64748b; font-style: italic; margin-top: 6px;">"${esc(b.note)}"</div>` : ''}
+            </div>
+          `;
+        }).join('')}
+      </div>
+    </div>
+  `;
 }

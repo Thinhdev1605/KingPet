@@ -132,10 +132,11 @@
         <b id="cartCount" class="badge-bubble">0</b>
       </button>
 
-      <!-- Neon Cloud DB Status Badge -->
-      <a href="admin.html" target="_blank" style="text-decoration:none; display:flex; align-items:center; gap:5px; background:#ecfdf5; border:1px solid #10b981; border-radius:20px; padding:4px 10px; font-size:11.5px; font-weight:700; color:#047857;" title="Đã kết nối máy chủ Neon PostgreSQL 18.7 (AWS US-East-2 Ohio)">
-        <span>🟢</span> <span class="hide-tablet">Neon DB</span>
-      </a>
+      <!-- Pet Service Booking Action Button -->
+      <button class="action-btn booking-nav-btn" onclick="openBookingModal()" title="Đặt lịch Spa, Cắt tỉa lông & Khám thú y cho Boss" style="background:#fff7ed; border:1.5px solid #ea580c; border-radius:12px; padding:6px 12px; display:flex; align-items:center; gap:6px; cursor:pointer; font-weight:700; font-size:13px; color:#ea580c; transition:all 0.2s ease;">
+        <span class="btn-icon">📅</span>
+        <span class="btn-text hide-tablet">Đặt Lịch</span>
+      </button>
 
       <!-- Account / Profile Dropdown Action -->
       <div class="account-nav-wrap" id="accountNavWrap">
@@ -161,6 +162,7 @@
       <a href="#products" class="sub-nav-pill" onclick="filterCategory('Phụ kiện'); return false;">🦮 Vòng cổ & Dây dắt</a>
       <a href="#products" class="sub-nav-pill" onclick="filterCategory('Bát ăn & Khay'); return false;">🥣 Bát ăn & Khay cát</a>
       <a href="#products" class="sub-nav-pill" onclick="filterCategory('Vệ sinh'); return false;">🛁 Sữa tắm & Vệ sinh</a>
+      <a href="#booking" class="sub-nav-pill" style="border:1.5px solid #ea580c; color:#ea580c; font-weight:800; background:#fff7ed;">📅 Đặt Lịch Dịch Vụ</a>
       <a href="#flashSale" class="sub-nav-pill hot-deal-pill">🔥 Flash Sale Sốc</a>
     </div>
   </nav>
@@ -439,6 +441,58 @@
       </button>
     </div>
     <div id="clientReviewsBox" class="reviews-grid"></div>
+  </section>
+
+  <!-- PET SERVICE BOOKING (ĐẶT LỊCH SPA, CẮT TỈA, KHÁM THÚ Y) -->
+  <section id="booking" class="container booking-section" style="margin-top: 50px; margin-bottom: 50px;">
+    <div class="section-header">
+      <div class="header-left">
+        <span class="sub-kicker">ROYAL SPA &amp; PET CARE SERVICE</span>
+        <h2 class="section-title">Đặt Lịch Dịch Vụ Cho Boss</h2>
+        <p class="section-desc">Hệ thống chăm sóc thú cưng chuẩn Hoàng Gia: Tắm Spa thảo dược, Cắt tỉa tạo kiểu lông, Khám sức khỏe &amp; Khách sạn thú cưng.</p>
+      </div>
+      <button class="btn btn-primary" onclick="openBookingModal()">
+        📅 Đặt Lịch Hẹn Ngay
+      </button>
+    </div>
+
+    <!-- Booking Service Cards Preview -->
+    <div class="booking-cards-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 18px; margin-bottom: 28px;">
+      <div class="service-preview-card" style="background:#fff; border:1.5px solid #e2e8f0; border-radius:18px; padding:22px; box-shadow:0 4px 16px rgba(0,0,0,0.04); text-align:center; transition:all 0.2s ease;">
+        <div style="font-size:38px; margin-bottom:10px;">🛁</div>
+        <h3 style="font-size:17px; font-weight:800; color:#0f172a; margin:0 0 6px;">Tắm &amp; Spa Hoàng Gia</h3>
+        <p style="font-size:12.5px; color:#64748b; line-height:1.45; margin:0 0 14px;">Tắm thảo dược dưỡng lông khử mùi, vắt tuyến hôi, sấy chải bông lông, vệ sinh tai móng.</p>
+        <div style="font-weight:900; color:#ea580c; font-size:16px; margin-bottom:14px;">Từ 150.000đ</div>
+        <button class="btn btn-outline full" onclick="openBookingModal('Tắm &amp; Spa Hoàng Gia', 150000)" style="width:100%; font-size:13px; font-weight:700;">Đặt dịch vụ này</button>
+      </div>
+
+      <div class="service-preview-card" style="background:#fff; border:1.5px solid #e2e8f0; border-radius:18px; padding:22px; box-shadow:0 4px 16px rgba(0,0,0,0.04); text-align:center; transition:all 0.2s ease;">
+        <div style="font-size:38px; margin-bottom:10px;">✂️</div>
+        <h3 style="font-size:17px; font-weight:800; color:#0f172a; margin:0 0 6px;">Cắt Tỉa &amp; Tạo Kiểu</h3>
+        <p style="font-size:12.5px; color:#64748b; line-height:1.45; margin:0 0 14px;">Cắt tỉa nghệ thuật theo yêu cầu (Gấu Teddy, Boo, Sư tử), cạo đệm chân, dưỡng lông bóng mượt.</p>
+        <div style="font-weight:900; color:#ea580c; font-size:16px; margin-bottom:14px;">Từ 250.000đ</div>
+        <button class="btn btn-outline full" onclick="openBookingModal('Cắt Tỉa &amp; Tạo Kiểu', 250000)" style="width:100%; font-size:13px; font-weight:700;">Đặt dịch vụ này</button>
+      </div>
+
+      <div class="service-preview-card" style="background:#fff; border:1.5px solid #e2e8f0; border-radius:18px; padding:22px; box-shadow:0 4px 16px rgba(0,0,0,0.04); text-align:center; transition:all 0.2s ease;">
+        <div style="font-size:38px; margin-bottom:10px;">🩺</div>
+        <h3 style="font-size:17px; font-weight:800; color:#0f172a; margin:0 0 6px;">Khám &amp; Tiêm Vaccine</h3>
+        <p style="font-size:12.5px; color:#64748b; line-height:1.45; margin:0 0 14px;">Khám tổng quát, tiêm phòng dại/7 bệnh, tẩy giun sán và kiểm tra da liễu chuẩn bác sĩ thú y.</p>
+        <div style="font-weight:900; color:#ea580c; font-size:16px; margin-bottom:14px;">Từ 100.000đ</div>
+        <button class="btn btn-outline full" onclick="openBookingModal('Khám &amp; Tiêm Vaccine', 100000)" style="width:100%; font-size:13px; font-weight:700;">Đặt dịch vụ này</button>
+      </div>
+
+      <div class="service-preview-card" style="background:#fff; border:1.5px solid #e2e8f0; border-radius:18px; padding:22px; box-shadow:0 4px 16px rgba(0,0,0,0.04); text-align:center; transition:all 0.2s ease;">
+        <div style="font-size:38px; margin-bottom:10px;">🏨</div>
+        <h3 style="font-size:17px; font-weight:800; color:#0f172a; margin:0 0 6px;">Khách Sạn Pet Hotel</h3>
+        <p style="font-size:12.5px; color:#64748b; line-height:1.45; margin:0 0 14px;">Phòng máy lạnh độc lập 24/7, camera theo dõi trực tiếp, ăn hạt Pate King Pet cao cấp mỗi ngày.</p>
+        <div style="font-weight:900; color:#ea580c; font-size:16px; margin-bottom:14px;">120.000đ / ngày</div>
+        <button class="btn btn-outline full" onclick="openBookingModal('Khách Sạn Pet Hotel', 120000)" style="width:100%; font-size:13px; font-weight:700;">Đặt dịch vụ này</button>
+      </div>
+    </div>
+
+    <!-- Active Bookings Container for Current User -->
+    <div id="myBookingsBox"></div>
   </section>
 
   <!-- MY ORDERS TRACKING -->

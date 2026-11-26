@@ -62,7 +62,8 @@ class KingPetHandler(SimpleHTTPRequestHandler):
                       (SELECT COUNT(*) FROM pet_categories) as categories,
                       (SELECT COUNT(*) FROM pet_users) as users,
                       (SELECT COUNT(*) FROM pet_orders) as orders,
-                      (SELECT COUNT(*) FROM pet_reviews) as reviews;
+                      (SELECT COUNT(*) FROM pet_reviews) as reviews,
+                      (SELECT COUNT(*) FROM pet_bookings) as bookings;
                     """)
                     row = cur.fetchone()
                     cur.execute("SELECT version();")
@@ -83,7 +84,8 @@ class KingPetHandler(SimpleHTTPRequestHandler):
                             "categories": row["categories"],
                             "users": row["users"],
                             "orders": row["orders"],
-                            "reviews": row["reviews"]
+                            "reviews": row["reviews"],
+                            "bookings": row["bookings"]
                         },
                         "version": ver
                     })
@@ -153,6 +155,17 @@ class KingPetHandler(SimpleHTTPRequestHandler):
                     cur.close()
                     conn.close()
                     self._send_json(spm['value'] if spm else {})
+                    return
+
+                # 8. Pet Service Bookings List
+                elif path == '/api/bookings':
+                    conn = get_db()
+                    cur = conn.cursor()
+                    cur.execute("SELECT * FROM pet_bookings ORDER BY created_at DESC;")
+                    bookings = cur.fetchall()
+                    cur.close()
+                    conn.close()
+                    self._send_json(bookings)
                     return
 
                 else:
@@ -395,6 +408,52 @@ class KingPetHandler(SimpleHTTPRequestHandler):
                     cur.close()
                     conn.close()
                     self._send_json({"success": True, "deleted_id": pid})
+                    return
+
+                # I. Pet Service Booking (Create/Update)
+                elif path == '/api/bookings':
+                    booking_id = data.get('booking_id') or ('BK' + str(int(time.time()))[-4:])
+                    customer = data.get('customer_name') or 'Khách hàng'
+                    phone = data.get('phone') or ''
+                    pet_name = data.get('pet_name') or 'Boss Cưng'
+                    pet_type = data.get('pet_type') or 'Chó'
+                    service_name = data.get('service_name') or 'Tắm & Spa Hoàng Gia'
+                    booking_date = data.get('booking_date') or str(datetime.date.today())
+                    booking_time = data.get('booking_time') or '09:00'
+                    price = int(data.get('price') or 150000)
+                    status = data.get('status') or 'Chờ xác nhận'
+                    notes = data.get('notes') or ''
+
+                    conn = get_db()
+                    cur = conn.cursor()
+                    cur.execute("""
+                    INSERT INTO pet_bookings (booking_id, customer_name, phone, pet_name, pet_type, service_name, booking_date, booking_time, price, status, notes)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    ON CONFLICT (booking_id) DO UPDATE SET 
+                        status = EXCLUDED.status,
+                        booking_date = EXCLUDED.booking_date,
+                        booking_time = EXCLUDED.booking_time
+                    RETURNING *;
+                    """, (booking_id, customer, phone, pet_name, pet_type, service_name, booking_date, booking_time, price, status, notes))
+                    new_b = cur.fetchone()
+                    conn.commit()
+                    cur.close()
+                    conn.close()
+                    self._send_json({"success": True, "booking": new_b})
+                    return
+
+                # J. Update Booking Status
+                elif path == '/api/bookings/update-status':
+                    booking_id = data.get('booking_id')
+                    status = data.get('status')
+                    conn = get_db()
+                    cur = conn.cursor()
+                    cur.execute("UPDATE pet_bookings SET status = %s WHERE booking_id = %s RETURNING *;", (status, booking_id))
+                    updated = cur.fetchone()
+                    conn.commit()
+                    cur.close()
+                    conn.close()
+                    self._send_json({"success": True, "booking": updated})
                     return
 
                 else:

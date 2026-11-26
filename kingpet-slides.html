@@ -7,27 +7,42 @@
     <title>Báo Cáo Cuối Kỳ SPM — King Pet E-Commerce System (Team 6)</title>
     <style>
         :root {
-            --primary: #ea580c;
-            --primary-dark: #c2410c;
+            --primary: #f97316;
+            --primary-dark: #ea580c;
             --primary-light: #ffedd5;
-            --secondary: #f8fafc;
-            --secondary-light: #f1f5f9;
+            --secondary: #0f172a;
+            --secondary-light: #1e293b;
             --accent: #0d9488;
             --accent-light: #ccfbf1;
-            --bg-slide: #ffffff;
-            --card-bg: #ffffff;
-            --card-border: #cbd5e1;
-            --text-main: #0f172a;
-            --text-muted: #475569;
+            --bg-slide: #090d16;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --card-border: rgba(255, 255, 255, 0.1);
+            --text-main: #f8fafc;
+            --text-muted: #cbd5e1;
             --success: #10b981;
-            --warning: #d97706;
+            --warning: #f59e0b;
             --danger: #ef4444;
             --font-heading: 'Times New Roman', Times, serif;
             --font-body: 'Times New Roman', Times, serif;
         }
 
         /* ===== GLOBAL TIMES NEW ROMAN OVERRIDE ===== */
-        *, body, h1, h2, h3, h4, h5, h6, p, span, div, td, th, li, a, button {
+        *,
+        body,
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6,
+        p,
+        span,
+        div,
+        td,
+        th,
+        li,
+        a,
+        button {
             font-family: 'Times New Roman', Times, serif !important;
         }
 
@@ -40,8 +55,8 @@
 
         body {
             font-family: var(--font-body);
-            background: #f1f5f9;
-            color: #0f172a;
+            background: #020617;
+            color: var(--text-main);
             overflow: hidden;
             width: 100vw;
             height: 100vh;
@@ -54,7 +69,7 @@
             left: 0;
             right: 0;
             height: 56px;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(12px);
             border-bottom: 1px solid var(--card-border);
             display: flex;
@@ -71,7 +86,7 @@
             font-family: var(--font-heading);
             font-size: 1.05rem;
             font-weight: 700;
-            color: #0f172a;
+            color: #fff;
         }
 
         .brand-badge .logo-dot {
@@ -156,12 +171,12 @@
             max-width: 1400px;
             height: 100%;
             max-height: 840px;
-            background: #ffffff;
+            background: radial-gradient(circle at top right, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.95));
             border: 1px solid var(--card-border);
             border-radius: 24px;
             padding: 40px 50px;
             position: relative;
-            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.7);
             overflow-y: auto;
             scrollbar-width: thin;
             scrollbar-color: var(--primary) transparent;
@@ -202,13 +217,14 @@
             letter-spacing: -0.3px;
             line-height: 1.25;
             margin-bottom: 8px;
-            color: #0f172a;
-            -webkit-text-fill-color: #0f172a;
+            background: linear-gradient(135deg, #ffffff, #e2e8f0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
         .slide-subtitle {
             font-size: 0.95rem;
-            color: #475569;
+            color: #cbd5e1;
             margin-bottom: 20px;
             font-style: italic;
         }
@@ -266,7 +282,7 @@
             font-family: var(--font-heading);
             font-size: 1.15rem;
             font-weight: 700;
-            color: #0f172a;
+            color: #fff;
             display: flex;
             align-items: center;
             gap: 10px;
@@ -278,7 +294,7 @@
             padding: 3px 8px;
             border-radius: 6px;
             background: rgba(255, 255, 255, 0.1);
-            color: #1e293b;
+            color: #e2e8f0;
         }
 
         .card-badge.primary {
@@ -308,7 +324,7 @@
 
         .card-body {
             font-size: 0.92rem;
-            color: #1e293b;
+            color: #e2e8f0;
             line-height: 1.65;
             flex: 1;
         }
@@ -324,7 +340,7 @@
             position: relative;
             padding-left: 20px;
             font-size: 0.9rem;
-            color: #1e293b;
+            color: #e2e8f0;
             line-height: 1.5;
         }
 
@@ -354,8 +370,8 @@
         }
 
         table.spm-table th {
-            background: #ea580c;
-            color: #ffffff;
+            background: rgba(15, 23, 42, 0.95);
+            color: #94a3b8;
             font-weight: 700;
             text-transform: uppercase;
             font-size: 0.75rem;
@@ -367,7 +383,7 @@
         table.spm-table td {
             padding: 11px 14px;
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-            color: #1e293b;
+            color: #e2e8f0;
             vertical-align: middle;
         }
 
@@ -384,7 +400,7 @@
         }
 
         .kpi-box {
-            background: #f8fafc;
+            background: linear-gradient(135deg, rgba(30, 41, 59, 0.6), rgba(15, 23, 42, 0.8));
             border: 1px solid var(--card-border);
             border-radius: 16px;
             padding: 16px 20px;
@@ -407,7 +423,7 @@
             font-family: var(--font-heading);
             font-size: 1.8rem;
             font-weight: 800;
-            color: #ea580c;
+            color: #fff;
             margin-bottom: 4px;
         }
 
@@ -477,7 +493,7 @@
             bottom: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(15, 23, 42, 0.85);
             backdrop-filter: blur(14px);
             border: 1px solid var(--card-border);
             padding: 8px 18px;
