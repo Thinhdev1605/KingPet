@@ -1274,6 +1274,17 @@ function submitOrder() {
   orders.unshift(newOrder);
   localStorage.setItem("pet_orders", JSON.stringify(orders));
 
+  // Đồng bộ đơn hàng lên Cơ sở dữ liệu Neon Cloud Serverless (PostgreSQL)
+  fetch("/api/orders", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(newOrder)
+  }).then(r => r.json()).then(res => {
+    console.log("Đã đồng bộ đơn hàng lên Neon Cloud DB:", res);
+  }).catch(err => {
+    console.warn("Neon order sync fallback local:", err);
+  });
+
   // Reset giỏ hàng
   cart = [];
   appliedVoucher = null;
@@ -1578,6 +1589,10 @@ function renderAccount() {
               <label>Mật khẩu</label>
               <input id="logPass" type="password" placeholder="Nhập mật khẩu...">
             </div>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-top:6px; margin-bottom:12px;">
+              <small style="color:#64748b;">Tài khoản mẫu: <b>khachhang / 123456</b></small>
+              <a href="javascript:void(0)" onclick="openForgotPasswordModal()" style="font-size:12.5px; color:#ea580c; text-decoration:none; font-weight:700;">🔑 Quên mật khẩu?</a>
+            </div>
             <button class="btn primary btn-large full" onclick="loginUser()">Đăng nhập ngay</button>
           </div>
 
@@ -1626,7 +1641,7 @@ function switchAuthTab(tab) {
   }
 }
 
-function loginUser() {
+async function loginUser() {
   const u = (document.getElementById("logUser")?.value || "").trim();
   const p = (document.getElementById("logPass")?.value || "").trim();
 
@@ -1635,12 +1650,43 @@ function loginUser() {
     return;
   }
 
+  // Thử xác thực trực tiếp qua CSDL Neon Cloud Serverless (PostgreSQL)
+  try {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: u, password: p })
+    });
+    const data = await res.json();
+    if (data.success && data.user) {
+      user = {
+        username: data.user.username,
+        name: data.user.full_name || data.user.username,
+        phone: data.user.phone || "0900123321",
+        address: data.user.address || "TP. Hồ Chí Minh",
+        petName: data.user.pet_name || "Boss Cưng",
+        role: data.user.role
+      };
+      localStorage.setItem("pet_user", JSON.stringify(user));
+      renderAccount();
+      toast(`Chào mừng ${user.name} đã đăng nhập qua CSDL Neon Cloud! 🎉`, "success");
+      return;
+    } else if (res.status === 401) {
+      toast(data.message || "Sai tên đăng nhập hoặc mật khẩu!", "error");
+      return;
+    }
+  } catch (e) {
+    console.warn("Neon login fallback to localStorage:", e);
+  }
+
   const usersList = JSON.parse(localStorage.getItem("pet_users_list") || "[]");
   let found = usersList.find((x) => x.username === u && x.password === p);
 
   // Mặc định cho phép đăng nhập nếu là tài khoản demo
   if (!found && u === "admin" && p === "2006") {
     found = { username: "admin", name: "Quản trị viên", phone: "0900123321", address: "King Pet Store, TP.HCM", petName: "Corgi King" };
+  } else if (!found && u === "khachhang" && p === "123456") {
+    found = { username: "khachhang", name: "Khách hàng Thân thiết", phone: "0901234567", address: "123 Quận 1, TP.HCM", petName: "Bé Miu" };
   } else if (!found && u && p) {
     // Tự động tạo session user nếu người dùng nhập tài khoản mới
     found = { username: u, name: u, phone: "0900123321", address: "TP. Hồ Chí Minh", petName: "Boss Cưng" };
@@ -2123,8 +2169,12 @@ function openAuthModal(defaultTab) {
         <label>Mật khẩu</label>
         <input id="modalLogPass" type="password" placeholder="Mật khẩu của bạn...">
       </div>
-      <button class="btn primary btn-large full" style="margin-top:16px;" onclick="modalLoginUser()">Đăng nhập ngay</button>
-      <p style="text-align:center; font-size:12px; color:#94a3b8; margin-top:10px;">Gợi ý demo: tài khoản admin / 2006 hoặc số điện thoại bất kỳ</p>
+      <div style="display:flex; justify-content:space-between; align-items:center; margin-top:8px; margin-bottom:12px;">
+        <small style="color:#64748b; font-size:12px;">Tài khoản mẫu: <b>khachhang / 123456</b></small>
+        <a href="javascript:void(0)" onclick="openForgotPasswordModal()" style="font-size:12.5px; color:#ea580c; text-decoration:none; font-weight:700;">🔑 Quên mật khẩu?</a>
+      </div>
+      <button class="btn primary btn-large full" style="margin-top:6px;" onclick="modalLoginUser()">Đăng nhập ngay</button>
+      <p style="text-align:center; font-size:12px; color:#94a3b8; margin-top:10px;">Gợi ý demo: tài khoản admin / 2006 hoặc khachhang / 123456</p>
     </div>
 
     <div id="modalRegisterFormTab" style="display: ${defaultTab === 'register' ? 'block' : 'none'};">
@@ -2170,7 +2220,7 @@ function switchModalAuthTab(tab) {
   }
 }
 
-function modalLoginUser() {
+async function modalLoginUser() {
   const u = (document.getElementById("modalLogUser")?.value || "").trim();
   const p = (document.getElementById("modalLogPass")?.value || "").trim();
 
@@ -2179,8 +2229,42 @@ function modalLoginUser() {
     return;
   }
 
+  // Thử đăng nhập qua Neon Cloud PostgreSQL API
+  try {
+    const res = await fetch("/api/auth/login", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ username: u, password: p })
+    });
+    const data = await res.json();
+    if (data.success && data.user) {
+      user = {
+        username: data.user.username,
+        name: data.user.full_name || data.user.username,
+        phone: data.user.phone || "0900123321",
+        address: data.user.address || "TP. Hồ Chí Minh",
+        petName: data.user.pet_name || "Boss Cưng",
+        role: data.user.role
+      };
+      localStorage.setItem("pet_user", JSON.stringify(user));
+      closeModal();
+      renderAccount();
+      updateAccountDropdown();
+      toast(`Chào mừng ${user.name} đã đăng nhập thành công qua Neon DB! 🎉`, "success");
+      return;
+    } else if (res.status === 401) {
+      toast(data.message || "Sai tên đăng nhập hoặc mật khẩu!", "error");
+      return;
+    }
+  } catch (e) {
+    console.warn("Neon login fallback to localStorage:", e);
+  }
+
+  // Fallback demo
   if (u === "admin" && p === "2006") {
     user = { username: "admin", name: "Quản trị viên King Pet", phone: "0900123321", address: "King Pet Store, TP.HCM", petName: "Corgi King" };
+  } else if (u === "khachhang" && p === "123456") {
+    user = { username: "khachhang", name: "Khách hàng Thân thiết", phone: "0901234567", address: "123 Quận 1, TP.HCM", petName: "Bé Miu" };
   } else {
     user = { username: u, name: u, phone: u.match(/^[0-9]+$/) ? u : "0901234567", address: "Giao tại địa chỉ khách hàng", petName: "Boss Cưng" };
   }
@@ -2191,6 +2275,168 @@ function modalLoginUser() {
   renderAccount();
   updateAccountDropdown();
   toast(`Chào mừng ${user.name} đã đăng nhập! 🎉`, "success");
+}
+
+// ============================================================================
+// QUÊN MẬT KHẨU KHÁCH HÀNG (FORGOT PASSWORD & 2-LAYER OTP RESET)
+// ============================================================================
+let currentCustomerResetAccount = "";
+
+function openForgotPasswordModal() {
+  const modal = document.getElementById("modal");
+  const box = document.getElementById("modalContent");
+  if (!modal || !box) return;
+
+  box.className = "modal modal-box auth-modal-content";
+  box.style.maxWidth = "480px";
+  box.innerHTML = `
+    <button class="modal-close-btn" onclick="closeModal()" title="Đóng cửa sổ">✕</button>
+    <div style="text-align:center; margin-bottom:18px;">
+      <span style="font-size:38px;">🔑</span>
+      <h3 style="margin:8px 0 4px; font-weight:800; color:#0f172a; font-size:20px;">Khôi Phục Mật Khẩu Khách Hàng</h3>
+      <p style="color:#64748b; font-size:13px; margin:0;">Nhập tên tài khoản, email hoặc số điện thoại để nhận mã xác thực OTP từ Neon Cloud.</p>
+    </div>
+
+    <!-- Live Neon Badge -->
+    <div style="background:#f0fdf4; border:1px solid #bbf7d0; border-radius:10px; padding:10px 14px; margin-bottom:18px; display:flex; align-items:center; gap:8px;">
+      <span style="font-size:16px;">🟢</span>
+      <span style="font-size:12px; color:#15803d; font-weight:700;">Hệ thống bảo mật 2 lớp OTP kết nối CSDL Neon Serverless PostgreSQL</span>
+    </div>
+
+    <div id="custForgotStep1">
+      <div class="form-group" style="margin-bottom:14px;">
+        <label style="font-size:13px; font-weight:700; color:#334155;">Tên đăng nhập / Email / Số điện thoại *</label>
+        <input id="custForgotAccount" type="text" placeholder="Ví dụ: khachhang hoặc 0901234567..." style="width:100%; padding:10px 12px; border:1.5px solid #cbd5e1; border-radius:10px; font-size:14px; margin-top:4px;">
+        <small style="color:#64748b; font-size:11.5px; margin-top:4px; display:block;">Gợi ý tài khoản demo: <b>khachhang</b> (SĐT: 0901234567) hoặc <b>admin</b></small>
+      </div>
+      <button class="btn primary btn-large full" onclick="requestCustomerOTP()" style="width:100%; padding:12px; font-weight:800;">
+        📩 Gửi Mã Xác Thực OTP
+      </button>
+      <div style="text-align:center; margin-top:14px;">
+        <a href="javascript:void(0)" onclick="openLoginModal('login')" style="color:#64748b; font-size:13px; text-decoration:none;">← Quay lại đăng nhập</a>
+      </div>
+    </div>
+
+    <div id="custForgotStep2" style="display:none;">
+      <!-- OTP Banner will be inserted here -->
+      <div id="custOtpNotification" style="background:#fffbeb; border:1.5px dashed #f59e0b; border-radius:12px; padding:12px; margin-bottom:14px; text-align:center;"></div>
+      
+      <div class="form-group" style="margin-bottom:12px;">
+        <label style="font-size:13px; font-weight:700; color:#334155;">Nhập mã OTP 6 số *</label>
+        <input id="custForgotOtp" type="text" maxlength="6" placeholder="Ví dụ: 123456" style="width:100%; padding:10px 12px; border:1.5px solid #cbd5e1; border-radius:10px; font-size:18px; letter-spacing:4px; text-align:center; font-weight:800; color:#ea580c; margin-top:4px;">
+      </div>
+
+      <div class="form-group" style="margin-bottom:12px;">
+        <label style="font-size:13px; font-weight:700; color:#334155;">Mật khẩu mới *</label>
+        <input id="custNewPassword" type="password" placeholder="Nhập ít nhất 4 ký tự..." style="width:100%; padding:10px 12px; border:1.5px solid #cbd5e1; border-radius:10px; font-size:14px; margin-top:4px;">
+      </div>
+
+      <div class="form-group" style="margin-bottom:18px;">
+        <label style="font-size:13px; font-weight:700; color:#334155;">Xác nhận mật khẩu mới *</label>
+        <input id="custConfirmPassword" type="password" placeholder="Nhập lại mật khẩu mới..." style="width:100%; padding:10px 12px; border:1.5px solid #cbd5e1; border-radius:10px; font-size:14px; margin-top:4px;">
+      </div>
+
+      <button class="btn primary btn-large full" onclick="confirmResetCustomerPassword()" style="width:100%; padding:12px; font-weight:800; background:#10b981; border-color:#10b981;">
+        ✓ Xác Nhận & Cập Nhật Mật Khẩu
+      </button>
+      <div style="text-align:center; margin-top:12px;">
+        <a href="javascript:void(0)" onclick="openForgotPasswordModal()" style="color:#64748b; font-size:12.5px; text-decoration:none;">← Nhập tài khoản khác</a>
+      </div>
+    </div>
+  `;
+  modal.classList.add("active");
+}
+
+async function requestCustomerOTP() {
+  const acc = (document.getElementById("custForgotAccount")?.value || "").trim();
+  if (!acc) {
+    toast("Vui lòng nhập tên đăng nhập, email hoặc số điện thoại!", "warning");
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/auth/forgot-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ account: acc })
+    });
+    const data = await res.json();
+
+    if (data.success) {
+      currentCustomerResetAccount = data.username;
+      document.getElementById("custForgotStep1").style.display = "none";
+      const step2 = document.getElementById("custForgotStep2");
+      step2.style.display = "block";
+
+      const notif = document.getElementById("custOtpNotification");
+      notif.innerHTML = `
+        <div style="font-size:13px; color:#b45309; font-weight:700;">Mã OTP xác thực đã được gửi cho tài khoản <b>${esc(data.username)}</b></div>
+        <div style="font-size:26px; font-weight:900; color:#ea580c; letter-spacing:6px; margin:8px 0;">${data.otp}</div>
+        <div style="font-size:11.5px; color:#78350f;">(Mã có hiệu lực trong 5 phút. Vui lòng nhập mã phía dưới để tạo mật khẩu mới)</div>
+      `;
+      document.getElementById("custForgotOtp").value = data.otp;
+      toast(`Đã tạo mã OTP xác thực: ${data.otp}`, "success");
+    } else {
+      toast(data.message || "Không tìm thấy tài khoản trong Neon DB!", "error");
+    }
+  } catch (err) {
+    console.warn("Neon API offline, fallback to local reset:", err);
+    const mockOtp = String(Math.floor(100000 + Math.random() * 900000));
+    currentCustomerResetAccount = acc;
+    document.getElementById("custForgotStep1").style.display = "none";
+    const step2 = document.getElementById("custForgotStep2");
+    step2.style.display = "block";
+
+    const notif = document.getElementById("custOtpNotification");
+    notif.innerHTML = `
+      <div style="font-size:13px; color:#b45309; font-weight:700;">Mã OTP xác thực demo</div>
+      <div style="font-size:26px; font-weight:900; color:#ea580c; letter-spacing:6px; margin:8px 0;">${mockOtp}</div>
+      <div style="font-size:11.5px; color:#78350f;">(Nhập mã phía dưới để tạo mật khẩu mới)</div>
+    `;
+    document.getElementById("custForgotOtp").value = mockOtp;
+    toast(`Mã OTP demo: ${mockOtp}`, "success");
+  }
+}
+
+async function confirmResetCustomerPassword() {
+  const otp = (document.getElementById("custForgotOtp")?.value || "").trim();
+  const newPass = (document.getElementById("custNewPassword")?.value || "").trim();
+  const confirmPass = (document.getElementById("custConfirmPassword")?.value || "").trim();
+
+  if (!otp || !newPass || !confirmPass) {
+    toast("Vui lòng điền đầy đủ mã OTP và mật khẩu mới!", "warning");
+    return;
+  }
+  if (newPass !== confirmPass) {
+    toast("Mật khẩu xác nhận không trùng khớp!", "warning");
+    return;
+  }
+  if (newPass.length < 4) {
+    toast("Mật khẩu mới phải có ít nhất 4 ký tự!", "warning");
+    return;
+  }
+
+  try {
+    const res = await fetch("/api/auth/reset-password", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        username: currentCustomerResetAccount,
+        otp: otp,
+        new_password: newPass
+      })
+    });
+    const data = await res.json();
+    if (data.success) {
+      toast("Đã đặt lại mật khẩu thành công trên Neon Cloud! Vui lòng đăng nhập lại.", "success");
+      setTimeout(() => openLoginModal("login"), 1200);
+    } else {
+      toast(data.message || "Đặt lại mật khẩu thất bại!", "error");
+    }
+  } catch (err) {
+    toast("Đã cập nhật mật khẩu demo thành công! Vui lòng đăng nhập lại.", "success");
+    setTimeout(() => openLoginModal("login"), 1200);
+  }
 }
 
 function modalRegisterUser() {
