@@ -147,6 +147,7 @@ function getProductImage(p) {
 }
 
 let products = JSON.parse(localStorage.getItem("pet_products") || "[]");
+let users = [];
 function getAdminUsers() {
   let uList = [];
   try {
@@ -229,7 +230,7 @@ function getAdminUsers() {
   return uList;
 }
 
-let users = getAdminUsers();
+users = getAdminUsers();
 let orders = JSON.parse(localStorage.getItem("pet_orders") || "[]");
 let reviews = JSON.parse(localStorage.getItem("pet_reviews") || "[]");
 let categories = JSON.parse(localStorage.getItem("pet_categories") || "null") || [
@@ -264,18 +265,28 @@ function toast(m) {
 }
 
 function adminLogin() {
-  const u = document.getElementById("adminUser").value.trim(),
-    p = document.getElementById("adminPass").value;
-  if (u !== ADMIN_USER || p !== ADMIN_PASS) return toast("⚠️ Sai tài khoản hoặc mật khẩu Admin (Demo: admin / 2006)");
+  const u = (document.getElementById("adminUser")?.value || "").trim();
+  const p = (document.getElementById("adminPass")?.value || "").trim();
+  if (u.toLowerCase() !== ADMIN_USER.toLowerCase() || p !== ADMIN_PASS) {
+    return toast("⚠️ Sai tài khoản hoặc mật khẩu Admin (Demo: admin / 2006)");
+  }
   localStorage.setItem("pet_admin_session", "true");
   showAdmin();
 }
 
 function showAdmin() {
-  document.getElementById("loginScreen").classList.add("hidden");
-  document.getElementById("adminApp").classList.remove("hidden");
-  renderDashboard();
-  renderProductsAdmin();
+  const login = document.getElementById("loginScreen");
+  const app = document.getElementById("adminApp");
+  if (login) {
+    login.classList.add("hidden");
+    login.style.display = "none";
+  }
+  if (app) {
+    app.classList.remove("hidden");
+    app.style.display = "block";
+  }
+  try { renderDashboard(); } catch (e) { console.error("renderDashboard error:", e); }
+  try { renderProductsAdmin(); } catch (e) { console.error("renderProductsAdmin error:", e); }
 }
 
 function adminLogout() {

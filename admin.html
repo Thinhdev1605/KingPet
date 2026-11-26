@@ -7,7 +7,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="admin.css?v=2.5">
+  <link rel="stylesheet" href="admin.css?v=2.6">
 </head>
 <body>
 <div id="toast"></div>
@@ -19,9 +19,11 @@
     <span class="kicker">KING PET ROYAL ADMIN</span>
     <h1>Quản trị hệ thống</h1>
     <p>Đăng nhập bằng tài khoản Quản trị viên để điều hành toàn bộ cửa hàng đồ ăn & phụ kiện thú cưng King Pet.</p>
-    <input id="adminUser" placeholder="Tên đăng nhập" value="admin">
-    <input id="adminPass" type="password" placeholder="Mật khẩu" value="2006">
-    <button class="primary full" onclick="adminLogin()">Đăng nhập Admin</button>
+    <form onsubmit="event.preventDefault(); adminLogin();" style="display:flex; flex-direction:column; gap:12px; width:100%;">
+      <input id="adminUser" placeholder="Tên đăng nhập" value="admin" autocomplete="username">
+      <input id="adminPass" type="password" placeholder="Mật khẩu" value="2006" autocomplete="current-password">
+      <button type="submit" class="primary full" id="btnLoginAdmin">Đăng nhập Admin</button>
+    </form>
     <small>Tài khoản Demo: <b>admin / 2006</b></small>
     <a href="index.html">← Quay lại cửa hàng King Pet</a>
   </div>
@@ -265,6 +267,6 @@
   <div id="modalBody" class="modal"></div>
 </div>
 
-<script src="admin.js?v=2.5"></script>
+<script src="admin.js?v=2.6"></script>
 </body>
 </html>
